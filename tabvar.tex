@@ -1,0 +1,379 @@
+%-- Macros tabvar créées par Denis Léger
+\newrgbcolor{gristabvar}{0.7669 0.7669 0.7669}
+\newdimen\tabdim
+\newdimen\tabblanc
+\catcode`\@=11
+\newdimen\tv@mydimen
+\newdimen\tv@mydimendeux
+\newdimen\tv@dimYHaut
+\newdimen\tv@dimYMilieu
+\newdimen\tv@dimYBas
+\newdimen\tv@dimX
+\newdimen\tv@Xdim
+\newdimen\tv@YTotal
+\newcount\tv@countLigne
+\newdimen\tv@DX
+\tabdim=0.8cm
+\tabblanc=2pt
+\newif\iftv@calcul
+\def\psdefaut{\psset{xunit=1cm,yunit=1cm,runit=1cm,linewidth=0.4pt,linestyle=solid,linecolor=black}}
+\let\dsp=\displaystyle
+\let\spt=\scriptstyle
+\def\initY#1{%
+\setbox100=\hbox{#1}%
+\global\tv@mydimen=\ht100\global\advance\tv@mydimen by\dp100}
+\def\initX#1{\setbox100=\hbox{#1}%
+\ifdim\wd100>\tabdim
+  \global\tv@mydimen=\wd100
+\else
+  \global\tv@mydimen=\tabdim
+\fi}
+\def\initx#1{\setbox100=\hbox{#1}\global\tv@mydimen=\wd100}
+\def\calculeYTotal{%
+ \global\tv@YTotal=\tv@dimYHaut\global\advance\tv@YTotal by\tv@dimYMilieu\global\advance\tv@YTotal by\tv@dimYBas}
+\def\setY#1#2#3{\global\tv@dimYHaut=#1\global\tv@dimYMilieu=#2\global\tv@dimYBas=#3\relax}
+\def\max#1#2{\ifdim#2>#1\global#1=#2\fi}
+\def\GererX#1{%
+\initX{#1}\tv@mydimen=1.1\tv@mydimen%
+\max{\tv@Xdim}{\tv@mydimen}}
+\def\GererXDimension#1{%
+\tv@mydimen=#1%
+\tv@mydimen=1.1\tv@mydimen%
+\max{\tv@Xdim}{\tv@mydimen}%
+\max{\tv@Xdim}{\tabdim}%
+}
+\def\GererDXSimple#1{%
+\initX{#1}\tv@mydimen=1.1\tv@mydimen
+\tv@mydimen=0.5\tv@mydimen
+\max{\tv@DX}{\tv@mydimen}%
+}
+\def\GererDXDimension#1{%
+\tv@mydimen=#1%
+\max{\tv@DX}{\tv@mydimen}%
+\max{\tv@DX}{0.5\tabdim}%
+}
+\def\tabvarputhaut#1{%
+\iftv@calcul
+  \initY{#1}%
+  \max{\tv@dimYHaut}{\tv@mydimen}%
+\fi
+\rput(\tv@DX,-0.5\tv@dimYHaut){#1}}
+\def\tabvarputmilieu#1{%
+\iftv@calcul
+  \initY{#1}%
+  \max{\tv@dimYMilieu}{\tv@mydimen}%
+\fi%
+\tv@mydimen=\tv@dimYHaut\advance\tv@mydimen by 0.5\tv@dimYMilieu
+\rput(\tv@DX,-\tv@mydimen){#1}}
+\def\tabvarputbas#1{%
+\iftv@calcul
+  \initY{#1}%
+  \max{\tv@dimYBas}{\tv@mydimen}%
+\fi%
+\tv@mydimen=\tv@dimYHaut\advance\tv@mydimen by \tv@dimYMilieu\advance\tv@mydimen by 0.5\tv@dimYBas
+\rput(\tv@DX,-\tv@mydimen){#1}}
+\def\traithaut{\psline(\tv@DX,0)(\tv@DX,-\tv@dimYHaut)}
+\def\traitmilieu{\tv@mydimen=\tv@dimYHaut\advance\tv@mydimen by\tv@dimYMilieu
+\psline(\tv@DX,-\tv@dimYHaut)(\tv@DX,-\tv@mydimen)}
+\def\traitbas{\tv@mydimen=\tv@dimYHaut\advance\tv@mydimen by\tv@dimYMilieu
+\dimen100=\tv@mydimen\advance\tv@mydimen by\tv@dimYBas
+\psline(\tv@DX,-\dimen100)(\tv@DX,-\tv@mydimen)}
+\def\doubletraithaut{\psline[doubleline=true,doublesep=1pt](\tv@DX,0)(\tv@DX,-\tv@dimYHaut)}
+\def\doubletraitmilieu{\tv@mydimen=\tv@dimYHaut\advance\tv@mydimen by\tv@dimYMilieu
+\psline[doubleline=true,doublesep=1pt](\tv@DX,-\tv@dimYHaut)(\tv@DX,-\tv@mydimen)}
+\def\doubletraitbas{\tv@mydimen=\tv@dimYHaut\advance\tv@mydimen by\tv@dimYMilieu
+\dimen100=\tv@mydimen\advance\tv@mydimen by\tv@dimYBas
+\psline[doubleline=true,doublesep=1pt](\tv@DX,-\dimen100)(\tv@DX,-\tv@mydimen)}
+\def\trait{\traithaut\traitmilieu\traitbas}
+\def\dbt{\doubletraithaut\doubletraitmilieu\doubletraitbas}
+\def\fm{%
+\iftv@calcul
+  \GererXDimension{\tabdim}%
+  \GererDXDimension{0.5\tabdim}%
+\fi
+\tv@mydimen=\tv@dimYHaut\advance\tv@mydimen by\tv@dimYMilieu
+\tv@dimX=\tv@Xdim\advance\tv@dimX by -\tv@DX %
+\hbox to\tv@Xdim{\rput(\tv@DX,0){\psline{->}(-0.9\tv@DX,-\tv@mydimen)(0.9\tv@dimX,-\tv@dimYHaut)}\hfil}}
+\def\fd{%
+\iftv@calcul
+  \GererXDimension{\tabdim}%
+  \GererDXDimension{0.5\tabdim}%
+\fi
+\tv@mydimen=\tv@dimYHaut\advance\tv@mydimen by\tv@dimYMilieu
+\tv@dimX=\tv@Xdim\advance\tv@dimX by -\tv@DX %
+\hbox to\tv@Xdim{\rput(\tv@DX,0){\psline{->}(-0.9\tv@DX,-\tv@dimYHaut)(0.9\tv@dimX,-\tv@mydimen)}\hfil}}
+\def\fhh{%
+\iftv@calcul
+  \GererXDimension{\tabdim}%
+  \GererDXDimension{0.5\tabdim}%
+\fi
+\tv@dimX=\tv@Xdim\advance\tv@dimX by -\tv@DX %
+\hbox to\tv@Xdim{\rput(\tv@DX,0){\psline{->}(-0.9\tv@DX,-0.5\tv@dimYHaut)(0.9\tv@dimX,-0.5\tv@dimYHaut)}\hfil}}
+\def\fhm{%
+\iftv@calcul
+  \GererXDimension{\tabdim}%
+  \GererDXDimension{0.5\tabdim}%
+\fi
+\tv@mydimen=\tv@dimYHaut\advance\tv@mydimen by 0.5\tv@dimYMilieu
+\tv@dimX=\tv@Xdim\advance\tv@dimX by -\tv@DX 
+\hbox to\tv@Xdim{\rput(\tv@DX,0){\psline{->}(-0.9\tv@DX,-\tv@mydimen)(0.9\tv@dimX,-\tv@mydimen)}\hfil}}
+\def\fhb{%
+\iftv@calcul
+  \GererXDimension{\tabdim}%
+  \GererDXDimension{0.5\tabdim}%
+\fi
+\tv@mydimen=\tv@dimYHaut\advance\tv@mydimen by\tv@dimYMilieu\advance\tv@mydimen by0.5\tv@dimYBas
+\tv@dimX=\tv@Xdim\advance\tv@dimX by -\tv@DX %
+\hbox to\tv@Xdim{\rput(\tv@DX,0){\psline{->}(-0.9\tv@DX,-\tv@mydimen)(0.9\tv@dimX,-\tv@mydimen)}\hfil}}
+\def\fmb{%
+\iftv@calcul
+  \GererXDimension{\tabdim}%
+  \GererDXDimension{0.5\tabdim}%
+\fi
+\tv@mydimen=\tv@dimYHaut\advance\tv@mydimen by\tv@dimYMilieu\advance\tv@mydimen by 0.5\tv@dimYBas
+\tv@mydimendeux=\tv@dimYHaut\advance\tv@mydimendeux by 0.5\tv@dimYMilieu
+\tv@dimX=\tv@Xdim\advance\tv@dimX by -\tv@DX %
+\hbox to\tv@Xdim{\rput(\tv@DX,0){\psline{->}(-0.9\tv@DX,-\tv@mydimen)(0.9\tv@dimX,-\tv@mydimendeux)}\hfil}}
+\def\fdb{%
+\iftv@calcul
+  \GererXDimension{\tabdim}%
+  \GererDXDimension{0.5\tabdim}%
+\fi
+\tv@mydimen=\tv@dimYHaut\advance\tv@mydimen by\tv@dimYMilieu\advance\tv@mydimen by 0.5\tv@dimYBas
+\tv@mydimendeux=\tv@dimYHaut\advance\tv@mydimendeux by 0.5\tv@dimYMilieu
+\tv@dimX=\tv@Xdim\advance\tv@dimX by -\tv@DX %
+\hbox to\tv@Xdim{\rput(\tv@DX,0){\psline{->}(-0.9\tv@DX,-\tv@mydimendeux)(0.9\tv@dimX,-\tv@mydimen)}\hfil}}
+\def\fmh{%
+\iftv@calcul
+  \GererXDimension{\tabdim}%
+  \GererDXDimension{0.5\tabdim}%
+\fi
+\tv@mydimen=0.5\tv@dimYHaut\tv@mydimendeux=\tv@dimYHaut\advance\tv@mydimendeux by 0.5\tv@dimYMilieu 
+\tv@dimX=\tv@Xdim\advance\tv@dimX by -\tv@DX %
+\hbox to\tv@Xdim{\rput(\tv@DX,0){\psline{->}(-0.9\tv@DX,-\tv@mydimendeux)(0.9\tv@dimX,-\tv@mydimen)}\hfil}}
+\def\fdh{%
+\iftv@calcul
+  \GererXDimension{\tabdim}%
+  \GererDXDimension{0.5\tabdim}%
+\fi
+\tv@mydimen=0.5\tv@dimYHaut\tv@mydimendeux=\tv@dimYHaut\advance\tv@mydimendeux by 0.5\tv@dimYMilieu 
+\tv@dimX=\tv@Xdim\advance\tv@dimX by -\tv@DX %
+\hbox to\tv@Xdim{\rput(\tv@DX,0){\psline{->}(-0.9\tv@DX,-\tv@mydimen)(0.9\tv@dimX,-\tv@mydimendeux)}\hfil}}
+\def\tx#1{%
+\iftv@calcul
+  \GererX{$\dsp#1$}%
+  \GererDXSimple{$\dsp#1$}%
+\fi
+\hbox to \tv@Xdim{\tabvarputmilieu{$\dsp #1$}\hfil}%
+}
+\def\txh#1{%
+\iftv@calcul
+  \GererX{$\dsp#1$}%
+  \GererDXSimple{$\dsp#1$}%
+\fi
+\hbox to\tv@Xdim{\tabvarputhaut{$\dsp #1$}\hfil}%
+}
+\def\txb#1{%
+\iftv@calcul
+  \GererX{$\dsp#1$}%
+  \GererDXSimple{$\dsp#1$}%
+\fi
+\hbox to\tv@Xdim{\tabvarputbas{$\dsp#1$}\hfil}%
+}
+\def\txt#1{%
+\iftv@calcul
+  \GererX{$\dsp#1$}%
+  \GererDXSimple{$\dsp#1$}%
+\fi
+\hbox to\tv@Xdim{\traithaut\tabvarputmilieu{$\dsp #1$}\traitbas\hfil}%
+}
+\def\txht#1{%
+\iftv@calcul
+  \GererX{$\dsp#1$}%
+  \GererDXSimple{$\dsp#1$}%
+\fi
+\hbox to\tv@Xdim{\tabvarputhaut{$\dsp #1$}\traitmilieu\traitbas\hfil}%
+}
+\def\txbt#1{%
+\iftv@calcul
+  \GererX{$\dsp#1$}%
+  \GererDXSimple{$\dsp#1$}%
+\fi
+\hbox to\tv@Xdim{\traithaut\traitmilieu\tabvarputbas{$\dsp #1$}\hfil}%
+}
+\def\xt#1{%
+\iftv@calcul
+  \GererX{$\dsp#1$}%
+  \GererDXSimple{$\dsp#1$}%
+\fi
+\hbox to\tv@Xdim{\tabvarputmilieu{$\dsp#1$}\traitbas\hfil}%
+}
+\def\xdbt#1{%
+\iftv@calcul
+  \GererX{$\dsp#1$}%
+  \GererDXSimple{$\dsp#1$}%
+\fi
+\hbox to\tv@Xdim{\tabvarputmilieu{$\dsp#1$}\doubletraitbas\hfil}%
+}
+\def\txdbthb#1#2{%
+\iftv@calcul
+  \initY{$\dsp #1$}\max{\tv@dimYHaut}{\tv@mydimen}%
+   \initY{$\dsp #2$}\max{\tv@dimYBas}{\tv@mydimen}%
+  \initx{$\dsp#1$}\advance\tv@mydimen by 3 pt\relax
+  \GererDXDimension{\tv@mydimen}%
+  \initx{$\dsp#1$}\max{\tv@mydimen}{\tv@DX}%
+  \global\advance\tv@mydimen by 3pt\global\tv@dimX=\tv@mydimen
+  \initx{$\dsp#2$}\global\advance\tv@mydimen by\tv@dimX
+  \GererXDimension{\tv@mydimen}%
+\fi%
+\hbox to\tv@Xdim{%
+\rput[r](\tv@DX,0){\rput[r](-3pt,-0.5\tv@dimYHaut){$\dsp#1$}}%
+%
+\dbt
+ %
+ \tv@mydimen=\tv@dimYHaut\advance\tv@mydimen by \tv@dimYMilieu\advance\tv@mydimen by 0.5\tv@dimYBas
+ \rput[l](\tv@DX,0){\rput[l](3pt,-\tv@mydimen){$\dsp #2$}}% 
+ \hfil}%
+}
+\def\txdbthh#1#2{%
+\iftv@calcul
+  \initY{$\dsp #1$}\max{\tv@dimYHaut}{\tv@mydimen}%
+  \initY{$\dsp #2$}\max{\tv@dimYHaut}{\tv@mydimen}%
+  \initx{$\dsp#1$}\advance\tv@mydimen by 3 pt\relax
+  \GererDXDimension{\tv@mydimen}%
+  \initx{$\dsp#1$}\max{\tv@mydimen}{\tv@DX}%
+  \global\advance\tv@mydimen by 3pt\global\tv@dimX=\tv@mydimen
+  \initx{$\dsp#2$}\global\advance\tv@mydimen by\tv@dimX
+  \GererXDimension{\tv@mydimen}%
+\fi%
+\hbox to\tv@Xdim{%
+ \rput[r](\tv@DX,0){\rput[r](-3pt,-0.5\tv@dimYHaut){$\dsp#1$}}%
+ %
+\dbt
+ %
+ \rput[l](\tv@DX,0){\rput[l](3pt,-0.5\tv@dimYHaut){$\dsp #2$}}
+ \hfil}%
+}%
+\def\txdbtbh#1#2{%
+\iftv@calcul 
+  \initY{$\dsp #1$}\max\tv@dimYBas\tv@mydimen%
+  \initY{$\dsp #2$}\max\tv@dimYHaut\tv@mydimen%
+  \initx{$\dsp#1$}\advance\tv@mydimen by 3 pt\relax
+  \GererDXDimension{\tv@mydimen}%
+  \initx{$\dsp#1$}\max{\tv@mydimen}{\tv@DX}%
+  \global\advance\tv@mydimen by 3pt\global\tv@dimX=\tv@mydimen
+  \initx{$\dsp#2$}\global\advance\tv@mydimen by\tv@dimX
+  \GererXDimension{\tv@mydimen}%
+\fi%
+\hbox to\tv@Xdim{%
+ \tv@mydimen=\tv@dimYHaut\advance\tv@mydimen by \tv@dimYMilieu\advance\tv@mydimen by 0.5\tv@dimYBas
+ \rput[r](\tv@DX,0){\rput[r](-3pt,-\tv@mydimen){$\dsp#1$}}%
+ %
+\dbt
+ %
+ \rput[l](\tv@DX,0){\rput[l](3pt,-0.5\tv@dimYHaut){$\dsp #2$}}
+ \hfil}%
+}%
+\def\txdbtbb#1#2{%
+\iftv@calcul%
+  \initY{$\dsp #1$}\max{\tv@dimYBas}{\tv@mydimen}%
+  \initY{$\dsp #2$}\max{\tv@dimYBas}{\tv@mydimen}%
+  \initx{$\dsp#1$}\advance\tv@mydimen by 3 pt%
+  \GererDXDimension{\tv@mydimen}%
+  \initx{$\dsp#1$}\max{\tv@mydimen}{0.90909\tv@DX}%
+  \global\advance\tv@mydimen by 3pt\global\tv@dimX=\tv@mydimen%
+  \initx{$\dsp#2$}\global\advance\tv@mydimen by\tv@dimX%
+  \GererXDimension{\tv@mydimen}%
+\fi%
+\hbox to\tv@Xdim{%
+ \tv@mydimen=\tv@dimYHaut\advance\tv@mydimen by\tv@dimYMilieu\advance\tv@mydimen by 0.5\tv@dimYBas\relax%
+ \rput[r](\tv@DX,0){\rput[r](-3pt,-\tv@mydimen){$\dsp#1$}}%
+ %
+\dbt
+ %
+ \tv@mydimen=\tv@dimYHaut\advance\tv@mydimen by\tv@dimYMilieu\advance\tv@mydimen by 0.5\tv@dimYBas\relax
+ \rput[l](\tv@DX,0){\rput[l](3pt,-\tv@mydimen){$\dsp #2$}}%
+ \hfil}%
+}%
+\def\grise{%
+\iftv@calcul
+  \GererXDimension{\tabdim}%
+  \GererDXDimension{0.5\tabdim}%
+\fi%
+\hbox to\tv@Xdim{\psframe[linecolor=gristabvar,fillstyle=solid,fillcolor=gristabvar](0,0)(\tv@Xdim,-\tv@YTotal)\hfil}}
+\toksdef\ta=0 \toksdef\tb=2
+\long\def\rightappenditem#1\to#2{\ta={\\{#1}}\tb=\expandafter{#2}%
+ \xdef#2{\the\tb\the\ta}}
+\long\def\leftappenditem#1\to#2{\ta={\\{#1}}\tb=\expandafter{#2}%
+\xdef#2{\the\ta\the\tb}}
+\def\lop#1\to#2{\expandafter\lopoff#1\lopoff#1#2}
+\long\def\lopoff\\#1#2\lopoff#3#4{\gdef#4{#1}\gdef#3{#2}}
+\def\clearListes{\gdef\listeY{}\gdef\listeX{}\gdef\listeDX{}}
+\def\savedimsY{%
+  \expandafter\rightappenditem\the\tv@dimYHaut\to\listeY
+  \expandafter\rightappenditem\the\tv@dimYMilieu\to\listeY
+  \expandafter\rightappenditem\the\tv@dimYBas\to\listeY}
+\def\litY{%
+ \lop\listeY\to\a \tv@dimYHaut=\a
+ \lop\listeY\to\a \tv@dimYMilieu=\a
+ \lop\listeY\to\a \tv@dimYBas=\a
+ \global\advance\tv@dimYHaut by 2\tabblanc
+ \global\advance\tv@dimYMilieu by 2\tabblanc
+ \global\advance\tv@dimYBas by 2\tabblanc
+ \calculeYTotal}
+\def\ajouteX#1{%
+  \expandafter\rightappenditem\the #1\to\listeX}
+\def\ajouteXAGauche#1{%
+  \expandafter\leftappenditem\the #1\to\listeX}
+\def\extraitX{\lop\listeX\to\a\tv@Xdim=\a}
+\def\ajouteDX#1{%
+  \expandafter\rightappenditem\the #1\to\listeDX}
+\def\ajouteDXAGauche#1{%
+  \expandafter\leftappenditem\the #1\to\listeDX}
+\def\extraitDX{\lop\listeDX\to\a\tv@DX=\a}
+\def\initListeXListeDX#1{%
+\global\tv@countLigne=0
+\setbox150=\vbox{\halign{%
+\global\advance\tv@countLigne by 1
+\ifnum\tv@countLigne=1
+  \tv@mydimen=0pt
+  \ajouteXAGauche{\tv@mydimen}%
+  \ajouteDXAGauche{\tv@mydimen}%
+\fi
+##\hfil\vrule&&%
+\hfil
+\ifnum\tv@countLigne=1
+  \tv@mydimen=0pt
+  \ajouteXAGauche{\tv@mydimen}%
+  \ajouteDXAGauche{\tv@mydimen}%
+\fi
+##\hfil\cr%
+#1}}}
+\def\TABVAR#1{%
+\vbox{\vglue\smallskipamount\nobreak%
+{\offinterlineskip\everycr{\noalign{\hrule}}%
+\iftv@calcul
+\else
+  \litY
+\fi%
+\hbox{\vrule\vbox{\halign{%
+\iftv@calcul
+  \savedimsY
+  \setY{0pt}{0pt}{0pt}%
+\else
+  \litY%
+\fi 
+\vrule height 0pt depth \tv@YTotal width 0pt\extraitX\extraitDX##\ajouteX{\tv@Xdim}\ajouteDX{\tv@DX}%
+\vrule&&%
+\extraitX\extraitDX##\ajouteX{\tv@Xdim}\ajouteDX{\tv@DX}\cr%
+#1}}\vrule}}
+\iftv@calcul
+  \savedimsY%
+\fi
+\medbreak%
+}}
+\def\tabvar#1{{\clearListes\initListeXListeDX{#1}\tv@calcultrue%
+\psset{linewidth=.4pt}%
+\setbox150=\hbox{\TABVAR{#1}}\tv@calculfalse\TABVAR{#1}}}
+\catcode`\@=12
+%-- Fin Macros tabvar 
