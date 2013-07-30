@@ -389,7 +389,8 @@ class TableauSigne():
 
 class TableauVariation(TableauSigne):
     """
-    Classe de creation d'un tableau de variation.
+    Classe de creation d'un tableau de variation. Ce n'est qu'une heuristique,
+    l'emplacement des flèches doit être remanié à la main dans pstplus.
     Les bornes par défaut sont \pm oo réglable avec le paramètre bornes.
 
     :param string expr: expression à étudier; avec la syntaxe sympy.
@@ -439,7 +440,6 @@ class TableauVariation(TableauSigne):
         except KeyError:
             pass
 
-
     def complete_tab(self):
         """Création du tableau de signe de f' et ajout des variations de f.
 
@@ -468,6 +468,7 @@ class TableauVariation(TableauSigne):
         out.write( etree.tostring(self.xml, pretty_print=True) )
         out.close()
 
+
 class TableauFactory():
     """Génère une liste de tableaux de signe simplifiés.
 
@@ -475,7 +476,7 @@ class TableauFactory():
 
     >>> test = ['(3*x+2)', '(5*x+4)*(2*x+8)', '(9*x-3)/(5*x-1)']
     >>> t = TableauFactory(test)
-    >>> t.export_simplif()
+    >>> t.export_simplif_pst()
     >>> t.export_latex()
 
     """
@@ -484,21 +485,24 @@ class TableauFactory():
         for e in L:
             self.tabs.append(TableauSigne(e))
 
-    def export_simplif_pst(self):
-        """créer les fichiers sortie simplifiée au format pst
+    def export_pst(self, simplif = False):
+        """créer les fichiers sortie simplifiée au format pst avec option 
+        de simplification (False par défaut)
         
         """
         for i,t in enumerate(self.tabs):
-            t.export_simplif(nom="tableau"+str(i+1))
+            choix = {True:t.export_pst_simplif, False: t.export_pst}
+            choix[simplif](nom="tableau"+str(i+1))
 
-    def export_latex(self, nom="tableaux_liste"):
-        """créer la sortie latex des tableaux complets
+    def export_latex(self, nom="tableaux_liste", simplif = False):
+        """créer la sortie latex des tableaux avec option de simplification
 
-        :param string nom: le nom de la sortie .tex        
+        :param string nom: le nom de la sortie .tex
+        :param boolean simplif: simplifier les tableaux ou pas
         """
         f = nom+".tex"
         out = open(f, 'w')
         for t in self.tabs:
-            out.write( t.tab2latex())
+            out.write( t.tab2latex(simplif = simplif))
             out.write('\n\n')
         out.close()
