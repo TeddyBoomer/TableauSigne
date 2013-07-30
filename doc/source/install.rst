@@ -29,10 +29,15 @@ aussi *sympy* et *lxml*.:
 
   # apt-get install python-sympy
 
-Attention, le sympy-0.6.6 présentait un petit bug pénible: les polynômes étaient affichés par ordre croissant de puissance. C'est une chose corrigée dans les versions 0.7.x. Si vous avez une ancienne distribution linux et que votre *python-sympy* est trop ancien, je vous conseille de l'enlever et d'installer la dernière version de *sympy* avec *easy_install*:: 
+Attention, le sympy-0.6.6 présentait un petit bug pénible: les polynômes
+étaient affichés par ordre croissant de puissance. C'est une chose corrigée
+dans les versions 0.7.x. Si vous avez une ancienne distribution linux et que
+votre *python-sympy* est trop ancien, je vous conseille de l'enlever et
+d'installer la dernière version de *sympy* avec *easy_install*::
 
   # easy_install -f http://code.google.com/p/sympy/downloads/detail?name=sympy-0.7.2-py3.2.tar.gz sympy
 
+(à l'heure actuelle une version 0.7.3 va bientôt arriver)
 Pour Windows, voici le lien pour `sympy-0.7.2  <http://code.google.com/p/sympy/downloads/detail?name=sympy-0.7.2.win32.exe>`_.
 
 sinon voir `http://code.google.com/p/sympy/downloads/list <http://code.google.com/p/sympy/downloads/list>`_

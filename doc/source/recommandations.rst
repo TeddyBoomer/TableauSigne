@@ -12,5 +12,10 @@ sympifiez-la (ou mettez *Rational(2,3)*).
 
 Par défaut les bornes sont à pm oo (oo est le symbole de l'infini dans sympy).
 
-Ce module ne gère pas les facteurs avec d'autres symboles que *x* en raison du
-placement des racines et pôles dans le tableau.
+Ce module ne gère pas les facteurs avec d'autres symboles que *x*.
+
+.. important:: 
+   Les scripts distribués avec le paquet ne montrent pas *toutes* les possibilités
+   du module. Notamment il existe une classe ``TableauFactory`` pour générer en
+   chaine une série de tableaux de signe. Vous pouvez la trouver à la fin du
+   fichier tabsigne3.py.
