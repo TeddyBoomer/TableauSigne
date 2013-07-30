@@ -500,7 +500,7 @@ class TableauFactory(list):
             self.append(TableauSigne(e))
 
     def export_pst(self, simplif = False):
-        """créer les fichiers sortie simplifiée au format pst avec option 
+        """créer les fichiers sortie au format pst avec option 
         de simplification (False par défaut)
         
         """

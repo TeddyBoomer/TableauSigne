@@ -22,7 +22,7 @@ Bienvenue dans la doc de TableauSigne!
    recommandations.rst
    history.rst
 
-.. automodule::    btabsigne 
+.. automodule::    tabsigne3
    :members:
 
 Indices and tables
