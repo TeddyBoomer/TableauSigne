@@ -5,13 +5,12 @@
 
 Bienvenue dans la doc de TableauSigne!
 ======================================
-.. :Info: See <http://bmauricette.free.fr> for introductory docs.
 
-:Author: Boris Mauricette <bmauricette at free point fr>
+:Author: Boris Mauricette <Boris point Mauricette at ac - lyon point fr>
 :Date: |today| 
 :Revision: |version| 
 :Description: Voici la documentation du module pour les tableaux de signe.
-:Contents: Informations sur le module btabsigne
+:Contents: Informations sur le module tabsigne3
 
 .. toctree::
    :maxdepth: 2

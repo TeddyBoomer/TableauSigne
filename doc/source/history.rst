@@ -19,3 +19,4 @@ TODO:
 * La classe heuristique TableauVariation n'est pas encore opérationnelle.
 * Rationnaliser le code (parfois des fonctions _simplif, parfois un paramètre)
 * Inclure un générateur de produits et quotients aléatoire pour ne plus s'embêter à taper quoique ce soit (paramètres: bornes des coefficients (int), type de coefs – fractions autorisées? –, nombre de facteurs) puis l'adjoindre au TableauFactory
+* Inclure un générateur de signes aléatoires pour l'associer à un TableauFactory. En conjuguant les deux on obtient un générateur d'entrainement aux lectures de signe.

@@ -70,15 +70,14 @@ class TableauSigne():
             self.vi = []
         self._create_tab()
         self._create_tab_simplif()
+        self._arbrepst()
+        self._arbrepst_simplif()
 
-    def arbrepst(self):
+    def _arbrepst(self):
         """Création de l'arbre xml selon le format de PST+;
         il est stocké dans self.xml
 
         """
-        #if self.tab == []:
-        #    self._create_tab()
-        #
         root = etree.Element("Tableau")
         ligne = etree.SubElement(root, "Lignes")
         #ligne.text = str(len(self.facteurs)+2)
@@ -95,7 +94,7 @@ class TableauSigne():
                                self._list2pststring(l[e]))
         self.xml = root
 
-    def arbrepst_simplif(self):
+    def _arbrepst_simplif(self):
         """Création de l'arbre xml simplifié avec juste la dernière ligne
         stocké dans self.xmlsimplif
 
@@ -348,7 +347,7 @@ class TableauSigne():
         """Exporter l'arbre xml dans un fichier. Format pst.
 
         """
-        self.arbrepst()
+        #self.arbrepst()
         #
         f = nom+".pst"
         out = open(f, 'w')
@@ -359,7 +358,7 @@ class TableauSigne():
         """Exporter l'arbre xml simplifié dans un fichier. Format pst.
 
         """
-        self.arbrepst_simplif()
+        #self.arbrepst_simplif()
         #
         f = nom+".pst"
         out = open(f, 'w')
@@ -469,8 +468,9 @@ class TableauVariation(TableauSigne):
         out.close()
 
 
-class TableauFactory():
-    """Génère une liste de tableaux de signe simplifiés.
+class TableauFactory(list):
+    """Génère une liste de tableaux de signe.
+    On peut à l'envie générer une liste de solutions d'inéquations ...
 
     exemple::
 
@@ -478,19 +478,19 @@ class TableauFactory():
     >>> t = TableauFactory(test)
     >>> t.export_pst(simplif = False)
     >>> t.export_latex(simplif = True)
-
+    >>> for e in t: print(e.get_solutions('++'))
+    
     """
     def __init__(self, L):
-        self.tabs = []
         for e in L:
-            self.tabs.append(TableauSigne(e))
+            self.append(TableauSigne(e))
 
     def export_pst(self, simplif = False):
         """créer les fichiers sortie simplifiée au format pst avec option 
         de simplification (False par défaut)
         
         """
-        for i,t in enumerate(self.tabs):
+        for i,t in enumerate(self):
             choix = {True:t.export_pst_simplif, False: t.export_pst}
             choix[simplif](nom="tableau"+str(i+1))
 
@@ -502,7 +502,7 @@ class TableauFactory():
         """
         f = nom+".tex"
         out = open(f, 'w')
-        for t in self.tabs:
+        for t in self:
             out.write( t.tab2latex(simplif = simplif))
             out.write('\n\n')
         out.close()
