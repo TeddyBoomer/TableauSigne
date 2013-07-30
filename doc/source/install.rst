@@ -7,6 +7,7 @@ Il contient:
 * le module btabsigne.py
 * l'executable *TabSigne.py*
 * l'executable *TabSigneSimplif.py*
+* une copie de la license GNU GPL v3
 * le dossier doc pour la documentation. Commencer par ouvrir *index.html*.
 
 Logiciel  PST+

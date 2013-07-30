@@ -42,7 +42,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'TableauSigne'
-copyright = '2012, B.M.'
+copyright = '2012, B.M. - GPL v3'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
