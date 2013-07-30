@@ -59,13 +59,13 @@ class TableauSigne():
             self.facteurs = self.pow_positif = [self.value]
             self.pow_moins = []
         try:
-            self.racines = reduce(operator.concat,\
-                                      [solve(Eq(u,0),x) for u in list(self.pow_positif)])
+            self.racines = reduce(operator.concat,
+                                  [solve(Eq(u,0),x) for u in list(self.pow_positif)])
         except TypeError:
             self.racines = []
         try:
-            self.vi = reduce(operator.concat,\
-                                 [solve(Eq(u.args[0],0),x) for u in list(self.pow_moins)]) # valeurs interdites
+            self.vi = reduce(operator.concat,
+                             [solve(Eq(u.args[0],0),x) for u in list(self.pow_moins)]) # valeurs interdites
         except TypeError:
             self.vi = []
         self._create_tab()
@@ -90,8 +90,8 @@ class TableauSigne():
         for l in self.tab:
             for e in ["Bas", "Milieu", "Haut"]:
                 etree.SubElement(root, e).text =\
-                    regexp.sub(r'\$',\
-                               r'',\
+                    regexp.sub(r'\$',
+                               r'',
                                self._list2pststring(l[e]))
         self.xml = root
 
@@ -111,8 +111,8 @@ class TableauSigne():
         for l in (self.tab[0], self.tab[-1]):
             for e in ["Bas", "Milieu", "Haut"]:
                 etree.SubElement(root, e).text =\
-                    regexp.sub(r'\$',\
-                               r'',\
+                    regexp.sub(r'\$',
+                               r'',
                                self._list2pststring(l[e]))
         self.xmlsimplif = root        
 
@@ -476,8 +476,8 @@ class TableauFactory():
 
     >>> test = ['(3*x+2)', '(5*x+4)*(2*x+8)', '(9*x-3)/(5*x-1)']
     >>> t = TableauFactory(test)
-    >>> t.export_simplif_pst()
-    >>> t.export_latex()
+    >>> t.export_pst(simplif = False)
+    >>> t.export_latex(simplif = True)
 
     """
     def __init__(self, L):

@@ -1,0 +1,8 @@
+Installation
+------------
+
+Décompressez le fichier TableauSigne.7z
+Il contient:
+   * le module btabsigne.py
+   * l'executable (TODO)
+   * le dossier doc pour la documentation.
