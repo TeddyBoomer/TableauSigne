@@ -373,7 +373,7 @@ class TableauSigne():
         #
         f = nom+".tex"
         out = open(f, 'w')
-        out.write( self.tab2latex() )
+        out.write( self.tab2latex(simplif = False) )
         out.close()
 
     def export_latex_simplif(self, nom="tableau"):
@@ -383,7 +383,7 @@ class TableauSigne():
         #
         f = nom+".tex"
         out = open(f, 'w')
-        out.write( self.tab2latex() )
+        out.write( self.tab2latex(simplif = True) )
         out.close()        
 
 

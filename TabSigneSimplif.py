@@ -11,9 +11,9 @@ import sys
 from tabsigne3 import *
 
 if len(sys.argv) == 1: # le nom du pgm se trouve tjs en argv[0]
-    print("utilisation: ./TabSigneSimplif 'produit ou quotient' [sortie]\n",\
-              "pas encore prêt: optionel: la liste des 2 bornes,\n",\
-              "par défaut, le fichier de sortie se nomme tableau.pst")
+    print("utilisation: ./TabSigneSimplif.py 'produit ou quotient' [sortie]\n",
+          "[borne 1, borne2]]\n",
+          "par défaut, le fichier de sortie se nomme tableau.pst")
 elif len(sys.argv) == 4:
     out = sys.argv[3]
     bornes = eval(sys.argv[2])
@@ -24,13 +24,19 @@ elif len(sys.argv) == 3:
         out = sys.argv[2] 
         bornes = [-oo, oo]
     else:
-        out = "tableau"
+        out = "tableau_simplif"
         bornes = eval(sys.argv[2])
     expr = sys.argv[1]
 elif len(sys.argv) == 2:
-    out = "tableau"
+    out = "tableau_simplif"
     bornes = [-oo, oo]
     expr = sys.argv[1]
 
 tmp = TableauSigne(sys.argv[1], bornes = bornes)
-tmp.export_simplif(nom = out) 
+
+print("Indiquez le type de sortie: tex/pst (tex par défaut)")
+choix = input()
+
+fin = {'':tmp.export_latex_simplif, 'tex':tmp.export_latex_simplif,
+       'pst':tmp.export_pst_simplif}
+fin[choix](nom = out) 

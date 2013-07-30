@@ -10,7 +10,7 @@ import sys
 from tabsigne3 import *
 
 if len(sys.argv) == 1: # le nom du pgm se trouve tjs en argv[0]
-    print("utilisation: ./TabSigne 'produit ou quotient' [sortie,\n",\
+    print("utilisation: ./TabSigne.py 'produit ou quotient' [sortie,\n",\
               "[borne 1, borne2]]\n",\
               "par défaut, le fichier de sortie se nomme tableau.pst")
 elif len(sys.argv) == 4:
@@ -32,4 +32,9 @@ elif len(sys.argv) == 2:
     expr = sys.argv[1]
 
 tmp = TableauSigne(sys.argv[1], bornes = bornes)
-tmp.export_latex(nom = out) 
+
+print("Indiquez le type de sortie: tex/pst (tex par défaut)")
+choix = input()
+
+fin = {'':tmp.export_latex, 'tex':tmp.export_latex, 'pst':tmp.export_pst}
+fin[choix](nom = out) 
