@@ -8,35 +8,28 @@ Il renvoie le fichier pst avec la ligne des valeurs et la ligne du signe.
 """
 
 import sys
+import argparse
 from tabsigne3 import *
 
-if len(sys.argv) == 1: # le nom du pgm se trouve tjs en argv[0]
-    print("utilisation: ./TabSigneSimplif.py 'produit ou quotient' [sortie]\n",
-          "[borne 1, borne2]]\n",
-          "par défaut, le fichier de sortie se nomme tableau.pst")
-elif len(sys.argv) == 4:
-    out = sys.argv[3]
-    bornes = eval(sys.argv[2])
-    expr = sys.argv[1]
-elif len(sys.argv) == 3:
-    # cas où le 2em argument est le nom de la sortie
-    if sys.argv[2][0] != "[":
-        out = sys.argv[2] 
-        bornes = [-oo, oo]
-    else:
-        out = "tableau_simplif"
-        bornes = eval(sys.argv[2])
-    expr = sys.argv[1]
-elif len(sys.argv) == 2:
-    out = "tableau_simplif"
-    bornes = [-oo, oo]
-    expr = sys.argv[1]
+# ./TabSigneSimplif.py -h
+# ./TabSigneSimplif.py -b '[-3,6]' '8*x+3'
+# ./TabSigneSimplif.py -b '[-3,6]' -o test '8*x+3'
+# ./TabSigneSimplif.py -b '[-3,6]' -o test -f pst '8*x+3'
 
-tmp = TableauSigne(sys.argv[1], bornes = bornes)
+parser = argparse.ArgumentParser(description="Construit le tableau de signe simplifié d'une expression.")
+parser.add_argument('expr', metavar='expression', type=str,
+                    help="L'expression dont on doit construire le tableau de signe (format sympy)")
+parser.add_argument('--bornes', '-b', type=str, nargs='?', default='[-oo,oo]',
+                    help="Liste [a,b] des bornes d'étude. L'infini se note oo.")
+parser.add_argument('--format', '-f', type=str, choices=['tex','pst'], default='tex', 
+                    help="Choix du format de sortie")
+parser.add_argument('--out', '-o', type=str, nargs='?', default='tableau_simplif', 
+                    help="Nom du fichier de sortie (sans extension)")
+parser.add_argument('--version', '-v', action='version', version='%(prog)s '+version)
 
-print("Indiquez le type de sortie: tex/pst (tex par défaut)")
-choix = input()
-
-fin = {'':tmp.export_latex_simplif, 'tex':tmp.export_latex_simplif,
-       'pst':tmp.export_pst_simplif}
-fin[choix](nom = out) 
+A = parser.parse_args()
+# l'expresion est du type "'e'" dans A
+tmp = TableauSigne(eval(A.expr), bornes = eval(A.bornes))
+# choix du format dans le dictionnaire fin des 2 méthodes.
+fin = {'tex':tmp.export_latex_simplif, 'pst':tmp.export_pst_simplif}
+fin[A.format](nom = A.out) 

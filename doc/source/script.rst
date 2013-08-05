@@ -7,24 +7,36 @@ directement en ligne de commande.
 En principe il fonctionne sur toute plateforme.
 Signature:
 
-.. function:: TabSigne "expr"  ["[a,b]", nom_sortie]
 
-Arguments:
+.. function:: TabSigne.py [-h] [--bornes [BORNES]] [--format {tex,pst}] [--out [OUT]] [--version] expression
 
-#. "expr" doit être entre guillemets simples '.' ou doubles "."; elle est au format sympy, les puissances s'écrivent avec ** et non pas ^
-#. "[a,b]" est la liste des bornes; vous pouvez mettre des valeurs sympifiées pour avoir des fractions (par ex: sympify('3/2'))
-#. nom_sortie est le nom du fichier de sortie (pas nécéssairement entre guillemets);
+	   Construit le tableau de signe d'une expression.
 
-Le script vous demande le format de sortie tex/pst (tex par défaut)
-
+	   positional arguments:
+	      * expression      
+		L'expression dont on doit construire le tableau de signe (format sympy)
+	   
+	   optional arguments:
+	     * -h, --help
+               show this help message and exit
+	     * --bornes [BORNES], -b [BORNES]
+	       Liste [a,b] des bornes d'étude. L'infini se note oo.
+	     * --format {tex,pst}, -f {tex,pst}
+	       Choix du format de sortie
+	     * --out [OUT], -o [OUT]
+	       Nom du fichier de sortie (sans extension)
+	     * --version, -v
+               show program's version number and exit
 
 Ainsi, on peut taper::
 
-       $ ./TabSigne.py '(3*x+2)**3 /(2*x - 5)**2 *(5*x+1) * -8' Sortie
-       $ ./TabSigne.py "(3*x+2)**3 /(2*x - 5)**2 *(5*x+1) * -8" "[-5, sympify('4/3')]" Sortie
-       $ ./TabSigne.py "(3*x+2)**3 /(2*x - 5)**2 *(5*x+1) * -8" "[-5, +oo]" Sortie
+       $ ./TabSigne.py -h
+       $ ./TabSigne.py -b '[-3,6]' '8*x+3'
+       $ ./TabSigne.py -b '[-3,6]' -o sortie '8*x+3'
+       $ ./TabSigne.py -b "[-3,sympify('13/2')]" -o sortie -f pst '8*x+3'
 
-qui vous fera le tableau de signe dans le fichier Sortie.tex ou Sortie.pst. Remarquez aussi dans le dernier exemple que les crochets de l'intervalle de définition n'ont rien à voir avec les crochets mathématiques; ce sont des crochets de liste en Python.
+
+qui vous fera le tableau de signe dans le fichier sortie.tex ou sortie.pst. Remarquez que les crochets de l'intervalle de définition n'ont rien à voir avec les crochets mathématiques; ce sont des crochets de liste en Python.
 
 Le fichier *TabSigneSimplif.py* fonctionne sur le même principe et produira un tableau simplifié: il ne contient alors que la ligne de la variable et la ligne finale.
 

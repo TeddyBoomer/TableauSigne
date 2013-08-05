@@ -29,6 +29,7 @@ from lxml import etree
 from functools import reduce
 
 x = var('x')
+version = '0.8'
 
 class TableauSigne():
     """

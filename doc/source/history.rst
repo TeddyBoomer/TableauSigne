@@ -3,8 +3,9 @@ Historique
 
 Versions:
 
-* 0.8 : Amélioration des exports LaTeX et pst avec paramètre simplif. Les scripts demandent le format de sortie.
+* 0.8 : Amélioration des exports LaTeX et pst avec paramètre simplif.
         La classe TableauFactory tient compte de cela.
+	Scripts améliorés avec le module argparse.
 * 0.7 : Ajout de l'export LaTeX direct (fonction tab2latex) des objets TableauSigne. oo est bien traduit par +\infty.
 * 0.6 : Ajout de l'export du tableau simplifié et du script TabSigneSimplif.
       	Ajout de la fonction get_solutions pour lecture des solutions d'une inéquation (sortie latex).
