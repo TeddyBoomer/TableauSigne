@@ -24,6 +24,7 @@ Elle génère au choix la sortie latex ou un tableau xml à lancer dans pst+.
 """
 import operator
 import re as regexp
+from random import choice
 from sympy import *
 from lxml import etree
 from functools import reduce
@@ -53,11 +54,11 @@ class TableauSigne():
 
     """
     def __init__(self, expr, bornes = [-oo, oo]):
-        self.value = sympify(expr)
+        self.expr = sympify(expr)
         self.bornes = bornes
         self.tab = []
-        if self.value.is_Mul:
-            self.facteurs = self.value.args
+        if self.expr.is_Mul:
+            self.facteurs = self.expr.args
             self.fact_cst = [u for u in self.facteurs if u.is_Number]
             ## facteur x seul, non traité ailleurs. en principe 1 seul résultat possible.
             self.fact_x = [u for u in self.facteurs if u.is_Symbol]
@@ -69,9 +70,9 @@ class TableauSigne():
             self.pow_positif = [u.args[0] for u in self.pow_plus] +list(self.pow_simple) + list(self.fact_x)
             ## facteurs puissance négative -> vi
             self.pow_moins = [u for u in self.facteurs if u.is_Pow and u.args[1]<0]
-        elif self.value.is_Add and (degree(self.value) == 1): 
+        elif self.expr.is_Add and (degree(self.expr) == 1): 
             # cas d'un seul facteur de degré 1:
-            self.facteurs = self.pow_positif = [self.value]
+            self.facteurs = self.pow_positif = [self.expr]
             self.pow_moins = []
         try:
             self.racines = reduce(operator.concat,
@@ -494,6 +495,8 @@ class TableauFactory(list):
     >>> t.export_pst(simplif = False)
     >>> t.export_latex(simplif = True)
     >>> for e in t: print(e.get_solutions('++'))
+    >>> t2 = TableauFactory([randExpr(3) for i in range(5)])
+    >>> for x in t2: print(str(x.expr)+'\n' + x.tab2latex(simplif = True)+'\n')
     
     """
     def __init__(self, L):
@@ -514,6 +517,7 @@ class TableauFactory(list):
 
         :param string nom: le nom de la sortie .tex
         :param boolean simplif: simplifier les tableaux ou pas
+
         """
         f = nom+".tex"
         out = open(f, 'w')
@@ -521,3 +525,26 @@ class TableauFactory(list):
             out.write( t.tab2latex(simplif = simplif))
             out.write('\n\n')
         out.close()
+
+
+def randExpr(n=2, a=-5, b=5):
+    """créer aléatoirement une expression avec n facteurs du 1er degré à coef
+    entiers compris entre a et b. Le placement au numérateur/dénominateur se
+    fait aussi au hasard.
+
+    :param int n: le nombre de facteurs, 2 par défaut
+    :param int a: borne inférieure des coefs, -5 par défaut
+    :param int b: borne supérieure des coefs, 5 par défaut
+
+    exemple::
+
+      >>> randExpr(2)
+      >>> (-x + 2)/(2*x + 3)
+      >>> randExpr(3,-15,15)
+      >>> (-3*x + 2)*(14*x - 10)/(5*x - 14)
+
+    """
+    F = [(random_poly(x, 1, a,b, polys=False), choice(['/','*'])) for i in range(n)]
+    Out = reduce(lambda a,b: a+b[1]+'('+str(b[0])+')', F, '1')
+    return sympify(Out)
+    
