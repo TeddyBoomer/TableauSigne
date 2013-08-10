@@ -25,12 +25,13 @@ Elle génère au choix la sortie latex ou un tableau xml à lancer dans pst+.
 import operator
 import re as regexp
 from random import choice
+import sympy
 from sympy import *
 from lxml import etree
 from functools import reduce
 
 x = var('x')
-version = '0.8'
+version = '0.9'
 
 class TableauSigne():
     """
@@ -490,14 +491,14 @@ class TableauFactory(list):
 
     exemple::
 
-    >>> test = ['(3*x+2)', '(5*x+4)*(2*x+8)', '(9*x-3)/(5*x-1)']
-    >>> t = TableauFactory(test)
-    >>> t.export_pst(simplif = False)
-    >>> t.export_latex(simplif = True)
-    >>> for e in t: print(e.get_solutions('++'))
-    >>> t2 = TableauFactory([randExpr(3) for i in range(5)])
-    >>> for x in t2: print(str(x.expr)+'\n' + x.tab2latex(simplif = True)+'\n')
-    
+      >>> test = ['(3*x+2)', '(5*x+4)*(2*x+8)', '(9*x-3)/(5*x-1)']
+      >>> t = TableauFactory(test)
+      >>> t.export_pst(simplif = False)
+      >>> t.export_latex(simplif = True)
+      >>> for e in t: print(e.get_solutions('++'))
+      >>> t2 = TableauFactory([randExpr(3) for i in range(5)])
+      >>> for x in t2: print(latex(x.expr)+'\\n'+ x.tab2latex(simplif = True)+'\\n')
+      
     """
     def __init__(self, L):
         for e in L:
@@ -545,6 +546,22 @@ def randExpr(n=2, a=-5, b=5):
 
     """
     F = [(random_poly(x, 1, a,b, polys=False), choice(['/','*'])) for i in range(n)]
-    Out = reduce(lambda a,b: a+b[1]+'('+str(b[0])+')', F, '1')
-    return sympify(Out)
-    
+    out = sympify(reduce(lambda a,b: a+b[1]+'('+str(b[0])+')', F, '1'))
+    # sadly certains facteurs "colinéaires" pourraient se neutraliser
+    while (n>=2 and (degree_good(numer(out)) + degree_good(denom(out)) !=n)):
+        F = [(random_poly(x, 1, a,b, polys=False), choice(['/','*'])) for i in range(n)]
+        out = sympify(reduce(lambda a,b: a+b[1]+'('+str(b[0])+')', F, '1'))
+    return out
+
+
+def degree_good(P):
+    """give the degree of P even if it's a constant.
+    This is probably a bug of the degree function.
+
+    """
+    if P.is_zero:
+        return -oo
+    elif P.is_number:
+        return 0
+    else:
+        return degree(P, gen=x)

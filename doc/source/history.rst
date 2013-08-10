@@ -3,6 +3,8 @@ Historique
 
 Versions:
 
+* 0.9 : Ajout de la fonction *randExpr* pour générer aléatoirement des produits/quotients.
+        Une fonction annexe *degree_good* ajoutée suite à un défaut sur la fonction degree de sympy (qui lève une exception quand on lui donne une constante).
 * 0.8 : Amélioration des exports LaTeX et pst avec paramètre simplif.
         La classe TableauFactory tient compte de cela.
 	Scripts améliorés avec le module argparse.
@@ -19,5 +21,3 @@ TODO:
 
 * La classe heuristique TableauVariation n'est pas encore opérationnelle.
 * Rationnaliser le code (parfois des fonctions _simplif, parfois un paramètre)
-* Inclure un générateur de produits et quotients aléatoire pour ne plus s'embêter à taper quoique ce soit (paramètres: bornes des coefficients (int), type de coefs – fractions autorisées? –, nombre de facteurs) puis l'adjoindre au TableauFactory
-* Inclure un générateur de signes aléatoires pour l'associer à un TableauFactory. En conjuguant les deux on obtient un générateur d'entrainement aux lectures de signe.
