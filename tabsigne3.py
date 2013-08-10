@@ -25,7 +25,6 @@ Elle génère au choix la sortie latex ou un tableau xml à lancer dans pst+.
 import operator
 import re as regexp
 from random import choice
-import sympy
 from sympy import *
 from lxml import etree
 from functools import reduce
