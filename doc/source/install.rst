@@ -1,13 +1,14 @@
 Installation
 ------------
 
-Décompressez le fichier paquet-TableauSigne.7z
+Décompressez le fichier paquet-TableauSigne-x.x.7z
 Il contient:
 
-* le module btabsigne.py
+* le module tabsigne3.py
 * l'executable *TabSigne.py*
 * l'executable *TabSigneSimplif.py*
 * une copie de la license GNU GPL v3
+* une copie du fichier tabvar.tex
 * le dossier doc pour la documentation. Commencer par ouvrir *index.html*.
 
 Logiciel  PST+
@@ -22,8 +23,9 @@ final. On peut insérer la sortie dans un document, moyennant l'ajout du fichier
 Python
 ^^^^^^
 
-Les scripts sont écrits en Python3, ils utilisent des modules standards mais
-aussi *sympy* et *lxml*.:
+Les scripts sont écrits en Python3; *ils fonctionnent aussi avec Python2.7*.
+Ils utilisent des modules standards mais
+aussi **sympy** et **lxml**:
 
 * Python: `http://python.org/getit/ <http://python.org/getit/>`_ : sélectionnez votre plateforme (sous linux, débrouillez-vous avec apt, synaptic...)
 * Sympy: le plus simple est sous Ubuntu/Debian en faisant::

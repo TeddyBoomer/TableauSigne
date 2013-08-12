@@ -4,7 +4,10 @@ Historique
 Versions:
 
 * 0.9 : Ajout de la fonction *randExpr* pour générer aléatoirement des produits/quotients.
-        Une fonction annexe *degree_good* ajoutée suite à un défaut sur la fonction degree de sympy (qui lève une exception quand on lui donne une constante).
+        Une fonction annexe *_degree_good* ajoutée suite à un défaut sur la fonction degree de sympy (qui lève une exception quand on lui donne une constante).
+	Retrait de la classe TableauVariation qui n'est pas opérationnelle
+	Correctif sur le symbole +oo dans l'export pst
+	Amélioration de la documentation.
 * 0.8 : Amélioration des exports LaTeX et pst avec paramètre simplif.
         La classe TableauFactory tient compte de cela.
 	Scripts améliorés avec le module argparse.

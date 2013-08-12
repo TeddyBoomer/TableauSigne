@@ -1,6 +1,8 @@
-Script
-------
+Scripts
+-------
 
+TabSigne.py
+^^^^^^^^^^^
 Le fichier *TabSigne.py* est un script permettant d'utiliser le module
 directement en ligne de commande.
 
@@ -17,15 +19,15 @@ Signature:
 		L'expression dont on doit construire le tableau de signe (format sympy)
 	   
 	   optional arguments:
-	     * -h, --help
+	     * -h, `- -help`
                show this help message and exit
-	     * --bornes [BORNES], -b [BORNES]
+	     * `- -bornes` [BORNES], -b [BORNES]
 	       Liste [a,b] des bornes d'étude. L'infini se note oo.
-	     * --format {tex,pst}, -f {tex,pst}
+	     * `- -format` {tex,pst}, -f {tex,pst}
 	       Choix du format de sortie
-	     * --out [OUT], -o [OUT]
+	     * `- -out` [OUT], -o [OUT]
 	       Nom du fichier de sortie (sans extension)
-	     * --version, -v
+	     * `- -version`, -v
                show program's version number and exit
 
 Ainsi, on peut taper::
@@ -38,6 +40,8 @@ Ainsi, on peut taper::
 
 qui vous fera le tableau de signe dans le fichier sortie.tex ou sortie.pst. Remarquez que les crochets de l'intervalle de définition n'ont rien à voir avec les crochets mathématiques; ce sont des crochets de liste en Python.
 
+TabSigneSimplif.py
+^^^^^^^^^^^^^^^^^^
 Le fichier *TabSigneSimplif.py* fonctionne sur le même principe et produira un tableau simplifié: il ne contient alors que la ligne de la variable et la ligne finale.
 
 .. important:: Il existe une classe ``TableauFactory`` très pratique pour générer directement une série de tableaux de signe.

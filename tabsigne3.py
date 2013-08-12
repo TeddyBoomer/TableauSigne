@@ -43,8 +43,6 @@ class TableauSigne():
     exemple::
 
         >>> a = TableauSigne('-1*(3*x+2)*(-5*x +4)')
-        >>> print(a.tab2latex())
-        >>> print(etree.tostring(a.xml, pretty_print=True).decode("utf-8"))
         >>> b = TableauSigne('(3*x+2)**3 /(2*x - 5)**2 *(5*x+1) * -8')
         >>> b.export_pst(nom="SuperTest")
         >>> c = TableauSigne('(3*x+2)**3 /(2*x - 5)**2 *(5*x+1) * -8', bornes=[-1, 1])
@@ -132,7 +130,8 @@ class TableauSigne():
         self.xmlsimplif = root        
 
     def _list2pststring(self, l):
-        return reduce(lambda u,v: str(u)+"#"+latex(v), l)
+        # disparition du + dans le cas de latex(+oo)
+        return reduce(lambda u,v: str(u)+"#"+(latex(v) if (v!=oo) else '+\\infty'), l)
     
     def _fill_ligne(self, tete, facteur):
         """ Construction de la ligne des signes concernant facteur
@@ -278,6 +277,11 @@ class TableauSigne():
 
             >>> a = TableauSigne('-1*(3*x+2)*(-5*x +4)')
             >>> print(a.tab2latex())
+            $$\\tabvar{%
+            \\tx{x} & \\tx{-\\infty} &  & \\tx{- \\frac{2}{3}} &  & \\tx{\\frac{4}{5}} &  & \\tx{+\\infty}\\cr
+            \\tx{- 3 x -2} &  & \\tx{+} & \\txt{0} & \\tx{-} & \\tx{|} & \\tx{-} & \\cr
+            \\tx{- 5 x + 4} &  & \\tx{+} & \\tx{|} & \\tx{+} & \\txt{0} & \\tx{-} & \\cr
+            \\tx{\\text{signe de }f} &  & \\tx{+} & \\txt{0} & \\tx{-} & \\txt{0} & \\tx{+} & \\cr}$$
 
         """
         # choix du tableau
@@ -348,9 +352,8 @@ class TableauSigne():
         exemple::
 
             >>> a = TableauSigne('-1*(3*x+2)*(-5*x +4)')
-            >>> a._create_tab()
             >>> print(a.get_solutions('+0'))
-            >>> \left] -\infty;- \\frac{2}{3}\\right]\cup \left[ \\frac{4}{5};+\\infty \\right[
+            \left] -\infty;- \\frac{2}{3}\\right]\cup \left[ \\frac{4}{5};+\\infty \\right[
 
         """
 
@@ -402,86 +405,86 @@ class TableauSigne():
         out.close()        
 
 
-class TableauVariation(TableauSigne):
-    """
-    Classe de creation d'un tableau de variation. Ce n'est qu'une heuristique,
-    l'emplacement des flèches doit être remanié à la main dans pstplus.
-    Les bornes par défaut sont \pm oo réglable avec le paramètre bornes.
-
-    :param string expr: expression à étudier; avec la syntaxe sympy.
-    :param list bornes: liste à deux éléments pour les bornes. [-oo, oo] par défaut
-
-    exemple::
-
-
-        >>> a = TableauVariation('-1*(3*x+2)*(-5*x +4)')
-        >>> a.arbrepst()
-        >>> print(etree.tostring(a.xml, pretty_print=True))
-    """
-
-    def __init__(self, expr, *args):
-        """
-        :type expr: string
-        :param expr: l'expression dont on veut dresser le tableau de variation
-
-        """
-        self.val = sympify(expr)
-        deriv = factor(self.val.diff())
-        TableauSigne.__init__(self, str(deriv), *args)
-
-    def _sens(self,s):
-        if s == "+":
-            return "/"
-        elif s == "-":
-            return "\\"
-        else:
-            return s
-
-    def _convert(self, s, i):
-        """indique la position et le symbole / ou \ à partir d'un triplet du tableau de signe
-
-        """
-        try:
-            return {"+0+": ("Bas", "/"),
-                "+0-": ("Milieu","/"),
-                "-0+": ("Milieu", "\\"),
-                "-0-": ("Haut","\\"),
-                "0+vide": ("Milieu","f("+latex(self.tab[0]["Milieu"][i])+")"),
-                "0-vide": ("Milieu","f("+latex(self.tab[0]["Milieu"][i])+")"),
-                "0+0": ("Milieu","f("+latex(self.tab[0]["Milieu"][i])+")"),
-                "0-0": ("Milieu","f("+latex(self.tab[0]["Milieu"][i])+")"),
-                "vide+0": ("Milieu", "vide"),
-                "vide-0": ("Milieu", "vide")}[s]
-        except KeyError:
-            pass
-
-    def complete_tab(self):
-        """Création du tableau de signe de f' et ajout des variations de f.
-
-        """
-        #self._create_tab()
-        signe = self.tab[-1]["Milieu"]
-        #var = {"Haut": len(signe)*["vide"], "Milieu": map(self._sens, signe), "Bas": len(signe)*["vide"]}
-        var = {"Haut": len(signe)*["vide"], "Milieu": len(signe)*["vide"], "Bas": len(signe)*["vide"]}
-        var["Haut"][0] = var["Bas"][0] = ""
-        var["Milieu"][0] = "\\text{sens de }f"
-        # TODO: valeurs extremales locales à configurer
-        for i in range(1, len(signe)-2):
-            position, symbole = self._convert(reduce(lambda x,y: str(x)+str(y), signe[i:i+3]), i)
-            var[position][i] = symbole
-        self.tab.append(var)
-
-    def export(self, nom="tableau"):
-        """Exporter l'arbre xml dans un fichier
-
-        """
-        self.complete_tab()
-        self.arbrepst()
-        #
-        f = nom+".pst"
-        out = open(f, 'w')
-        out.write( etree.tostring(self.xml, pretty_print=True) )
-        out.close()
+# class TableauVariation(TableauSigne):
+#     """
+#     Classe de creation d'un tableau de variation. Ce n'est qu'une heuristique,
+#     l'emplacement des flèches doit être remanié à la main dans pstplus.
+#     Les bornes par défaut sont \pm oo réglable avec le paramètre bornes.
+# 
+#     :param string expr: expression à étudier; avec la syntaxe sympy.
+#     :param list bornes: liste à deux éléments pour les bornes. [-oo, oo] par défaut
+# 
+#     exemple::
+# 
+# 
+#         >>> a = TableauVariation('-1*(3*x+2)*(-5*x +4)')
+#         >>> a.arbrepst()
+#         >>> print(etree.tostring(a.xml, pretty_print=True))
+#     """
+# 
+#     def __init__(self, expr, *args):
+#         """
+#         :type expr: string
+#         :param expr: l'expression dont on veut dresser le tableau de variation
+# 
+#         """
+#         self.val = sympify(expr)
+#         deriv = factor(self.val.diff())
+#         TableauSigne.__init__(self, str(deriv), *args)
+# 
+#     def _sens(self,s):
+#         if s == "+":
+#             return "/"
+#         elif s == "-":
+#             return "\\"
+#         else:
+#             return s
+# 
+#     def _convert(self, s, i):
+#         """indique la position et le symbole / ou \ à partir d'un triplet du tableau de signe
+# 
+#         """
+#         try:
+#             return {"+0+": ("Bas", "/"),
+#                 "+0-": ("Milieu","/"),
+#                 "-0+": ("Milieu", "\\"),
+#                 "-0-": ("Haut","\\"),
+#                 "0+vide": ("Milieu","f("+latex(self.tab[0]["Milieu"][i])+")"),
+#                 "0-vide": ("Milieu","f("+latex(self.tab[0]["Milieu"][i])+")"),
+#                 "0+0": ("Milieu","f("+latex(self.tab[0]["Milieu"][i])+")"),
+#                 "0-0": ("Milieu","f("+latex(self.tab[0]["Milieu"][i])+")"),
+#                 "vide+0": ("Milieu", "vide"),
+#                 "vide-0": ("Milieu", "vide")}[s]
+#         except KeyError:
+#             pass
+# 
+#     def complete_tab(self):
+#         """Création du tableau de signe de f' et ajout des variations de f.
+# 
+#         """
+#         #self._create_tab()
+#         signe = self.tab[-1]["Milieu"]
+#         #var = {"Haut": len(signe)*["vide"], "Milieu": map(self._sens, signe), "Bas": len(signe)*["vide"]}
+#         var = {"Haut": len(signe)*["vide"], "Milieu": len(signe)*["vide"], "Bas": len(signe)*["vide"]}
+#         var["Haut"][0] = var["Bas"][0] = ""
+#         var["Milieu"][0] = "\\text{sens de }f"
+#         # TODO: valeurs extremales locales à configurer
+#         for i in range(1, len(signe)-2):
+#             position, symbole = self._convert(reduce(lambda x,y: str(x)+str(y), signe[i:i+3]), i)
+#             var[position][i] = symbole
+#         self.tab.append(var)
+# 
+#     def export(self, nom="tableau"):
+#         """Exporter l'arbre xml dans un fichier
+# 
+#         """
+#         self.complete_tab()
+#         self.arbrepst()
+#         #
+#         f = nom+".pst"
+#         out = open(f, 'w')
+#         out.write( etree.tostring(self.xml, pretty_print=True) )
+#         out.close()
 
 
 class TableauFactory(list):
@@ -495,8 +498,20 @@ class TableauFactory(list):
       >>> t.export_pst(simplif = False)
       >>> t.export_latex(simplif = True)
       >>> for e in t: print(e.get_solutions('++'))
-      >>> t2 = TableauFactory([randExpr(3) for i in range(5)])
+      \\left] - \\frac{2}{3};+\\infty \\right[
+      \\left] -\\infty;-4\\right[\\cup \\left] - \\frac{4}{5};+\\infty \\right[
+      \\left] -\\infty;\\frac{1}{5}\\right[\\cup \\left] \\frac{1}{3};+\\infty \\right[
+      >>> t2 = TableauFactory([randExpr(3) for i in range(2)])
       >>> for x in t2: print(latex(x.expr)+'\\n'+ x.tab2latex(simplif = True)+'\\n')
+      - \\frac{4 x + 1}{x \\left(- 3 x -2\\right)}
+      $$\\tabvar{%
+      \\tx{x} & \\tx{-\\infty} &  & \\tx{- \\frac{2}{3}} &  & \\tx{- \\frac{1}{4}} &  & \\tx{0} &  & \\tx{+\\infty}\\cr
+      \\tx{\\text{signe de }f} &  & \\tx{-} & \\dbt & \\tx{+} & \\txt{0} & \\tx{-} & \\dbt & \\tx{+} & \\cr}$$
+      
+      3 \\frac{x}{\\left(x -3\\right) \\left(2 x -4\\right)}
+      $$\\tabvar{%
+      \\tx{x} & \\tx{-\\infty} &  & \\tx{0} &  & \\tx{2} &  & \\tx{3} &  & \\tx{+\\infty}\\cr
+      \\tx{\\text{signe de }f} &  & \\tx{-} & \\txt{0} & \\tx{+} & \\dbt & \\tx{-} & \\dbt & \\tx{+} & \\cr}$$
       
     """
     def __init__(self, L):
@@ -539,21 +554,21 @@ def randExpr(n=2, a=-5, b=5):
     exemple::
 
       >>> randExpr(2)
-      >>> (-x + 2)/(2*x + 3)
+      (-x + 2)/(2*x + 3)
       >>> randExpr(3,-15,15)
-      >>> (-3*x + 2)*(14*x - 10)/(5*x - 14)
+      (-3*x + 2)*(14*x - 10)/(5*x - 14)
 
     """
     F = [(random_poly(x, 1, a,b, polys=False), choice(['/','*'])) for i in range(n)]
     out = sympify(reduce(lambda a,b: a+b[1]+'('+str(b[0])+')', F, '1'))
     # sadly certains facteurs "colinéaires" pourraient se neutraliser
-    while (n>=2 and (degree_good(numer(out)) + degree_good(denom(out)) !=n)):
+    while (n>=2 and (_degree_good(numer(out)) + _degree_good(denom(out)) !=n)):
         F = [(random_poly(x, 1, a,b, polys=False), choice(['/','*'])) for i in range(n)]
         out = sympify(reduce(lambda a,b: a+b[1]+'('+str(b[0])+')', F, '1'))
     return out
 
 
-def degree_good(P):
+def _degree_good(P):
     """give the degree of P even if it's a constant.
     This is probably a bug of the degree function.
 
