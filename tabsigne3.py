@@ -562,20 +562,7 @@ def randExpr(n=2, a=-5, b=5):
     F = [(random_poly(x, 1, a,b, polys=False), choice(['/','*'])) for i in range(n)]
     out = sympify(reduce(lambda a,b: a+b[1]+'('+str(b[0])+')', F, '1'))
     # sadly certains facteurs "colinéaires" pourraient se neutraliser
-    while (n>=2 and (_degree_good(numer(out)) + _degree_good(denom(out)) !=n)):
+    while (n>=2 and (degree(Poly(numer(out),x)) + degree(Poly(denom(out),x)) !=n)):
         F = [(random_poly(x, 1, a,b, polys=False), choice(['/','*'])) for i in range(n)]
         out = sympify(reduce(lambda a,b: a+b[1]+'('+str(b[0])+')', F, '1'))
     return out
-
-
-def _degree_good(P):
-    """give the degree of P even if it's a constant.
-    This is probably a bug of the degree function.
-
-    """
-    if P.is_zero:
-        return -oo
-    elif P.is_number:
-        return 0
-    else:
-        return degree(P, gen=x)
