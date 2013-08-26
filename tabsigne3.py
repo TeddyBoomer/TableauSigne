@@ -30,7 +30,7 @@ from lxml import etree
 from functools import reduce
 
 x = var('x')
-version = '0.9'
+version = '0.9.2'
 
 class TableauSigne():
     """
@@ -44,7 +44,7 @@ class TableauSigne():
 
         >>> a = TableauSigne('-1*(3*x+2)*(-5*x +4)')
         >>> b = TableauSigne('(3*x+2)**3 /(2*x - 5)**2 *(5*x+1) * -8')
-        >>> b.export_pst(nom="SuperTest")
+        >>> b.export_pst(nom="SuperTest", simplif=False)
         >>> c = TableauSigne('(3*x+2)**3 /(2*x - 5)**2 *(5*x+1) * -8', bornes=[-1, 1])
         >>> d = TableauSigne('(-4*x+4)/(-2*x+3)', bornes=[0, sympify('3/2')])
         >>> e = TableauSigne('x*(2-3*x)') # bug sur x factor corrigé.
@@ -83,16 +83,15 @@ class TableauSigne():
         except TypeError:
             self.vi = []
         self._create_tab()
-        self._create_tab_simplif()
         self._arbrepst()
-        self._arbrepst_simplif()
 
     def _arbrepst(self):
-        """Création de l'arbre xml selon le format de PST+;
-        il est stocké dans self.xml
+        """Création de l'arbre xml et de l'arbre simplifié selon le format de PST+;
+        stockés dans self.xml, self.xmlsimplif
 
         """
         root = etree.Element("Tableau")
+        root_simplif = etree.Element("Tableau")
         ligne = etree.SubElement(root, "Lignes")
         #ligne.text = str(len(self.facteurs)+2)
         ligne.text = str(len(self.tab))
@@ -106,28 +105,15 @@ class TableauSigne():
                     regexp.sub(r'\$',
                                r'',
                                self._list2pststring(l[e]))
+
         self.xml = root
-
-    def _arbrepst_simplif(self):
-        """Création de l'arbre xml simplifié avec juste la dernière ligne
-        stocké dans self.xmlsimplif
-
-        """
-        root = etree.Element("Tableau")
-        ligne = etree.SubElement(root, "Lignes")
-        #ligne.text: que les racines, vi et le signe
-        ligne.text = '2'
-        col = etree.SubElement(root, "Colonnes")
-        #col.text = str(2*len(self.racines)+2*len(self.vi)+4)
-        col.text = str(len(self.tab[0]["Milieu"]))
-
         for l in (self.tab[0], self.tab[-1]):
             for e in ["Bas", "Milieu", "Haut"]:
-                etree.SubElement(root, e).text =\
+                etree.SubElement(root_simplif, e).text =\
                     regexp.sub(r'\$',
                                r'',
                                self._list2pststring(l[e]))
-        self.xmlsimplif = root        
+        self.xmlsimplif = root_simplif
 
     def _list2pststring(self, l):
         # disparition du + dans le cas de latex(+oo)
@@ -245,7 +231,8 @@ class TableauSigne():
         return out
             
     def _create_tab(self):
-        """Création du tableau de signe disponible dans self.tab
+        """Création du tableau de signe disponible dans self.tab et 
+        du tableau de signe simplifié disponible dans self.tabsimplif
 
         """
         #values = self.racines+self.vi + 2eme borne
@@ -260,12 +247,8 @@ class TableauSigne():
         for f in self.facteurs:
             self.tab.append(self._fill_ligne(tete, f))
         self.tab.append(self._fill_last_ligne(tete))
-
-    def _create_tab_simplif(self):
-        """Création du tableau de signe simplifié disponible dans self.tabsimplif
-
-        """
         self.tabsimplif = [self.tab[0]]+[self.tab[-1]]
+
 
     def tab2latex(self, simplif = False):
         """Sortie latex du tableau de signe. Il utilise le fichier tabvar.tex comme 
@@ -362,48 +345,27 @@ class TableauSigne():
         I = reduce(lambda a,b: a+'\\cup '+b, intervs[1:], intervs[0])
         return I
 
-    def export_pst(self, nom="tableau"):
+    def export_pst(self, nom="tableau", simplif = False):
         """Exporter l'arbre xml dans un fichier. Format pst.
 
         """
         #self.arbrepst()
         #
         f = nom+".pst"
+        choix ={True: self.xmlsimplif, False: self.xml}
         out = open(f, 'w')
-        out.write( etree.tostring(self.xml, pretty_print=True).decode("utf-8") )
+        out.write( etree.tostring(choix[simplif], pretty_print=True).decode("utf-8") )
         out.close()
 
-    def export_pst_simplif(self, nom="tableau"):
-        """Exporter l'arbre xml simplifié dans un fichier. Format pst.
-
-        """
-        #self.arbrepst_simplif()
-        #
-        f = nom+".pst"
-        out = open(f, 'w')
-        out.write( etree.tostring(self.xmlsimplif, pretty_print=True).decode("utf-8") )
-        out.close()
-
-    def export_latex(self, nom="tableau"):
+    def export_latex(self, nom="tableau", simplif = False):
         """Exporter la sortie latex dans un fichier. Format tex.
 
         """
         #
         f = nom+".tex"
         out = open(f, 'w')
-        out.write( self.tab2latex(simplif = False) )
+        out.write( self.tab2latex(simplif = simplif) )
         out.close()
-
-    def export_latex_simplif(self, nom="tableau"):
-        """Exporter la sortie latex simplifiée dans un fichier. Format tex.
-
-        """
-        #
-        f = nom+".tex"
-        out = open(f, 'w')
-        out.write( self.tab2latex(simplif = True) )
-        out.close()        
-
 
 # class TableauVariation(TableauSigne):
 #     """
@@ -521,11 +483,12 @@ class TableauFactory(list):
     def export_pst(self, simplif = False):
         """créer les fichiers sortie au format pst avec option 
         de simplification (False par défaut)
-        
+
+        :param boolean simplif: simplifier les tableaux ou pas
+
         """
         for i,t in enumerate(self):
-            choix = {True:t.export_pst_simplif, False: t.export_pst}
-            choix[simplif](nom="tableau"+str(i+1))
+            t.export_pst(nom="tableau"+str(i+1), simplif = simplif)
 
     def export_latex(self, nom="tableaux_liste", simplif = False):
         """créer la sortie latex des tableaux avec option de simplification

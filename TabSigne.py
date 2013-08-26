@@ -31,4 +31,4 @@ A = parser.parse_args()
 tmp = TableauSigne(eval(A.expr), bornes = eval(A.bornes))
 # choix du format dans le dictionnaire fin des 2 méthodes.
 fin = {'tex':tmp.export_latex, 'pst':tmp.export_pst}
-fin[A.format](nom = A.out) 
+fin[A.format](nom = A.out, simplif = False) 

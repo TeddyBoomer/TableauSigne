@@ -31,5 +31,5 @@ A = parser.parse_args()
 # l'expresion est du type "'e'" dans A
 tmp = TableauSigne(eval(A.expr), bornes = eval(A.bornes))
 # choix du format dans le dictionnaire fin des 2 méthodes.
-fin = {'tex':tmp.export_latex_simplif, 'pst':tmp.export_pst_simplif}
-fin[A.format](nom = A.out) 
+fin = {'tex':tmp.export_latex, 'pst':tmp.export_pst}
+fin[A.format](nom = A.out, simplif = True)
