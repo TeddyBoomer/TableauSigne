@@ -508,7 +508,7 @@ class TableauFactory(list):
         out.close()
 
 
-def randExpr(n=2, a=-5, b=5, denom = True):
+def randExpr(n=2, a=-5, b=5, denomin = True):
     """créer aléatoirement une expression avec n facteurs du 1er degré à coef
     entiers compris entre a et b. Le placement au numérateur/dénominateur se
     fait aussi au hasard.
@@ -516,7 +516,7 @@ def randExpr(n=2, a=-5, b=5, denom = True):
     :param int n: le nombre de facteurs, 2 par défaut
     :param int a: borne inférieure des coefs, -5 par défaut
     :param int b: borne supérieure des coefs, 5 par défaut
-    :param boolean denom: autoriser des expressions au dénominateur, True par défaut
+    :param boolean denomin: autoriser des expressions au dénominateur, True par défaut
 
     exemple::
 
@@ -526,7 +526,7 @@ def randExpr(n=2, a=-5, b=5, denom = True):
       (-3*x + 2)*(14*x - 10)/(5*x - 14)
 
     """
-    ope = (['/','*'] if denom else ['*'])
+    ope = (['/','*'] if denomin else ['*'])
     F = [(random_poly(x, 1, a,b, polys=False), choice(ope)) for i in range(n)]
     out = sympify(reduce(lambda a,b: a+b[1]+'('+str(b[0])+')', F, '1'))
     # sadly certains facteurs "colinéaires" pourraient se neutraliser
