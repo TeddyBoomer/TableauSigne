@@ -42,9 +42,9 @@ Exemple::
    \tx{\text{signe de }f} &  & \tx{+} & \dbt & \tx{-} & \txt{0} & \tx{+} & \dbt & \tx{-} & \cr}$$
    >>> B.export_pst()
 
-Le logiciel PST+ donne le rendu suivant (.eps converti en .jpg) 
+Le logiciel pdfAdd donne le rendu suivant (.pdf converti en .png)
 
-.. image:: ../img/exemple.jpg
+.. image:: ../img/exemple.png
    :scale: 100 %
    :alt: résultat de l'export au format eps (produit par pst+)
    :align: left

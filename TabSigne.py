@@ -20,7 +20,7 @@ parser.add_argument('expr', metavar='expression', type=str,
                     help="L'expression dont on doit construire le tableau de signe (format sympy)")
 parser.add_argument('--bornes', '-b', type=str, nargs='?', default='[-oo,oo]',
                     help="Liste [a,b] des bornes d'étude. L'infini se note oo.")
-parser.add_argument('--format', '-f', type=str, choices=['tex','pst'], default='tex', 
+parser.add_argument('--format', '-f', type=str, choices=['tex', 'pst', 'pag'], default='tex', 
                     help="Choix du format de sortie")
 parser.add_argument('--out', '-o', type=str, nargs='?', default='tableau', 
                     help="Nom du fichier de sortie (sans extension)")
@@ -28,7 +28,7 @@ parser.add_argument('--version', '-v', action='version', version='%(prog)s '+ver
 
 A = parser.parse_args()
 # l'expresion est du type "'e'" dans A
-tmp = TableauSigne(eval(A.expr), bornes = eval(A.bornes))
+tmp = TableauSigne(sympify(A.expr), bornes = eval(A.bornes))
 # choix du format dans le dictionnaire fin des 2 méthodes.
-fin = {'tex':tmp.export_latex, 'pst':tmp.export_pst}
-fin[A.format](nom = A.out, simplif = False) 
+fin = {'tex':tmp.export_latex, 'pst':tmp.export_pst, 'pag':tmp.export_pst}
+fin[A.format](nom = A.out, simplif = False, ext = A.format) 

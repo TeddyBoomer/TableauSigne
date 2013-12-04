@@ -9,23 +9,25 @@ Il contient:
 * l'executable *TabSigneSimplif.py*
 * une copie de la license GNU GPL v3
 * une copie du fichier tabvar.tex
+* une copie du fichier pdftabvar.tex
 * le dossier doc pour la documentation. Commencer par ouvrir *index.html*.
 
-Logiciel  PST+
-^^^^^^^^^^^^^^
+Logiciels  PST+/PdfAdd
+^^^^^^^^^^^^^^^^^^^^^^
 
 Ces scripts produisent des fichiers LaTeX et des fichiers xml lisibles dans
-`PST+ <http://www.xm1math.net/pstplus/>`_ pour faire des tableaux de signe. Les
-outils PST+ permettent de modifier rapidement le tableau pour soigner le rendu
+`PST+ <http://www.xm1math.net/pstplus/>`_ et dans `PdfAdd
+<http://www.xm1math.net/pdfadd/>`_ pour faire des tableaux de signe. Les outils
+PST+/PdfAdd permettent de modifier rapidement le tableau pour soigner le rendu
 final. On peut insérer la sortie dans un document, moyennant l'ajout du fichier
-*tabvar.tex* dans l'entête.
+*tabvar.tex* (pour PST+) ou *pdftabvar.tex* dans l'entête.
 
 Python
 ^^^^^^
 
-Les scripts sont écrits en Python3; *ils fonctionnent aussi avec Python2.7*.
-Ils utilisent des modules standards mais
-aussi **sympy** et **lxml**:
+Les scripts sont écrits en Python3 mais *ils fonctionnent aussi avec Python2.7*.
+Ils utilisent des modules standards ainsi que **sympy** et **lxml**.
+Attention, pour Windows, lxml n'est installable que pour python <= 3.2.
 
 * Python: `http://python.org/getit/ <http://python.org/getit/>`_ : sélectionnez votre plateforme (sous linux, débrouillez-vous avec apt, synaptic...)
 * Sympy: le plus simple est sous Ubuntu/Debian en faisant::
@@ -38,10 +40,9 @@ dans les versions 0.7.x. Si vous avez une ancienne distribution linux et que
 votre *python-sympy* est trop ancien, je vous conseille de l'enlever et
 d'installer la dernière version de *sympy* avec *easy_install*::
 
-  # easy_install -f http://code.google.com/p/sympy/downloads/detail?name=sympy-0.7.2-py3.2.tar.gz sympy
+  # easy_install -f http://code.google.com/p/sympy/downloads/detail?name=sympy-0.7.3-py3.2.tar.gz sympy
 
-(à l'heure actuelle une version 0.7.3 va bientôt arriver)
-Pour Windows, voici le lien pour `sympy-0.7.2  <http://code.google.com/p/sympy/downloads/detail?name=sympy-0.7.2.win32.exe>`_.
+Pour Windows, voici le lien pour `sympy-0.7.3  <http://code.google.com/p/sympy/downloads/detail?name=sympy-0.7.3.win32.exe>`_.
 
 sinon voir `http://code.google.com/p/sympy/downloads/list <http://code.google.com/p/sympy/downloads/list>`_
 
@@ -50,6 +51,6 @@ sinon voir `http://code.google.com/p/sympy/downloads/list <http://code.google.co
   # apt-get install python-lxml
   # apt-get install python3-lxml
 
-Pour Windows, voici le lien `lxml-3.2.1 <https://pypi.python.org/pypi/lxml/3.2.1>`_.
-sinon voir `http://lxml.de/installation.html <http://lxml.de/installation.html>`_ 
-
+Pour Windows, voici le lien `lxml-3.2.3 <https://pypi.python.org/pypi/lxml/3.2.4>`_ (choisissez votre version de python
+et votre type de processeur).  sinon voir `http://lxml.de/installation.html
+<http://lxml.de/installation.html>`_

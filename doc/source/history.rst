@@ -3,6 +3,7 @@ Historique
 
 Versions:
 
+* 0.9.3 : Ajout de l'extension 'pag' pour les sorties vers pdfadd. Ajout du fichier pdftabvar.tex.
 * 0.9.2 : Factorisation du code - disparition des fonctions internes en _simplif, ajout d'un paramètre simplif (True/False). Fonction *_degree_good* retirée suite à commentaire `issue #3970 <http://code.google.com/p/sympy/issues/detail?id=3970>`_
 * 0.9 : Ajout de la fonction *randExpr* pour générer aléatoirement des produits/quotients.
         Une fonction annexe *_degree_good* ajoutée suite à un défaut sur la fonction degree de sympy (qui lève une exception quand on lui donne une constante).

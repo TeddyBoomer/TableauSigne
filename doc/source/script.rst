@@ -23,7 +23,7 @@ Signature:
                show this help message and exit
 	     * `- -bornes` [BORNES], -b [BORNES]
 	       Liste [a,b] des bornes d'étude. L'infini se note oo.
-	     * `- -format` {tex,pst}, -f {tex,pst}
+	     * `- -format` {tex,pst,pag}, -f {tex,pst,pag}
 	       Choix du format de sortie
 	     * `- -out` [OUT], -o [OUT]
 	       Nom du fichier de sortie (sans extension)
@@ -39,6 +39,13 @@ Ainsi, on peut taper::
 
 
 qui vous fera le tableau de signe dans le fichier sortie.tex ou sortie.pst. Remarquez que les crochets de l'intervalle de définition n'ont rien à voir avec les crochets mathématiques; ce sont des crochets de liste en Python.
+
+Attention, la synatxe de l'expression doit être précise: n'oubliez pas les symboles de produit * et mettez des parenthèses autour des constantes négatives. Par exemple on tapera::
+
+       $ ./TabSigne.py -b '[-1,10]' -o DM -f pst '(-2)*x**2*(x+3)/(x+2)**2'
+
+(et non pas '-2*x**2*(x+3)/(x+2)**2' pour l'expression) 
+
 
 TabSigneSimplif.py
 ^^^^^^^^^^^^^^^^^^

@@ -30,7 +30,7 @@ from lxml import etree
 from functools import reduce
 
 x = var('x')
-version = '0.9.2'
+version = '0.9.3'
 
 class TableauSigne():
     """
@@ -44,7 +44,7 @@ class TableauSigne():
 
         >>> a = TableauSigne('-1*(3*x+2)*(-5*x +4)')
         >>> b = TableauSigne('(3*x+2)**3 /(2*x - 5)**2 *(5*x+1) * -8')
-        >>> b.export_pst(nom="SuperTest", simplif=False)
+        >>> b.export_pst(nom="SuperTest", simplif=False, ext='pag')
         >>> c = TableauSigne('(3*x+2)**3 /(2*x - 5)**2 *(5*x+1) * -8', bornes=[-1, 1])
         >>> d = TableauSigne('(-4*x+4)/(-2*x+3)', bornes=[0, sympify('3/2')])
         >>> e = TableauSigne('x*(2-3*x)') # bug sur x factor corrigé.
@@ -345,21 +345,21 @@ class TableauSigne():
         I = reduce(lambda a,b: a+'\\cup '+b, intervs[1:], intervs[0])
         return I
 
-    def export_pst(self, nom="tableau", simplif = False):
-        """Exporter l'arbre xml dans un fichier. Format pst.
+    def export_pst(self, nom="tableau", ext="pag", simplif = False):
+        """Exporter l'arbre xml dans un fichier. Format pag ou pst.
 
         """
         #self.arbrepst()
         #
-        f = nom+".pst"
+        f = nom+"."+ext
         choix ={True: self.xmlsimplif, False: self.xml}
         out = open(f, 'w')
         out.write( etree.tostring(choix[simplif], pretty_print=True).decode("utf-8") )
         out.close()
 
-    def export_latex(self, nom="tableau", simplif = False):
+    def export_latex(self, nom="tableau", simplif = False, ext = "tex"):
         """Exporter la sortie latex dans un fichier. Format tex.
-
+        paramètre ext pour compatibilite avec export_pst
         """
         #
         f = nom+".tex"
@@ -457,7 +457,7 @@ class TableauFactory(list):
 
       >>> test = ['(3*x+2)', '(5*x+4)*(2*x+8)', '(9*x-3)/(5*x-1)']
       >>> t = TableauFactory(test)
-      >>> t.export_pst(simplif = False)
+      >>> t.export_pst(simplif = False, ext='pag')
       >>> t.export_latex(simplif = True)
       >>> for e in t: print(e.get_solutions('++'))
       \\left] - \\frac{2}{3};+\\infty \\right[
@@ -480,24 +480,27 @@ class TableauFactory(list):
         for e in L:
             self.append(TableauSigne(e))
 
-    def export_pst(self, simplif = False):
-        """créer les fichiers sortie au format pst avec option 
+    def export_pst(self, simplif = False, ext = "pag"):
+        """créer les fichiers sortie au format pag/pst avec option 
         de simplification (False par défaut)
 
         :param boolean simplif: simplifier les tableaux ou pas
+        :param string ext: extension de la sortie pag (pdfadd) pst (pstplus)
 
         """
         for i,t in enumerate(self):
-            t.export_pst(nom="tableau"+str(i+1), simplif = simplif)
+            t.export_pst(nom="tableau"+str(i+1), simplif = simplif, ext = ext)
 
-    def export_latex(self, nom="tableaux_liste", simplif = False):
-        """créer la sortie latex des tableaux avec option de simplification
+    def export_latex(self, nom="tableaux_liste", simplif = False, ext = "tex"):
+        """créer la sortie latex des tableaux dans un seul fichier avec option
+        de simplification.
 
         :param string nom: le nom de la sortie .tex
         :param boolean simplif: simplifier les tableaux ou pas
+        :param string ext: extension de la sortie (pour compatibilite)
 
         """
-        f = nom+".tex"
+        f = nom+"."+ext
         out = open(f, 'w')
         for t in self:
             out.write( t.tab2latex(simplif = simplif))
@@ -505,7 +508,7 @@ class TableauFactory(list):
         out.close()
 
 
-def randExpr(n=2, a=-5, b=5):
+def randExpr(n=2, a=-5, b=5, denom = True):
     """créer aléatoirement une expression avec n facteurs du 1er degré à coef
     entiers compris entre a et b. Le placement au numérateur/dénominateur se
     fait aussi au hasard.
@@ -513,6 +516,7 @@ def randExpr(n=2, a=-5, b=5):
     :param int n: le nombre de facteurs, 2 par défaut
     :param int a: borne inférieure des coefs, -5 par défaut
     :param int b: borne supérieure des coefs, 5 par défaut
+    :param boolean denom: autoriser des expressions au dénominateur, True par défaut
 
     exemple::
 
@@ -522,10 +526,11 @@ def randExpr(n=2, a=-5, b=5):
       (-3*x + 2)*(14*x - 10)/(5*x - 14)
 
     """
-    F = [(random_poly(x, 1, a,b, polys=False), choice(['/','*'])) for i in range(n)]
+    ope = (['/','*'] if denom else ['*'])
+    F = [(random_poly(x, 1, a,b, polys=False), choice(ope)) for i in range(n)]
     out = sympify(reduce(lambda a,b: a+b[1]+'('+str(b[0])+')', F, '1'))
     # sadly certains facteurs "colinéaires" pourraient se neutraliser
     while (n>=2 and (degree(Poly(numer(out),x)) + degree(Poly(denom(out),x)) !=n)):
-        F = [(random_poly(x, 1, a,b, polys=False), choice(['/','*'])) for i in range(n)]
+        F = [(random_poly(x, 1, a,b, polys=False), choice(ope)) for i in range(n)]
         out = sympify(reduce(lambda a,b: a+b[1]+'('+str(b[0])+')', F, '1'))
     return out
