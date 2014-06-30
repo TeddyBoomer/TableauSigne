@@ -38,9 +38,9 @@ Attention, le sympy-0.6.6 présentait un petit bug pénible: les polynômes
 étaient affichés par ordre croissant de puissance. C'est une chose corrigée
 dans les versions 0.7.x. Si vous avez une ancienne distribution linux et que
 votre *python-sympy* est trop ancien, je vous conseille de l'enlever et
-d'installer la dernière version de *sympy* avec *pip*::
+d'installer la dernière version de *sympy* avec *easy_install*::
 
-  # pip install sympy
+  # easy_install -f http://code.google.com/p/sympy/downloads/detail?name=sympy-0.7.3-py3.2.tar.gz sympy
 
 Pour Windows, voici le lien pour `sympy-0.7.5 <https://github.com/sympy/sympy/releases/download/sympy-0.7.5/sympy-0.7.5.win32.exe>`_.
 

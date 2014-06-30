@@ -1,0 +1,183 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1. Installation &mdash; TableauSigne 0.9.3 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.9.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="TableauSigne 0.9.3 documentation" href="index.html" />
+    <link rel="next" title="2. Scripts" href="script.html" />
+    <link rel="prev" title="Bienvenue dans la doc de TableauSigne!" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Index général"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="script.html" title="2. Scripts"
+             accesskey="N">suivant</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Bienvenue dans la doc de TableauSigne!"
+             accesskey="P">précédent</a> |</li>
+        <li><a href="index.html">TableauSigne 0.9.3 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="installation">
+<h1>1. Installation<a class="headerlink" href="#installation" title="Lien permanent vers ce titre">¶</a></h1>
+<p>Décompressez le fichier paquet-TableauSigne-x.x.7z
+Il contient:</p>
+<ul class="simple">
+<li>le module tabsigne3.py</li>
+<li>l&#8217;executable <em>TabSigne.py</em></li>
+<li>l&#8217;executable <em>TabSigneSimplif.py</em></li>
+<li>une copie de la license GNU GPL v3</li>
+<li>une copie du fichier tabvar.tex</li>
+<li>une copie du fichier pdftabvar.tex</li>
+<li>le dossier doc pour la documentation. Commencer par ouvrir <em>index.html</em>.</li>
+</ul>
+<div class="section" id="logiciels-pst-pdfadd">
+<h2>1.1. Logiciels  PST+/PdfAdd<a class="headerlink" href="#logiciels-pst-pdfadd" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Ces scripts produisent des fichiers LaTeX et des fichiers xml lisibles dans
+<a class="reference external" href="http://www.xm1math.net/pstplus/">PST+</a> et dans <a class="reference external" href="http://www.xm1math.net/pdfadd/">PdfAdd</a> pour faire des tableaux de signe. Les outils
+PST+/PdfAdd permettent de modifier rapidement le tableau pour soigner le rendu
+final. On peut insérer la sortie dans un document, moyennant l&#8217;ajout du fichier
+<em>tabvar.tex</em> (pour PST+) ou <em>pdftabvar.tex</em> dans l&#8217;entête.</p>
+</div>
+<div class="section" id="python">
+<h2>1.2. Python<a class="headerlink" href="#python" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Les scripts sont écrits en Python3 mais <em>ils fonctionnent aussi avec Python2.7</em>.
+Ils utilisent des modules standards ainsi que <strong>sympy</strong> et <strong>lxml</strong>.
+Attention, pour Windows, lxml n&#8217;est installable que pour python &lt;= 3.2.</p>
+<ul>
+<li><p class="first">Python: <a class="reference external" href="http://python.org/getit/">http://python.org/getit/</a> : sélectionnez votre plateforme (sous linux, débrouillez-vous avec apt, synaptic...)</p>
+</li>
+<li><p class="first">Sympy: le plus simple est sous Ubuntu/Debian en faisant:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># apt-get install python-sympy</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Attention, le sympy-0.6.6 présentait un petit bug pénible: les polynômes
+étaient affichés par ordre croissant de puissance. C&#8217;est une chose corrigée
+dans les versions 0.7.x. Si vous avez une ancienne distribution linux et que
+votre <em>python-sympy</em> est trop ancien, je vous conseille de l&#8217;enlever et
+d&#8217;installer la dernière version de <em>sympy</em> avec <em>easy_install</em>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># easy_install -f http://code.google.com/p/sympy/downloads/detail?name=sympy-0.7.3-py3.2.tar.gz sympy</span>
+</pre></div>
+</div>
+<p>Pour Windows, voici le lien pour <a class="reference external" href="https://github.com/sympy/sympy/releases/download/sympy-0.7.5/sympy-0.7.5.win32.exe">sympy-0.7.5</a>.</p>
+<p>sinon voir <a class="reference external" href="https://github.com/sympy/sympy/releases">https://github.com/sympy/sympy/releases</a></p>
+<ul>
+<li><p class="first">lxml: le plus simple est sous Ubuntu/Debian en faisant:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># apt-get install python-lxml</span>
+<span class="c"># apt-get install python3-lxml</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Pour Windows, voici le lien <a class="reference external" href="https://pypi.python.org/pypi/lxml/3.3.3">lxml-3.3.3</a> (choisissez votre version de python
+et votre type de processeur).  sinon voir <a class="reference external" href="http://lxml.de/installation.html">http://lxml.de/installation.html</a></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table des matières</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1. Installation</a><ul>
+<li><a class="reference internal" href="#logiciels-pst-pdfadd">1.1. Logiciels  PST+/PdfAdd</a></li>
+<li><a class="reference internal" href="#python">1.2. Python</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Sujet précédent</h4>
+  <p class="topless"><a href="index.html"
+                        title="Chapitre précédent">Bienvenue dans la doc de TableauSigne!</a></p>
+  <h4>Sujet suivant</h4>
+  <p class="topless"><a href="script.html"
+                        title="Chapitre suivant">2. Scripts</a></p>
+  <h3>Cette page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/install.txt"
+           rel="nofollow">Montrer la source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Recherche rapide</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Saisissez un mot clef ou un nom de module, classe ou fonction.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Index général"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="script.html" title="2. Scripts"
+             >suivant</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Bienvenue dans la doc de TableauSigne!"
+             >précédent</a> |</li>
+        <li><a href="index.html">TableauSigne 0.9.3 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, B.M. - GPL v3.
+      Créé avec <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

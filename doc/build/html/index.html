@@ -1,0 +1,164 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Bienvenue dans la doc de TableauSigne! &mdash; TableauSigne 0.9.3 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.9.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="TableauSigne 0.9.3 documentation" href="#" />
+    <link rel="next" title="1. Installation" href="install.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Index général"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="install.html" title="1. Installation"
+             accesskey="N">suivant</a> |</li>
+        <li><a href="#">TableauSigne 0.9.3 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="bienvenue-dans-la-doc-de-tableausigne">
+<h1>Bienvenue dans la doc de TableauSigne!<a class="headerlink" href="#bienvenue-dans-la-doc-de-tableausigne" title="Lien permanent vers ce titre">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Author:</th><td class="field-body">Boris Mauricette &lt;Boris point Mauricette at ac - lyon point fr&gt;</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Date:</th><td class="field-body">27 October 2013</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Revision:</th><td class="field-body">0.9.3</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Description:</th><td class="field-body">Voici la documentation du module pour les tableaux de signe.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Contents:</th><td class="field-body">Informations sur le module tabsigne3</td>
+</tr>
+</tbody>
+</table>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">1. Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install.html#logiciels-pst-pdfadd">1.1. Logiciels  PST+/PdfAdd</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#python">1.2. Python</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="script.html">2. Scripts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="script.html#tabsigne-py">2.1. TabSigne.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="script.html#tabsignesimplif-py">2.2. TabSigneSimplif.py</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="recommandations.html">3. Recommandations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">4. Historique</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interface.html">5. API (Application programming interface) du module tabsigne3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interface.html#indices-and-tables">6. Indices and tables</a></li>
+</ul>
+</div>
+<p>Une petite illustration des capacités du module:</p>
+<p>Exemple:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">tabsigne3</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">A</span> <span class="o">=</span> <span class="n">randExpr</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">(4*x - 3)/((-3*x + 4)*(5*x + 5))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">B</span> <span class="o">=</span> <span class="n">TableauSigne</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">B</span><span class="o">.</span><span class="n">get_solutions</span><span class="p">(</span><span class="s">&#39;+0&#39;</span><span class="p">)</span>
+<span class="go">&#39;\left] -\infty;-1\right[\cup \left[ \frac{3}{4};\frac{4}{3}\\right[&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">B</span><span class="o">.</span><span class="n">tab2latex</span><span class="p">())</span>
+<span class="go">$$\tabvar{%</span>
+<span class="go">\tx{x} &amp; \tx{-\infty} &amp;  &amp; \tx{-1} &amp;  &amp; \tx{\frac{3}{4}} &amp;  &amp; \tx{\frac{4}{3}} &amp;  &amp; \tx{+\infty}\cr</span>
+<span class="go">\tx{- 3 x + 4} &amp;  &amp; \tx{+} &amp; \tx{|} &amp; \tx{+} &amp; \tx{|} &amp; \tx{+} &amp; \txt{0} &amp; \tx{-} &amp; \cr</span>
+<span class="go">\tx{5 x + 5} &amp;  &amp; \tx{-} &amp; \txt{0} &amp; \tx{+} &amp; \tx{|} &amp; \tx{+} &amp; \tx{|} &amp; \tx{+} &amp; \cr</span>
+<span class="go">\tx{4 x -3} &amp;  &amp; \tx{-} &amp; \tx{|} &amp; \tx{-} &amp; \txt{0} &amp; \tx{+} &amp; \tx{|} &amp; \tx{+} &amp; \cr</span>
+<span class="go">\tx{\text{signe de }f} &amp;  &amp; \tx{+} &amp; \dbt &amp; \tx{-} &amp; \txt{0} &amp; \tx{+} &amp; \dbt &amp; \tx{-} &amp; \cr}$$</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">B</span><span class="o">.</span><span class="n">export_pst</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Le logiciel pdfAdd donne le rendu suivant (.pdf converti en .png)</p>
+<a class="reference internal image-reference" href="_images/exemple.png"><img alt="résultat de l'export au format eps (produit par pst+)" class="align-left" src="_images/exemple.png" style="width: 396.0px; height: 170.0px;" /></a>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Sujet suivant</h4>
+  <p class="topless"><a href="install.html"
+                        title="Chapitre suivant">1. Installation</a></p>
+  <h3>Cette page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Montrer la source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Recherche rapide</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Saisissez un mot clef ou un nom de module, classe ou fonction.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Index général"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="install.html" title="1. Installation"
+             >suivant</a> |</li>
+        <li><a href="#">TableauSigne 0.9.3 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, B.M. - GPL v3.
+      Créé avec <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

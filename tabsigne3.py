@@ -74,12 +74,12 @@ class TableauSigne():
             self.pow_moins = []
         try:
             self.racines = reduce(operator.concat,
-                                  [solve(Eq(u,0),x) for u in list(self.pow_positif)])
+                                  [solve(u,x) for u in list(self.pow_positif)])
         except TypeError:
             self.racines = []
         try:
             self.vi = reduce(operator.concat,
-                             [solve(Eq(u.args[0],0),x) for u in list(self.pow_moins)]) # valeurs interdites
+                             [solve(u.args[0],x) for u in list(self.pow_moins)]) # valeurs interdites
         except TypeError:
             self.vi = []
         self._create_tab()
