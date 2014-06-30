@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>tabsigne3 &mdash; TableauSigne 0.9.3 documentation</title>
+    <title>tabsigne3 &mdash; documentation TableauSigne 0.9.3</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -27,7 +25,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/translations.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="TableauSigne 0.9.3 documentation" href="../index.html" />
+    <link rel="top" title="documentation TableauSigne 0.9.3" href="../index.html" />
     <link rel="up" title="Code du module" href="index.html" /> 
   </head>
   <body>
@@ -40,7 +38,7 @@
         <li class="right" >
           <a href="../py-modindex.html" title="Index des modules Python"
              >modules</a> |</li>
-        <li><a href="../index.html">TableauSigne 0.9.3 documentation</a> &raquo;</li>
+        <li><a href="../index.html">documentation TableauSigne 0.9.3</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Code du module</a> &raquo;</li> 
       </ul>
     </div>  
@@ -83,7 +81,7 @@
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="nb">reduce</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="n">var</span><span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">)</span>
-<span class="n">version</span> <span class="o">=</span> <span class="s">&#39;0.9&#39;</span>
+<span class="n">version</span> <span class="o">=</span> <span class="s">&#39;0.9.3&#39;</span>
 
 <div class="viewcode-block" id="TableauSigne"><a class="viewcode-back" href="../interface.html#tabsigne3.TableauSigne">[docs]</a><span class="k">class</span> <span class="nc">TableauSigne</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -96,10 +94,8 @@
 <span class="sd">    exemple::</span>
 
 <span class="sd">        &gt;&gt;&gt; a = TableauSigne(&#39;-1*(3*x+2)*(-5*x +4)&#39;)</span>
-<span class="sd">        &gt;&gt;&gt; print(a.tab2latex())</span>
-<span class="sd">        &gt;&gt;&gt; print(etree.tostring(a.xml, pretty_print=True).decode(&quot;utf-8&quot;))</span>
 <span class="sd">        &gt;&gt;&gt; b = TableauSigne(&#39;(3*x+2)**3 /(2*x - 5)**2 *(5*x+1) * -8&#39;)</span>
-<span class="sd">        &gt;&gt;&gt; b.export_pst(nom=&quot;SuperTest&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; b.export_pst(nom=&quot;SuperTest&quot;, simplif=False, ext=&#39;pag&#39;)</span>
 <span class="sd">        &gt;&gt;&gt; c = TableauSigne(&#39;(3*x+2)**3 /(2*x - 5)**2 *(5*x+1) * -8&#39;, bornes=[-1, 1])</span>
 <span class="sd">        &gt;&gt;&gt; d = TableauSigne(&#39;(-4*x+4)/(-2*x+3)&#39;, bornes=[0, sympify(&#39;3/2&#39;)])</span>
 <span class="sd">        &gt;&gt;&gt; e = TableauSigne(&#39;x*(2-3*x)&#39;) # bug sur x factor corrigé.</span>
@@ -129,25 +125,24 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">pow_moins</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">racines</span> <span class="o">=</span> <span class="nb">reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">concat</span><span class="p">,</span>
-                                  <span class="p">[</span><span class="n">solve</span><span class="p">(</span><span class="n">Eq</span><span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pow_positif</span><span class="p">)])</span>
+                                  <span class="p">[</span><span class="n">solve</span><span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pow_positif</span><span class="p">)])</span>
         <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">racines</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">vi</span> <span class="o">=</span> <span class="nb">reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">concat</span><span class="p">,</span>
-                             <span class="p">[</span><span class="n">solve</span><span class="p">(</span><span class="n">Eq</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">0</span><span class="p">),</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pow_moins</span><span class="p">)])</span> <span class="c"># valeurs interdites</span>
+                             <span class="p">[</span><span class="n">solve</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pow_moins</span><span class="p">)])</span> <span class="c"># valeurs interdites</span>
         <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">vi</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_create_tab</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_create_tab_simplif</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_arbrepst</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_arbrepst_simplif</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_arbrepst</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Création de l&#39;arbre xml selon le format de PST+;</span>
-<span class="sd">        il est stocké dans self.xml</span>
+        <span class="sd">&quot;&quot;&quot;Création de l&#39;arbre xml et de l&#39;arbre simplifié selon le format de PST+;</span>
+<span class="sd">        stockés dans self.xml, self.xmlsimplif</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">root</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s">&quot;Tableau&quot;</span><span class="p">)</span>
+        <span class="n">root_simplif</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s">&quot;Tableau&quot;</span><span class="p">)</span>
         <span class="n">ligne</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s">&quot;Lignes&quot;</span><span class="p">)</span>
         <span class="c">#ligne.text = str(len(self.facteurs)+2)</span>
         <span class="n">ligne</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tab</span><span class="p">))</span>
@@ -161,28 +156,15 @@
                     <span class="n">regexp</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\$&#39;</span><span class="p">,</span>
                                <span class="s">r&#39;&#39;</span><span class="p">,</span>
                                <span class="bp">self</span><span class="o">.</span><span class="n">_list2pststring</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="n">e</span><span class="p">]))</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">xml</span> <span class="o">=</span> <span class="n">root</span>
-
-    <span class="k">def</span> <span class="nf">_arbrepst_simplif</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Création de l&#39;arbre xml simplifié avec juste la dernière ligne</span>
-<span class="sd">        stocké dans self.xmlsimplif</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">root</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s">&quot;Tableau&quot;</span><span class="p">)</span>
-        <span class="n">ligne</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s">&quot;Lignes&quot;</span><span class="p">)</span>
-        <span class="c">#ligne.text: que les racines, vi et le signe</span>
-        <span class="n">ligne</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s">&#39;2&#39;</span>
-        <span class="n">col</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s">&quot;Colonnes&quot;</span><span class="p">)</span>
-        <span class="c">#col.text = str(2*len(self.racines)+2*len(self.vi)+4)</span>
-        <span class="n">col</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tab</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s">&quot;Milieu&quot;</span><span class="p">]))</span>
-
         <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tab</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">tab</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
             <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&quot;Bas&quot;</span><span class="p">,</span> <span class="s">&quot;Milieu&quot;</span><span class="p">,</span> <span class="s">&quot;Haut&quot;</span><span class="p">]:</span>
-                <span class="n">etree</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span>\
+                <span class="n">etree</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">root_simplif</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span>\
                     <span class="n">regexp</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\$&#39;</span><span class="p">,</span>
                                <span class="s">r&#39;&#39;</span><span class="p">,</span>
                                <span class="bp">self</span><span class="o">.</span><span class="n">_list2pststring</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="n">e</span><span class="p">]))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">xmlsimplif</span> <span class="o">=</span> <span class="n">root</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">xmlsimplif</span> <span class="o">=</span> <span class="n">root_simplif</span>
 
     <span class="k">def</span> <span class="nf">_list2pststring</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l</span><span class="p">):</span>
         <span class="c"># disparition du + dans le cas de latex(+oo)</span>
@@ -300,7 +282,8 @@
         <span class="k">return</span> <span class="n">out</span>
             
     <span class="k">def</span> <span class="nf">_create_tab</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Création du tableau de signe disponible dans self.tab</span>
+        <span class="sd">&quot;&quot;&quot;Création du tableau de signe disponible dans self.tab et </span>
+<span class="sd">        du tableau de signe simplifié disponible dans self.tabsimplif</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c">#values = self.racines+self.vi + 2eme borne</span>
@@ -315,12 +298,8 @@
         <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">facteurs</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">tab</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fill_ligne</span><span class="p">(</span><span class="n">tete</span><span class="p">,</span> <span class="n">f</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tab</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fill_last_ligne</span><span class="p">(</span><span class="n">tete</span><span class="p">))</span>
-
-    <span class="k">def</span> <span class="nf">_create_tab_simplif</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Création du tableau de signe simplifié disponible dans self.tabsimplif</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tabsimplif</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">tab</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">+</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">tab</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+
 
 <div class="viewcode-block" id="TableauSigne.tab2latex"><a class="viewcode-back" href="../interface.html#tabsigne3.TableauSigne.tab2latex">[docs]</a>    <span class="k">def</span> <span class="nf">tab2latex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">simplif</span> <span class="o">=</span> <span class="bp">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sortie latex du tableau de signe. Il utilise le fichier tabvar.tex comme </span>
@@ -332,6 +311,11 @@
 
 <span class="sd">            &gt;&gt;&gt; a = TableauSigne(&#39;-1*(3*x+2)*(-5*x +4)&#39;)</span>
 <span class="sd">            &gt;&gt;&gt; print(a.tab2latex())</span>
+<span class="sd">            $$\\tabvar{%</span>
+<span class="sd">            \\tx{x} &amp; \\tx{-\\infty} &amp;  &amp; \\tx{- \\frac{2}{3}} &amp;  &amp; \\tx{\\frac{4}{5}} &amp;  &amp; \\tx{+\\infty}\\cr</span>
+<span class="sd">            \\tx{- 3 x -2} &amp;  &amp; \\tx{+} &amp; \\txt{0} &amp; \\tx{-} &amp; \\tx{|} &amp; \\tx{-} &amp; \\cr</span>
+<span class="sd">            \\tx{- 5 x + 4} &amp;  &amp; \\tx{+} &amp; \\tx{|} &amp; \\tx{+} &amp; \\txt{0} &amp; \\tx{-} &amp; \\cr</span>
+<span class="sd">            \\tx{\\text{signe de }f} &amp;  &amp; \\tx{+} &amp; \\txt{0} &amp; \\tx{-} &amp; \\txt{0} &amp; \\tx{+} &amp; \\cr}$$</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c"># choix du tableau</span>
@@ -402,9 +386,8 @@
 <span class="sd">        exemple::</span>
 
 <span class="sd">            &gt;&gt;&gt; a = TableauSigne(&#39;-1*(3*x+2)*(-5*x +4)&#39;)</span>
-<span class="sd">            &gt;&gt;&gt; a._create_tab()</span>
 <span class="sd">            &gt;&gt;&gt; print(a.get_solutions(&#39;+0&#39;))</span>
-<span class="sd">            &gt;&gt;&gt; \left] -\infty;- \\frac{2}{3}\\right]\cup \left[ \\frac{4}{5};+\\infty \\right[</span>
+<span class="sd">            \left] -\infty;- \\frac{2}{3}\\right]\cup \left[ \\frac{4}{5};+\\infty \\right[</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -413,48 +396,27 @@
         <span class="n">I</span> <span class="o">=</span> <span class="nb">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">:</span> <span class="n">a</span><span class="o">+</span><span class="s">&#39;</span><span class="se">\\</span><span class="s">cup &#39;</span><span class="o">+</span><span class="n">b</span><span class="p">,</span> <span class="n">intervs</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">intervs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">I</span>
 </div>
-<div class="viewcode-block" id="TableauSigne.export_pst"><a class="viewcode-back" href="../interface.html#tabsigne3.TableauSigne.export_pst">[docs]</a>    <span class="k">def</span> <span class="nf">export_pst</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nom</span><span class="o">=</span><span class="s">&quot;tableau&quot;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Exporter l&#39;arbre xml dans un fichier. Format pst.</span>
+<div class="viewcode-block" id="TableauSigne.export_pst"><a class="viewcode-back" href="../interface.html#tabsigne3.TableauSigne.export_pst">[docs]</a>    <span class="k">def</span> <span class="nf">export_pst</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nom</span><span class="o">=</span><span class="s">&quot;tableau&quot;</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="s">&quot;pag&quot;</span><span class="p">,</span> <span class="n">simplif</span> <span class="o">=</span> <span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Exporter l&#39;arbre xml dans un fichier. Format pag ou pst.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c">#self.arbrepst()</span>
         <span class="c">#</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="n">nom</span><span class="o">+</span><span class="s">&quot;.pst&quot;</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">nom</span><span class="o">+</span><span class="s">&quot;.&quot;</span><span class="o">+</span><span class="n">ext</span>
+        <span class="n">choix</span> <span class="o">=</span><span class="p">{</span><span class="bp">True</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">xmlsimplif</span><span class="p">,</span> <span class="bp">False</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">xml</span><span class="p">}</span>
         <span class="n">out</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
-        <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span> <span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xml</span><span class="p">,</span> <span class="n">pretty_print</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&quot;utf-8&quot;</span><span class="p">)</span> <span class="p">)</span>
+        <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span> <span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">choix</span><span class="p">[</span><span class="n">simplif</span><span class="p">],</span> <span class="n">pretty_print</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&quot;utf-8&quot;</span><span class="p">)</span> <span class="p">)</span>
         <span class="n">out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="TableauSigne.export_pst_simplif"><a class="viewcode-back" href="../interface.html#tabsigne3.TableauSigne.export_pst_simplif">[docs]</a>    <span class="k">def</span> <span class="nf">export_pst_simplif</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nom</span><span class="o">=</span><span class="s">&quot;tableau&quot;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Exporter l&#39;arbre xml simplifié dans un fichier. Format pst.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c">#self.arbrepst_simplif()</span>
-        <span class="c">#</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="n">nom</span><span class="o">+</span><span class="s">&quot;.pst&quot;</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
-        <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span> <span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xmlsimplif</span><span class="p">,</span> <span class="n">pretty_print</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&quot;utf-8&quot;</span><span class="p">)</span> <span class="p">)</span>
-        <span class="n">out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</div>
-<div class="viewcode-block" id="TableauSigne.export_latex"><a class="viewcode-back" href="../interface.html#tabsigne3.TableauSigne.export_latex">[docs]</a>    <span class="k">def</span> <span class="nf">export_latex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nom</span><span class="o">=</span><span class="s">&quot;tableau&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="TableauSigne.export_latex"><a class="viewcode-back" href="../interface.html#tabsigne3.TableauSigne.export_latex">[docs]</a>    <span class="k">def</span> <span class="nf">export_latex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nom</span><span class="o">=</span><span class="s">&quot;tableau&quot;</span><span class="p">,</span> <span class="n">simplif</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="s">&quot;tex&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Exporter la sortie latex dans un fichier. Format tex.</span>
-
+<span class="sd">        paramètre ext pour compatibilite avec export_pst</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c">#</span>
         <span class="n">f</span> <span class="o">=</span> <span class="n">nom</span><span class="o">+</span><span class="s">&quot;.tex&quot;</span>
         <span class="n">out</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
-        <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">tab2latex</span><span class="p">(</span><span class="n">simplif</span> <span class="o">=</span> <span class="bp">False</span><span class="p">)</span> <span class="p">)</span>
+        <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">tab2latex</span><span class="p">(</span><span class="n">simplif</span> <span class="o">=</span> <span class="n">simplif</span><span class="p">)</span> <span class="p">)</span>
         <span class="n">out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</div>
-<div class="viewcode-block" id="TableauSigne.export_latex_simplif"><a class="viewcode-back" href="../interface.html#tabsigne3.TableauSigne.export_latex_simplif">[docs]</a>    <span class="k">def</span> <span class="nf">export_latex_simplif</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nom</span><span class="o">=</span><span class="s">&quot;tableau&quot;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Exporter la sortie latex simplifiée dans un fichier. Format tex.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c">#</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="n">nom</span><span class="o">+</span><span class="s">&quot;.tex&quot;</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
-        <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">tab2latex</span><span class="p">(</span><span class="n">simplif</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span> <span class="p">)</span>
-        <span class="n">out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>        
-
 
 <span class="c"># class TableauVariation(TableauSigne):</span>
 <span class="c">#     &quot;&quot;&quot;</span>
@@ -546,34 +508,50 @@
 
 <span class="sd">      &gt;&gt;&gt; test = [&#39;(3*x+2)&#39;, &#39;(5*x+4)*(2*x+8)&#39;, &#39;(9*x-3)/(5*x-1)&#39;]</span>
 <span class="sd">      &gt;&gt;&gt; t = TableauFactory(test)</span>
-<span class="sd">      &gt;&gt;&gt; t.export_pst(simplif = False)</span>
+<span class="sd">      &gt;&gt;&gt; t.export_pst(simplif = False, ext=&#39;pag&#39;)</span>
 <span class="sd">      &gt;&gt;&gt; t.export_latex(simplif = True)</span>
 <span class="sd">      &gt;&gt;&gt; for e in t: print(e.get_solutions(&#39;++&#39;))</span>
-<span class="sd">      &gt;&gt;&gt; t2 = TableauFactory([randExpr(3) for i in range(5)])</span>
+<span class="sd">      \\left] - \\frac{2}{3};+\\infty \\right[</span>
+<span class="sd">      \\left] -\\infty;-4\\right[\\cup \\left] - \\frac{4}{5};+\\infty \\right[</span>
+<span class="sd">      \\left] -\\infty;\\frac{1}{5}\\right[\\cup \\left] \\frac{1}{3};+\\infty \\right[</span>
+<span class="sd">      &gt;&gt;&gt; t2 = TableauFactory([randExpr(3) for i in range(2)])</span>
 <span class="sd">      &gt;&gt;&gt; for x in t2: print(latex(x.expr)+&#39;\\n&#39;+ x.tab2latex(simplif = True)+&#39;\\n&#39;)</span>
+<span class="sd">      - \\frac{4 x + 1}{x \\left(- 3 x -2\\right)}</span>
+<span class="sd">      $$\\tabvar{%</span>
+<span class="sd">      \\tx{x} &amp; \\tx{-\\infty} &amp;  &amp; \\tx{- \\frac{2}{3}} &amp;  &amp; \\tx{- \\frac{1}{4}} &amp;  &amp; \\tx{0} &amp;  &amp; \\tx{+\\infty}\\cr</span>
+<span class="sd">      \\tx{\\text{signe de }f} &amp;  &amp; \\tx{-} &amp; \\dbt &amp; \\tx{+} &amp; \\txt{0} &amp; \\tx{-} &amp; \\dbt &amp; \\tx{+} &amp; \\cr}$$</span>
+<span class="sd">      </span>
+<span class="sd">      3 \\frac{x}{\\left(x -3\\right) \\left(2 x -4\\right)}</span>
+<span class="sd">      $$\\tabvar{%</span>
+<span class="sd">      \\tx{x} &amp; \\tx{-\\infty} &amp;  &amp; \\tx{0} &amp;  &amp; \\tx{2} &amp;  &amp; \\tx{3} &amp;  &amp; \\tx{+\\infty}\\cr</span>
+<span class="sd">      \\tx{\\text{signe de }f} &amp;  &amp; \\tx{-} &amp; \\txt{0} &amp; \\tx{+} &amp; \\dbt &amp; \\tx{-} &amp; \\dbt &amp; \\tx{+} &amp; \\cr}$$</span>
 <span class="sd">      </span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">L</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">L</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">TableauSigne</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
 
-<div class="viewcode-block" id="TableauFactory.export_pst"><a class="viewcode-back" href="../interface.html#tabsigne3.TableauFactory.export_pst">[docs]</a>    <span class="k">def</span> <span class="nf">export_pst</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">simplif</span> <span class="o">=</span> <span class="bp">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;créer les fichiers sortie au format pst avec option </span>
+<div class="viewcode-block" id="TableauFactory.export_pst"><a class="viewcode-back" href="../interface.html#tabsigne3.TableauFactory.export_pst">[docs]</a>    <span class="k">def</span> <span class="nf">export_pst</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">simplif</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="s">&quot;pag&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;créer les fichiers sortie au format pag/pst avec option </span>
 <span class="sd">        de simplification (False par défaut)</span>
-<span class="sd">        </span>
+
+<span class="sd">        :param boolean simplif: simplifier les tableaux ou pas</span>
+<span class="sd">        :param string ext: extension de la sortie pag (pdfadd) pst (pstplus)</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">t</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="n">choix</span> <span class="o">=</span> <span class="p">{</span><span class="bp">True</span><span class="p">:</span><span class="n">t</span><span class="o">.</span><span class="n">export_pst_simplif</span><span class="p">,</span> <span class="bp">False</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">export_pst</span><span class="p">}</span>
-            <span class="n">choix</span><span class="p">[</span><span class="n">simplif</span><span class="p">](</span><span class="n">nom</span><span class="o">=</span><span class="s">&quot;tableau&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+            <span class="n">t</span><span class="o">.</span><span class="n">export_pst</span><span class="p">(</span><span class="n">nom</span><span class="o">=</span><span class="s">&quot;tableau&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">simplif</span> <span class="o">=</span> <span class="n">simplif</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">ext</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="TableauFactory.export_latex"><a class="viewcode-back" href="../interface.html#tabsigne3.TableauFactory.export_latex">[docs]</a>    <span class="k">def</span> <span class="nf">export_latex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nom</span><span class="o">=</span><span class="s">&quot;tableaux_liste&quot;</span><span class="p">,</span> <span class="n">simplif</span> <span class="o">=</span> <span class="bp">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;créer la sortie latex des tableaux avec option de simplification</span>
+<div class="viewcode-block" id="TableauFactory.export_latex"><a class="viewcode-back" href="../interface.html#tabsigne3.TableauFactory.export_latex">[docs]</a>    <span class="k">def</span> <span class="nf">export_latex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nom</span><span class="o">=</span><span class="s">&quot;tableaux_liste&quot;</span><span class="p">,</span> <span class="n">simplif</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="s">&quot;tex&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;créer la sortie latex des tableaux dans un seul fichier avec option</span>
+<span class="sd">        de simplification.</span>
 
 <span class="sd">        :param string nom: le nom de la sortie .tex</span>
 <span class="sd">        :param boolean simplif: simplifier les tableaux ou pas</span>
+<span class="sd">        :param string ext: extension de la sortie (pour compatibilite)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="n">nom</span><span class="o">+</span><span class="s">&quot;.tex&quot;</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">nom</span><span class="o">+</span><span class="s">&quot;.&quot;</span><span class="o">+</span><span class="n">ext</span>
         <span class="n">out</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span> <span class="n">t</span><span class="o">.</span><span class="n">tab2latex</span><span class="p">(</span><span class="n">simplif</span> <span class="o">=</span> <span class="n">simplif</span><span class="p">))</span>
@@ -581,7 +559,7 @@
         <span class="n">out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
 </div></div>
-<div class="viewcode-block" id="randExpr"><a class="viewcode-back" href="../interface.html#tabsigne3.randExpr">[docs]</a><span class="k">def</span> <span class="nf">randExpr</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">a</span><span class="o">=-</span><span class="mi">5</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+<div class="viewcode-block" id="randExpr"><a class="viewcode-back" href="../interface.html#tabsigne3.randExpr">[docs]</a><span class="k">def</span> <span class="nf">randExpr</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">a</span><span class="o">=-</span><span class="mi">5</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">denomin</span> <span class="o">=</span> <span class="bp">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;créer aléatoirement une expression avec n facteurs du 1er degré à coef</span>
 <span class="sd">    entiers compris entre a et b. Le placement au numérateur/dénominateur se</span>
 <span class="sd">    fait aussi au hasard.</span>
@@ -589,35 +567,24 @@
 <span class="sd">    :param int n: le nombre de facteurs, 2 par défaut</span>
 <span class="sd">    :param int a: borne inférieure des coefs, -5 par défaut</span>
 <span class="sd">    :param int b: borne supérieure des coefs, 5 par défaut</span>
+<span class="sd">    :param boolean denomin: autoriser des expressions au dénominateur, True par défaut</span>
 
 <span class="sd">    exemple::</span>
 
 <span class="sd">      &gt;&gt;&gt; randExpr(2)</span>
-<span class="sd">      &gt;&gt;&gt; (-x + 2)/(2*x + 3)</span>
+<span class="sd">      (-x + 2)/(2*x + 3)</span>
 <span class="sd">      &gt;&gt;&gt; randExpr(3,-15,15)</span>
-<span class="sd">      &gt;&gt;&gt; (-3*x + 2)*(14*x - 10)/(5*x - 14)</span>
+<span class="sd">      (-3*x + 2)*(14*x - 10)/(5*x - 14)</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">F</span> <span class="o">=</span> <span class="p">[(</span><span class="n">random_poly</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span> <span class="n">polys</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span> <span class="n">choice</span><span class="p">([</span><span class="s">&#39;/&#39;</span><span class="p">,</span><span class="s">&#39;*&#39;</span><span class="p">]))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    <span class="n">ope</span> <span class="o">=</span> <span class="p">([</span><span class="s">&#39;/&#39;</span><span class="p">,</span><span class="s">&#39;*&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="n">denomin</span> <span class="k">else</span> <span class="p">[</span><span class="s">&#39;*&#39;</span><span class="p">])</span>
+    <span class="n">F</span> <span class="o">=</span> <span class="p">[(</span><span class="n">random_poly</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span> <span class="n">polys</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span> <span class="n">choice</span><span class="p">(</span><span class="n">ope</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
     <span class="n">out</span> <span class="o">=</span> <span class="n">sympify</span><span class="p">(</span><span class="nb">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">:</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="s">&#39;(&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">+</span><span class="s">&#39;)&#39;</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="s">&#39;1&#39;</span><span class="p">))</span>
     <span class="c"># sadly certains facteurs &quot;colinéaires&quot; pourraient se neutraliser</span>
-    <span class="k">while</span> <span class="p">(</span><span class="n">n</span><span class="o">&gt;=</span><span class="mi">2</span> <span class="ow">and</span> <span class="p">(</span><span class="n">_degree_good</span><span class="p">(</span><span class="n">numer</span><span class="p">(</span><span class="n">out</span><span class="p">))</span> <span class="o">+</span> <span class="n">_degree_good</span><span class="p">(</span><span class="n">denom</span><span class="p">(</span><span class="n">out</span><span class="p">))</span> <span class="o">!=</span><span class="n">n</span><span class="p">)):</span>
-        <span class="n">F</span> <span class="o">=</span> <span class="p">[(</span><span class="n">random_poly</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span> <span class="n">polys</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span> <span class="n">choice</span><span class="p">([</span><span class="s">&#39;/&#39;</span><span class="p">,</span><span class="s">&#39;*&#39;</span><span class="p">]))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">n</span><span class="o">&gt;=</span><span class="mi">2</span> <span class="ow">and</span> <span class="p">(</span><span class="n">degree</span><span class="p">(</span><span class="n">Poly</span><span class="p">(</span><span class="n">numer</span><span class="p">(</span><span class="n">out</span><span class="p">),</span><span class="n">x</span><span class="p">))</span> <span class="o">+</span> <span class="n">degree</span><span class="p">(</span><span class="n">Poly</span><span class="p">(</span><span class="n">denom</span><span class="p">(</span><span class="n">out</span><span class="p">),</span><span class="n">x</span><span class="p">))</span> <span class="o">!=</span><span class="n">n</span><span class="p">)):</span>
+        <span class="n">F</span> <span class="o">=</span> <span class="p">[(</span><span class="n">random_poly</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span> <span class="n">polys</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span> <span class="n">choice</span><span class="p">(</span><span class="n">ope</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
         <span class="n">out</span> <span class="o">=</span> <span class="n">sympify</span><span class="p">(</span><span class="nb">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">:</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="s">&#39;(&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">+</span><span class="s">&#39;)&#39;</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="s">&#39;1&#39;</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">out</span>
-
-</div>
-<span class="k">def</span> <span class="nf">_degree_good</span><span class="p">(</span><span class="n">P</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;give the degree of P even if it&#39;s a constant.</span>
-<span class="sd">    This is probably a bug of the degree function.</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">P</span><span class="o">.</span><span class="n">is_zero</span><span class="p">:</span>
-        <span class="k">return</span> <span class="o">-</span><span class="n">oo</span>
-    <span class="k">elif</span> <span class="n">P</span><span class="o">.</span><span class="n">is_number</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">0</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">degree</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">gen</span><span class="o">=</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out</span></div>
 </pre></div>
 
           </div>
@@ -651,13 +618,13 @@
         <li class="right" >
           <a href="../py-modindex.html" title="Index des modules Python"
              >modules</a> |</li>
-        <li><a href="../index.html">TableauSigne 0.9.3 documentation</a> &raquo;</li>
+        <li><a href="../index.html">documentation TableauSigne 0.9.3</a> &raquo;</li>
           <li><a href="index.html" >Code du module</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2013, B.M. - GPL v3.
-      Créé avec <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Créé avec <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>
