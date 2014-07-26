@@ -18,10 +18,12 @@ class Dialog(QDialog):
     def __init__(self):
         super(Dialog, self).__init__()
 
+        self.inequations = {"<=0":"-0","<0":"--", ">=0":"+0",">0":"++"}
+
         self.createMenu()
         self.createHorizontalGroupBox()
-        #self.createGridGroupBox()
         self.createFormGroupBox()
+        self.createSolutionBox()
 
         bigEditor = QTextEdit()
         bigEditor.setPlainText("Création de la sortie latex ici pour un copier/coller "
@@ -35,9 +37,9 @@ class Dialog(QDialog):
         mainLayout = QVBoxLayout()
         mainLayout.setMenuBar(self.menuBar)
         mainLayout.addWidget(self.horizontalGroupBox)
-        #mainLayout.addWidget(self.gridGroupBox)
         mainLayout.addWidget(self.formGroupBox)
         mainLayout.addWidget(bigEditor)
+        mainLayout.addWidget(self.solGroupBox)
         mainLayout.addWidget(buttonBox)
         self.setLayout(mainLayout)
         self.bigEditor = bigEditor
@@ -54,7 +56,7 @@ class Dialog(QDialog):
         self.exitAction.triggered.connect(self.accept)
 
     def createHorizontalGroupBox(self):
-        self.horizontalGroupBox = QGroupBox("Horizontal layout")
+        self.horizontalGroupBox = QGroupBox("Export (indisponible)")
         layout = QHBoxLayout()
         out = ['LaTeX', 'PST+', 'PAG']
         for i in range(Dialog.NumButtons):
@@ -62,31 +64,6 @@ class Dialog(QDialog):
             layout.addWidget(button)
 
         self.horizontalGroupBox.setLayout(layout)
-
-    # def createGridGroupBox(self):
-    #      self.gridGroupBox = QGroupBox("Grid layout")
-    #      layout = QGridLayout()
-    # 
-    #      for i in range(Dialog.NumGridRows):
-    #          label = QLabel("Fraction rationnelle")
-    #          lineEdit = QLineEdit()
-    #          layout.addWidget(label, i + 1, 0)
-    #          layout.addWidget(lineEdit, i + 1, 1)
-    # 
-    #      self.smallEditor = QTextEdit()
-    #      self.smallEditor.setPlainText("This widget takes up about two thirds "
-    #             "of the grid layout.")
-    # 
-    #      layout.addWidget(self.smallEditor, 0, 2, 4, 1)
-    # 
-    #      layout.setColumnStretch(1, 10)
-    #      layout.setColumnStretch(2, 20)
-    #      self.gridGroupBox.setLayout(layout)
-
-    def _createTableau(self):
-         ex = self.expr.text()
-         self.tableau = TableauSigne(ex)
-         self.bigEditor.setPlainText(self.tableau.tab2latex())
 
     def createFormGroupBox(self):
         self.formGroupBox = QGroupBox("Entrée")
@@ -100,6 +77,35 @@ class Dialog(QDialog):
         layout.addWidget(valid)
         self.formGroupBox.setLayout(layout)
 
+    def _createTableau(self):
+         ex = self.expr.text()
+         self.tableau = TableauSigne(ex)
+         self.bigEditor.setPlainText(self.tableau.tab2latex())
+         # voir self.inequations dans __init__
+         ineq = self.inequations[ self.choixIneq.currentText() ]
+         self.solution.setText(self.tableau.get_solutions(ineq))        
+
+    def _fillbis(self, t):
+        """récupérer l'émission du signal lors d'un changement d'inéquation
+        """
+        self.solution.setText(self.tableau.get_solutions(self.inequations[ t ]))
+
+    def createSolutionBox(self):
+        self.solGroupBox = QGroupBox("Ensemble des solutions d'inéquation")
+        self.solution = QLineEdit()
+        layout = QFormLayout()
+        choix = QComboBox()
+        # for x in ["<=0","<0", ">=0",">0"]
+        for x in self.inequations.keys(): 
+            choix.addItem(x)
+        self.choixIneq  = choix
+        # associer le signal de changement d'inéquation au slot de self.solution.setText
+        self.choixIneq.currentTextChanged.connect(self._fillbis)
+        self.choixIneq.currentTextChanged.emit(self.choixIneq.currentText())
+        layout.addRow(QLabel("Inéquation de la forme f(x)"), self.choixIneq)    
+        layout.addRow(QLabel("ens. des solutions:"), self.solution)
+        self.solGroupBox.setLayout(layout)
+
 
 if __name__ == '__main__':
 
@@ -107,4 +113,5 @@ if __name__ == '__main__':
 
     app = QApplication(sys.argv)
     dialog = Dialog()
+    dialog.resize(700,500)
     sys.exit(dialog.exec_())
