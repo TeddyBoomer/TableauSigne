@@ -6,7 +6,7 @@
 __name__ == '__main__'
 from tabsigne3 import *
 from PyQt5.QtWidgets import (QApplication, QComboBox, QDialog,
-        QDialogButtonBox, QFormLayout, QGridLayout, QGroupBox, QHBoxLayout,
+        QDialogButtonBox, QFileDialog, QFormLayout, QGridLayout, QGroupBox, QHBoxLayout,
         QLabel, QLineEdit, QMenu, QMenuBar, QPushButton, QSpinBox, QTextEdit,
         QVBoxLayout)
 from PyQt5.QtCore import (QSaveFile, QIODevice, QByteArray, pyqtSlot)
@@ -15,35 +15,28 @@ from PyQt5.QtCore import (QSaveFile, QIODevice, QByteArray, pyqtSlot)
 class TableauQt(TableauSigne):
     """Réécriture des exports avec un QSaveFile Widget
     """
-    @pyqtSlot()
-    def export_pst(self, nom="tableau", ext="pag", simplif = False):
-        """Exporter l'arbre xml dans un fichier. Format pag ou pst.
+    def export_pst(self, file, simplif = False):
+        """Exporter l'arbre xml dans un fichier. Format pag.
 
         """
-        #self.arbrepst()
-        #
-        f = nom+"."+ext
         choix ={True: self.xmlsimplif, False: self.xml}
         o = etree.tostring(choix[simplif], pretty_print=True)
         t = QByteArray(o)
-        out = QSaveFile(f)
+        out = QSaveFile(file[0])
         out.open(QIODevice.WriteOnly) # cette constante de classe vaut 2
         out.write(t)
         out.commit()
 
-    @pyqtSlot()
-    def export_latex(self, nom="tableau", simplif=False, ext="tex"):
+    def export_latex(self, file, simplif = False):#nom="tableau", simplif=False, ext="tex"):
         """Exporter la sortie latex dans un fichier. Format tex.
         paramètre ext pour compatibilite avec export_pst
-        p1: le nom
-        p2: simplifié ou non bool
-        p3: ext: extension
+        file est un tuple du genre (u’C:/production/species/testSpecies.species’, u’Species Files (*.species)’)
         """
         #
-        f = nom+"."+ext
+        #f = nom +"."+ext
         o = self.tab2latex(simplif = simplif)
         t = QByteArray(o.encode('utf-8'))
-        out = QSaveFile(f)
+        out = QSaveFile(file[0])
         out.open(QIODevice.WriteOnly) # cette constante de classe vaut 2
         out.write( t )
         out.commit()
@@ -106,14 +99,31 @@ class Dialog(QDialog):
 
         self.horizontalGroupBox.setLayout(layout)
 
+    @pyqtSlot()
     def _export_latex(self):
-        self.tableau.export_latex()
+        factory = QFileDialog(self)
+        fichier = factory.getSaveFileName(self, 
+                                          "Sauver dans…", 
+                                          "/home/boris/Documents/tableau.tex", 
+                                          "Fichiers LaTeX (*.tex)")
+        self.tableau.export_latex(fichier)
 
+    @pyqtSlot()
     def _export_pst(self):
-        self.tableau.export_pst(ext="pst")
+        factory = QFileDialog(self)
+        fichier = factory.getSaveFileName(self, 
+                                          "Sauver dans…", 
+                                          "/home/boris/Documents/tableau.pst", 
+                                          "Fichiers PST+ (*.pst)")
+        self.tableau.export_pst(fichier)
 
+    @pyqtSlot()
     def _export_pag(self):
-        self.tableau.export_pst(ext="pag")
+        fichier = QFileDialog.getSaveFileName(self, 
+                                          "Sauver dans…", 
+                                          "tableau.pag", 
+                                          "Fichiers PAG (PdfAdd) (*.pag)")
+        self.tableau.export_pst(fichier)
 
 
     def createFormGroupBox(self):
