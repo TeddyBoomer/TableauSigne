@@ -9,6 +9,44 @@ from PyQt5.QtWidgets import (QApplication, QComboBox, QDialog,
         QDialogButtonBox, QFormLayout, QGridLayout, QGroupBox, QHBoxLayout,
         QLabel, QLineEdit, QMenu, QMenuBar, QPushButton, QSpinBox, QTextEdit,
         QVBoxLayout)
+from PyQt5.QtCore import (QSaveFile, QIODevice, QByteArray, pyqtSlot)
+
+
+class TableauQt(TableauSigne):
+    """Réécriture des exports avec un QSaveFile Widget
+    """
+    @pyqtSlot()
+    def export_pst(self, nom="tableau", ext="pag", simplif = False):
+        """Exporter l'arbre xml dans un fichier. Format pag ou pst.
+
+        """
+        #self.arbrepst()
+        #
+        f = nom+"."+ext
+        choix ={True: self.xmlsimplif, False: self.xml}
+        o = etree.tostring(choix[simplif], pretty_print=True)
+        t = QByteArray(o)
+        out = QSaveFile(f)
+        out.open(QIODevice.WriteOnly) # cette constante de classe vaut 2
+        out.write(t)
+        out.commit()
+
+    @pyqtSlot()
+    def export_latex(self, nom="tableau", simplif=False, ext="tex"):
+        """Exporter la sortie latex dans un fichier. Format tex.
+        paramètre ext pour compatibilite avec export_pst
+        p1: le nom
+        p2: simplifié ou non bool
+        p3: ext: extension
+        """
+        #
+        f = nom+"."+ext
+        o = self.tab2latex(simplif = simplif)
+        t = QByteArray(o.encode('utf-8'))
+        out = QSaveFile(f)
+        out.open(QIODevice.WriteOnly) # cette constante de classe vaut 2
+        out.write( t )
+        out.commit()
 
 
 class Dialog(QDialog):
@@ -17,7 +55,7 @@ class Dialog(QDialog):
 
     def __init__(self):
         super(Dialog, self).__init__()
-
+        self.tableau = TableauQt('x')
         self.inequations = {"<=0":"-0","<0":"--", ">=0":"+0",">0":"++"}
 
         self.createMenu()
@@ -58,28 +96,40 @@ class Dialog(QDialog):
     def createHorizontalGroupBox(self):
         self.horizontalGroupBox = QGroupBox("Export (indisponible)")
         layout = QHBoxLayout()
-        out = ['LaTeX', 'PST+', 'PAG']
+        out = [('LaTeX', self._export_latex),\
+               ('PST+', self._export_pst),\
+               ('PAG',self._export_pag)]
         for i in range(Dialog.NumButtons):
-            button = QPushButton(out[i])
+            button = QPushButton(out[i][0])
+            button.clicked.connect(out[i][1])
             layout.addWidget(button)
 
         self.horizontalGroupBox.setLayout(layout)
 
+    def _export_latex(self):
+        self.tableau.export_latex()
+
+    def _export_pst(self):
+        self.tableau.export_pst(ext="pst")
+
+    def _export_pag(self):
+        self.tableau.export_pst(ext="pag")
+
+
     def createFormGroupBox(self):
         self.formGroupBox = QGroupBox("Entrée")
-        self.expr = QLineEdit()
+        self.expression = QLineEdit(str(self.tableau.expr))
         layout = QFormLayout()
-        layout.addRow(QLabel("(fraction rationnelle):"), self.expr)
-        #layout.addRow(QLabel("Line 2, long text:"), QComboBox())
-        #layout.addRow(QLabel("Line 3:"), QSpinBox())
+        layout.addRow(QLabel("(fraction rationnelle):"), self.expression)
         valid = QPushButton("Valider")
         valid.clicked.connect(self._createTableau)
         layout.addWidget(valid)
         self.formGroupBox.setLayout(layout)
 
     def _createTableau(self):
-         ex = self.expr.text()
-         self.tableau = TableauSigne(ex)
+         ex = self.expression.text()
+         #self.tableau.expr = ex
+         self.tableau.__init__(ex)
          self.bigEditor.setPlainText(self.tableau.tab2latex())
          # voir self.inequations dans __init__
          ineq = self.inequations[ self.choixIneq.currentText() ]
