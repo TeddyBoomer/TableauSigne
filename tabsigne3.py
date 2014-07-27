@@ -30,7 +30,7 @@ from lxml import etree
 from functools import reduce
 
 x = var('x')
-version = '0.9.3'
+version = '0.9.4'
 
 class TableauSigne():
     """
@@ -70,6 +70,10 @@ class TableauSigne():
             self.pow_moins = [u for u in self.facteurs if u.is_Pow and u.args[1]<0]
         elif self.expr.is_Add and (degree(self.expr) == 1): 
             # cas d'un seul facteur de degré 1:
+            self.facteurs = self.pow_positif = [self.expr]
+            self.pow_moins = []
+        elif self.expr.is_Symbol:
+            # cas de l'expression 'x' tout court, is_Add False, mais is_Symbol True
             self.facteurs = self.pow_positif = [self.expr]
             self.pow_moins = []
         try:
