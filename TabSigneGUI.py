@@ -5,44 +5,37 @@
 
 __name__ == '__main__'
 from tabsigne3 import *
-from PyQt5.QtWidgets import (QApplication, QComboBox, QDialog,
+from PyQt5.QtWidgets import (QAction, QApplication, QComboBox, QDialog,
         QDialogButtonBox, QFileDialog, QFormLayout, QGridLayout, QGroupBox, QHBoxLayout,
-        QLabel, QLineEdit, QMenu, QMenuBar, QPushButton, QSpinBox, QTextEdit,
-        QVBoxLayout)
+        QLabel, QLineEdit, QMainWindow, QMenu, QMenuBar, QPushButton, QSpinBox, QTextEdit,
+                             QVBoxLayout, QMainWindow, QWidget)
 from PyQt5.QtCore import (QSaveFile, QIODevice, QByteArray, pyqtSlot)
 
 
 class TableauQt(TableauSigne):
     """Réécriture des exports avec un QSaveFile Widget
     """
-    def export_pst(self, file, simplif = False):
-        """Exporter l'arbre xml dans un fichier. Format pag.
-
+    def export(self, file, simplif = False):
+        """le type d'export est obtenu par analyse de l'extension
+        file est un QString: tuple (nom de fichier, filtre)
         """
+        # choix pour pst,pag
         choix ={True: self.xmlsimplif, False: self.xml}
-        o = etree.tostring(choix[simplif], pretty_print=True)
-        t = QByteArray(o)
-        out = QSaveFile(file[0])
-        out.open(QIODevice.WriteOnly) # cette constante de classe vaut 2
-        out.write(t)
-        out.commit()
-
-    def export_latex(self, file, simplif = False):#nom="tableau", simplif=False, ext="tex"):
-        """Exporter la sortie latex dans un fichier. Format tex.
-        paramètre ext pour compatibilite avec export_pst
-        file est un tuple du genre (u’C:/production/species/testSpecies.species’, u’Species Files (*.species)’)
-        """
-        #
-        #f = nom +"."+ext
-        o = self.tab2latex(simplif = simplif)
-        t = QByteArray(o.encode('utf-8'))
+        f = file[0]
+        ext = f[-3:] #3 derniers caractères
+        if ext == "tex":
+            o = self.tab2latex(simplif = simplif)
+            t = QByteArray(o.encode('utf-8'))
+        elif ext in ["pst", "pag"]:
+            o = etree.tostring(choix[simplif], pretty_print=True)
+            t = QByteArray(o)
         out = QSaveFile(file[0])
         out.open(QIODevice.WriteOnly) # cette constante de classe vaut 2
         out.write( t )
         out.commit()
 
 
-class Dialog(QDialog):
+class QMW(QMainWindow):
     NumGridRows = 1
     NumButtons = 3
 
@@ -56,14 +49,20 @@ class Dialog(QDialog):
         self.createFormGroupBox()
         self.createSolutionBox()
 
+        self.exitAct = QAction("E&xit", self, shortcut="Ctrl+Q",
+                statusTip="Sortir de l'application", triggered=self.close)
+
         bigEditor = QTextEdit()
         bigEditor.setPlainText("Création de la sortie latex ici pour un copier/coller "
                 "top-level.")
 
-        buttonBox = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
+        buttonBox = QDialogButtonBox(QDialogButtonBox.Ok) #| QDialogButtonBox.Cancel
 
-        buttonBox.accepted.connect(self.accept)
-        buttonBox.rejected.connect(self.reject)
+        buttonBox.accepted.connect(self.close)
+        #buttonBox.rejected.connect(self.reject)
+        
+        widget = QWidget()
+        self.setCentralWidget(widget)
 
         mainLayout = QVBoxLayout()
         mainLayout.setMenuBar(self.menuBar)
@@ -72,7 +71,7 @@ class Dialog(QDialog):
         mainLayout.addWidget(bigEditor)
         mainLayout.addWidget(self.solGroupBox)
         mainLayout.addWidget(buttonBox)
-        self.setLayout(mainLayout)
+        widget.setLayout(mainLayout)
         self.bigEditor = bigEditor
 
         self.setWindowTitle("Tableau de signe")
@@ -84,7 +83,7 @@ class Dialog(QDialog):
         self.exitAction = self.fileMenu.addAction("E&xit")
         self.menuBar.addMenu(self.fileMenu)
 
-        self.exitAction.triggered.connect(self.accept)
+        #self.exitAction.triggered.connect(self.accept)
 
     def createHorizontalGroupBox(self):
         self.horizontalGroupBox = QGroupBox("Export (indisponible)")
@@ -101,29 +100,27 @@ class Dialog(QDialog):
 
     @pyqtSlot()
     def _export_latex(self):
-        factory = QFileDialog(self)
-        fichier = factory.getSaveFileName(self, 
-                                          "Sauver dans…", 
+        fichier = QFileDialog.getSaveFileName(self, 
+                                          "Enregistrer sous…", 
                                           "/home/boris/Documents/tableau.tex", 
                                           "Fichiers LaTeX (*.tex)")
-        self.tableau.export_latex(fichier)
+        self.tableau.export(fichier)
 
     @pyqtSlot()
     def _export_pst(self):
-        factory = QFileDialog(self)
-        fichier = factory.getSaveFileName(self, 
-                                          "Sauver dans…", 
+        fichier = QFileDialog.getSaveFileName(self, 
+                                          "Enregistrer sous…", 
                                           "/home/boris/Documents/tableau.pst", 
                                           "Fichiers PST+ (*.pst)")
-        self.tableau.export_pst(fichier)
+        self.tableau.export(fichier)
 
     @pyqtSlot()
     def _export_pag(self):
         fichier = QFileDialog.getSaveFileName(self, 
-                                          "Sauver dans…", 
+                                          "Enregistrer sous…", 
                                           "tableau.pag", 
                                           "Fichiers PAG (PdfAdd) (*.pag)")
-        self.tableau.export_pst(fichier)
+        self.tableau.export(fichier)
 
 
     def createFormGroupBox(self):
@@ -138,8 +135,8 @@ class Dialog(QDialog):
 
     def _createTableau(self):
          ex = self.expression.text()
-         #self.tableau.expr = ex
-         self.tableau.__init__(ex)
+         # créer un nouveau TableauQt provoquerait des pointeurs d'actions vides
+         self.tableau.__init__(ex) 
          self.bigEditor.setPlainText(self.tableau.tab2latex())
          # voir self.inequations dans __init__
          ineq = self.inequations[ self.choixIneq.currentText() ]
@@ -172,6 +169,8 @@ if __name__ == '__main__':
     import sys
 
     app = QApplication(sys.argv)
-    dialog = Dialog()
+    dialog = QMW()
     dialog.resize(700,500)
-    sys.exit(dialog.exec_())
+    dialog.show()
+    #sys.exit(dialog.exec_())
+    sys.exit(app.exec_())
