@@ -3,6 +3,8 @@ Historique
 
 Versions:
 
+* 0.9.9 : Ajout de l'option "Simplifier" dans l'interface graphique. Màj de la documentation. Dernière version alpha avant 1.0
+* 0.9.4 : Ajout d'une interface graphique Qt5. Correction d'un bug, l'expression 'x' seule n'était pas traitée.
 * 0.9.3 : Ajout de l'extension 'pag' pour les sorties vers pdfadd. Ajout du fichier pdftabvar.tex.
 * 0.9.2 : Factorisation du code - disparition des fonctions internes en _simplif, ajout d'un paramètre simplif (True/False). Fonction *_degree_good* retirée suite à commentaire `issue #3970 <http://code.google.com/p/sympy/issues/detail?id=3970>`_
 * 0.9 : Ajout de la fonction *randExpr* pour générer aléatoirement des produits/quotients.

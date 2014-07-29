@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2. Scripts &mdash; documentation TableauSigne 0.9.3</title>
+    <title>2. Scripts &mdash; documentation TableauSigne 0.9.9a</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.9.3',
+        VERSION:     '0.9.9a',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/translations.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="documentation TableauSigne 0.9.3" href="index.html" />
+    <link rel="top" title="documentation TableauSigne 0.9.9a" href="index.html" />
     <link rel="next" title="3. Recommandations" href="recommandations.html" />
     <link rel="prev" title="1. Installation" href="install.html" /> 
   </head>
@@ -45,7 +45,7 @@
         <li class="right" >
           <a href="install.html" title="1. Installation"
              accesskey="P">précédent</a> |</li>
-        <li><a href="index.html">documentation TableauSigne 0.9.3</a> &raquo;</li> 
+        <li><a href="index.html">documentation TableauSigne 0.9.9a</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -56,15 +56,28 @@
             
   <div class="section" id="scripts">
 <h1>2. Scripts<a class="headerlink" href="#scripts" title="Lien permanent vers ce titre">¶</a></h1>
+<div class="section" id="tabsignegui-py">
+<h2>2.1. TabSigneGUI.py<a class="headerlink" href="#tabsignegui-py" title="Lien permanent vers ce titre">¶</a></h2>
+<p>C&#8217;est probablement le plus simple à utiliser car c&#8217;est une interface graphique: un double clic dessus devrait le lancer.</p>
+<p>Il y a des boutons d&#8217;export tex/pst/pag.</p>
+<p>Il y a une fenêtre de texte qui donne la sortie tex que vous pouvez directement utiliser pour un copier/coller.
+Idem pour produire l&#8217;ensemble des solutions d&#8217;une inéquation sur le signe.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/GUI.png"><img alt="interface graphique *TableauSigneGUI.py*" src="_images/GUI.png" style="width: 717.0px; height: 537.0px;" /></a>
+<p class="caption">Interface graphique <em>TableauSigneGUI.py</em></p>
+<div class="legend">
+La fonction de chaque élément est relativement intuitive.</div>
+</div>
+</div>
 <div class="section" id="tabsigne-py">
-<h2>2.1. TabSigne.py<a class="headerlink" href="#tabsigne-py" title="Lien permanent vers ce titre">¶</a></h2>
+<h2>2.2. TabSigne.py<a class="headerlink" href="#tabsigne-py" title="Lien permanent vers ce titre">¶</a></h2>
 <p>Le fichier <em>TabSigne.py</em> est un script permettant d&#8217;utiliser le module
 directement en ligne de commande.</p>
 <p>En principe il fonctionne sur toute plateforme.
 Signature:</p>
 <dl class="function">
 <dt>
-<tt class="descname">TabSigne.py [-h] [--bornes [BORNES]] [--format {tex,pst}] [--out [OUT]] [--version] expression</tt></dt>
+<tt class="descname">TabSigne.py [-h] [--bornes [BORNES]] [--format {tex,pst,pag}] [--out [OUT]] [--version] expression</tt></dt>
 <dd><p>Construit le tableau de signe d&#8217;une expression.</p>
 <dl class="docutils">
 <dt>positional arguments:</dt>
@@ -98,14 +111,14 @@ $ ./TabSigne.py -b &quot;[-3,sympify(&#39;13/2&#39;)]&quot; -o sortie -f pst &#3
 </pre></div>
 </div>
 <p>qui vous fera le tableau de signe dans le fichier sortie.tex ou sortie.pst. Remarquez que les crochets de l&#8217;intervalle de définition n&#8217;ont rien à voir avec les crochets mathématiques; ce sont des crochets de liste en Python.</p>
-<p>Attention, la synatxe de l&#8217;expression doit être précise: n&#8217;oubliez pas les symboles de produit * et mettez des parenthèses autour des constantes négatives. Par exemple on tapera:</p>
+<p>Attention, la syntaxe de l&#8217;expression doit être précise: n&#8217;oubliez pas les symboles de produit * et mettez des parenthèses autour des constantes négatives. Par exemple on tapera:</p>
 <div class="highlight-python"><div class="highlight"><pre>$ ./TabSigne.py -b &#39;[-1,10]&#39; -o DM -f pst &#39;(-2)*x**2*(x+3)/(x+2)**2&#39;
 </pre></div>
 </div>
 <p>(et non pas &#8216;-2*x**2*(x+3)/(x+2)**2&#8217; pour l&#8217;expression)</p>
 </div>
 <div class="section" id="tabsignesimplif-py">
-<h2>2.2. TabSigneSimplif.py<a class="headerlink" href="#tabsignesimplif-py" title="Lien permanent vers ce titre">¶</a></h2>
+<h2>2.3. TabSigneSimplif.py<a class="headerlink" href="#tabsignesimplif-py" title="Lien permanent vers ce titre">¶</a></h2>
 <p>Le fichier <em>TabSigneSimplif.py</em> fonctionne sur le même principe et produira un tableau simplifié: il ne contient alors que la ligne de la variable et la ligne finale.</p>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
@@ -123,8 +136,9 @@ $ ./TabSigne.py -b &quot;[-3,sympify(&#39;13/2&#39;)]&quot; -o sortie -f pst &#3
   <h3><a href="index.html">Table des Matières</a></h3>
   <ul>
 <li><a class="reference internal" href="#">2. Scripts</a><ul>
-<li><a class="reference internal" href="#tabsigne-py">2.1. TabSigne.py</a></li>
-<li><a class="reference internal" href="#tabsignesimplif-py">2.2. TabSigneSimplif.py</a></li>
+<li><a class="reference internal" href="#tabsignegui-py">2.1. TabSigneGUI.py</a></li>
+<li><a class="reference internal" href="#tabsigne-py">2.2. TabSigne.py</a></li>
+<li><a class="reference internal" href="#tabsignesimplif-py">2.3. TabSigneSimplif.py</a></li>
 </ul>
 </li>
 </ul>
@@ -172,7 +186,7 @@ $ ./TabSigne.py -b &quot;[-3,sympify(&#39;13/2&#39;)]&quot; -o sortie -f pst &#3
         <li class="right" >
           <a href="install.html" title="1. Installation"
              >précédent</a> |</li>
-        <li><a href="index.html">documentation TableauSigne 0.9.3</a> &raquo;</li> 
+        <li><a href="index.html">documentation TableauSigne 0.9.9a</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

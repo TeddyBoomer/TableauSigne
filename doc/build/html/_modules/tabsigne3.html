@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>tabsigne3 &mdash; documentation TableauSigne 0.9.3</title>
+    <title>tabsigne3 &mdash; documentation TableauSigne 0.9.9a</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.9.3',
+        VERSION:     '0.9.9a',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/translations.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="documentation TableauSigne 0.9.3" href="../index.html" />
+    <link rel="top" title="documentation TableauSigne 0.9.9a" href="../index.html" />
     <link rel="up" title="Code du module" href="index.html" /> 
   </head>
   <body>
@@ -38,7 +38,7 @@
         <li class="right" >
           <a href="../py-modindex.html" title="Index des modules Python"
              >modules</a> |</li>
-        <li><a href="../index.html">documentation TableauSigne 0.9.3</a> &raquo;</li>
+        <li><a href="../index.html">documentation TableauSigne 0.9.9a</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Code du module</a> &raquo;</li> 
       </ul>
     </div>  
@@ -81,7 +81,7 @@
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="nb">reduce</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="n">var</span><span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">)</span>
-<span class="n">version</span> <span class="o">=</span> <span class="s">&#39;0.9.3&#39;</span>
+<span class="n">version</span> <span class="o">=</span> <span class="s">&#39;0.9.9a&#39;</span>
 
 <div class="viewcode-block" id="TableauSigne"><a class="viewcode-back" href="../interface.html#tabsigne3.TableauSigne">[docs]</a><span class="k">class</span> <span class="nc">TableauSigne</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -121,6 +121,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">pow_moins</span> <span class="o">=</span> <span class="p">[</span><span class="n">u</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">facteurs</span> <span class="k">if</span> <span class="n">u</span><span class="o">.</span><span class="n">is_Pow</span> <span class="ow">and</span> <span class="n">u</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">expr</span><span class="o">.</span><span class="n">is_Add</span> <span class="ow">and</span> <span class="p">(</span><span class="n">degree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expr</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span> 
             <span class="c"># cas d&#39;un seul facteur de degré 1:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">facteurs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pow_positif</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">expr</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pow_moins</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">expr</span><span class="o">.</span><span class="n">is_Symbol</span><span class="p">:</span>
+            <span class="c"># cas de l&#39;expression &#39;x&#39; tout court, is_Add False, mais is_Symbol True</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">facteurs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pow_positif</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">expr</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">pow_moins</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">try</span><span class="p">:</span>
@@ -618,7 +622,7 @@
         <li class="right" >
           <a href="../py-modindex.html" title="Index des modules Python"
              >modules</a> |</li>
-        <li><a href="../index.html">documentation TableauSigne 0.9.3</a> &raquo;</li>
+        <li><a href="../index.html">documentation TableauSigne 0.9.9a</a> &raquo;</li>
           <li><a href="index.html" >Code du module</a> &raquo;</li> 
       </ul>
     </div>

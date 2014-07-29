@@ -7,6 +7,7 @@ Il contient:
 * le module tabsigne3.py
 * l'executable *TabSigne.py*
 * l'executable *TabSigneSimplif.py*
+* l'executable *TabSigneGUI.py*
 * une copie de la license GNU GPL v3
 * une copie du fichier tabvar.tex
 * une copie du fichier pdftabvar.tex
@@ -25,32 +26,40 @@ final. On peut insérer la sortie dans un document, moyennant l'ajout du fichier
 Python
 ^^^^^^
 
-Les scripts sont écrits en Python3 mais *ils fonctionnent aussi avec Python2.7*.
-Ils utilisent des modules standards ainsi que **sympy** et **lxml**.
-Attention, pour Windows, lxml n'est installable que pour python <= 3.2.
+Les scripts sont écrits en Python3 mais *ils fonctionnent aussi avec Python2.7* (au moins les scripts en ligne de commande).
+Ils utilisent des modules standards ainsi que **sympy** et **lxml**; 
+le script d'interface graphique *TabSigneGUI.py* utilise **Qt5** qui produit de jolies fenêtres.
+
+Attention, (pour Windows) lxml n'est installable que pour python <= 3.2.
+Globalement, pour Ububtu/Debian, il y a des paquets disponibles dans la distribution. Vous pourrez essayer::
+
+  # apt-get install python-sympy python-lxml python-qt5
+  # apt-get install python3-sympy python3-lxml python3-qt5
+
+Ou de façon encore plus efficace, pour avoir les plus récentes versions des modules grâce à l'installateur python pip/pip3::
+
+  # pip install sympy      
+  # pip3 install sympy
+
+et de même pour lxml et PyQt5 (bien respecter la casse)
 
 * Python: `http://python.org/getit/ <http://python.org/getit/>`_ : sélectionnez votre plateforme (sous linux, débrouillez-vous avec apt, synaptic...)
-* Sympy: le plus simple est sous Ubuntu/Debian en faisant::
-
-  # apt-get install python-sympy
+* Sympy:
 
 Attention, le sympy-0.6.6 présentait un petit bug pénible: les polynômes
 étaient affichés par ordre croissant de puissance. C'est une chose corrigée
 dans les versions 0.7.x. Si vous avez une ancienne distribution linux et que
 votre *python-sympy* est trop ancien, je vous conseille de l'enlever et
-d'installer la dernière version de *sympy* avec *pip*::
+d'installer la dernière version de *sympy* avec *pip* (voir ci-dessus).
 
-  # pip install sympy
-
-Pour Windows, voici le lien pour `sympy-0.7.5 <https://github.com/sympy/sympy/releases/download/sympy-0.7.5/sympy-0.7.5.win32.exe>`_.
+Lien pour `sympy-0.7.5 <https://github.com/sympy/sympy/releases/download/sympy-0.7.5/sympy-0.7.5.win32.exe>`_.
 
 sinon voir `https://github.com/sympy/sympy/releases <https://github.com/sympy/sympy/releases>`_
 
-* lxml: le plus simple est sous Ubuntu/Debian en faisant::
+* lxml: 
 
-  # apt-get install python-lxml
-  # apt-get install python3-lxml
-
-Pour Windows, voici le lien `lxml-3.3.3 <https://pypi.python.org/pypi/lxml/3.3.3>`_ (choisissez votre version de python
+Voici le lien `lxml-3.3.5 <https://pypi.python.org/pypi/lxml/3.3.5>`_ (choisissez votre version de python
 et votre type de processeur).  sinon voir `http://lxml.de/installation.html
 <http://lxml.de/installation.html>`_
+
+* Qt5: Lien `Qt5 <http://www.riverbankcomputing.co.uk/software/pyqt/download5>`_

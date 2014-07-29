@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# script adapté de l'exemple basiclayout en qt5
+# script adapté des exemples basiclayout, mainwindows.menu en qt5
 
 __name__ == '__main__'
 from tabsigne3 import *
-from PyQt5.QtWidgets import (QAction, QApplication, QComboBox, QDialog,
-        QDialogButtonBox, QFileDialog, QFormLayout, QGridLayout, QGroupBox, QHBoxLayout,
-        QLabel, QLineEdit, QMainWindow, QMenu, QMenuBar, QPushButton, QSpinBox, QTextEdit,
-                             QVBoxLayout, QMainWindow, QWidget)
+from PyQt5.QtWidgets import (QAction, QApplication, QCheckBox, QComboBox, QDialog,\
+                             QDialogButtonBox, QFileDialog, QFormLayout,\
+                             QGridLayout, QGroupBox, QHBoxLayout,\
+                             QLabel, QLineEdit, QMainWindow, QMenu, QMenuBar,\
+                             QMessageBox, QPushButton, QTextEdit, QVBoxLayout, QMainWindow, QWidget)
 from PyQt5.QtCore import (QSaveFile, QIODevice, QByteArray, pyqtSlot)
 
 
@@ -18,6 +19,7 @@ class TableauQt(TableauSigne):
     def export(self, file, simplif = False):
         """le type d'export est obtenu par analyse de l'extension
         file est un QString: tuple (nom de fichier, filtre)
+        la simplification est lue depuis l'attribut QMW.simple
         """
         # choix pour pst,pag
         choix ={True: self.xmlsimplif, False: self.xml}
@@ -37,11 +39,11 @@ class TableauQt(TableauSigne):
 
 class QMW(QMainWindow):
     NumGridRows = 1
-    NumButtons = 3
 
     def __init__(self):
-        super(Dialog, self).__init__()
+        super(QMW, self).__init__()
         self.tableau = TableauQt('x')
+        self.simple = False #doit-on faire un tableau simplifié
         self.inequations = {"<=0":"-0","<0":"--", ">=0":"+0",">0":"++"}
 
         self.createMenu()
@@ -59,39 +61,50 @@ class QMW(QMainWindow):
         buttonBox = QDialogButtonBox(QDialogButtonBox.Ok) #| QDialogButtonBox.Cancel
 
         buttonBox.accepted.connect(self.close)
-        #buttonBox.rejected.connect(self.reject)
         
         widget = QWidget()
         self.setCentralWidget(widget)
 
         mainLayout = QVBoxLayout()
         mainLayout.setMenuBar(self.menuBar)
-        mainLayout.addWidget(self.horizontalGroupBox)
         mainLayout.addWidget(self.formGroupBox)
         mainLayout.addWidget(bigEditor)
         mainLayout.addWidget(self.solGroupBox)
+        mainLayout.addWidget(self.horizontalGroupBox)
         mainLayout.addWidget(buttonBox)
         widget.setLayout(mainLayout)
         self.bigEditor = bigEditor
 
         self.setWindowTitle("Tableau de signe")
 
+    @pyqtSlot()
+    def _createApropos(self):
+        QMessageBox.information(self,
+                                "À propos",\
+                                "<p><strong>Tableau de signe</strong> - v"+version+"</p>"+\
+                                "<p>B. Mauricette - GPLv3</p>")
+        
+
     def createMenu(self):
         self.menuBar = QMenuBar()
 
-        self.fileMenu = QMenu("&File", self)
+        self.fileMenu = QMenu("&Fichier", self)
         self.exitAction = self.fileMenu.addAction("E&xit")
-        self.menuBar.addMenu(self.fileMenu)
+        apropos = QMenu("&Infos", self)
+        apro = QAction("À &propos", self)
+        apro.triggered.connect(self._createApropos)
+        apropos.addAction(apro)
 
-        #self.exitAction.triggered.connect(self.accept)
+        self.menuBar.addMenu(self.fileMenu)
+        self.menuBar.addMenu(apropos)
 
     def createHorizontalGroupBox(self):
-        self.horizontalGroupBox = QGroupBox("Export (indisponible)")
+        self.horizontalGroupBox = QGroupBox("Export")
         layout = QHBoxLayout()
         out = [('LaTeX', self._export_latex),\
                ('PST+', self._export_pst),\
                ('PAG',self._export_pag)]
-        for i in range(Dialog.NumButtons):
+        for i in range(len(out)):
             button = QPushButton(out[i][0])
             button.clicked.connect(out[i][1])
             layout.addWidget(button)
@@ -104,7 +117,7 @@ class QMW(QMainWindow):
                                           "Enregistrer sous…", 
                                           "/home/boris/Documents/tableau.tex", 
                                           "Fichiers LaTeX (*.tex)")
-        self.tableau.export(fichier)
+        self.tableau.export(fichier, simplif = self.simple)
 
     @pyqtSlot()
     def _export_pst(self):
@@ -112,7 +125,7 @@ class QMW(QMainWindow):
                                           "Enregistrer sous…", 
                                           "/home/boris/Documents/tableau.pst", 
                                           "Fichiers PST+ (*.pst)")
-        self.tableau.export(fichier)
+        self.tableau.export(fichier, simplif = self.simple)
 
     @pyqtSlot()
     def _export_pag(self):
@@ -120,24 +133,31 @@ class QMW(QMainWindow):
                                           "Enregistrer sous…", 
                                           "tableau.pag", 
                                           "Fichiers PAG (PdfAdd) (*.pag)")
-        self.tableau.export(fichier)
+        self.tableau.export(fichier, simplif = self.simple)
 
 
     def createFormGroupBox(self):
         self.formGroupBox = QGroupBox("Entrée")
+        simple = QCheckBox("Simplifier (pas de lignes intermédiaires)") # bool à basculer
+        simple.clicked.connect(self._simple)
         self.expression = QLineEdit(str(self.tableau.expr))
         layout = QFormLayout()
         layout.addRow(QLabel("(fraction rationnelle):"), self.expression)
         valid = QPushButton("Valider")
         valid.clicked.connect(self._createTableau)
         layout.addWidget(valid)
+        layout.addWidget(simple)
         self.formGroupBox.setLayout(layout)
+
+    def _simple(self):
+         self.simple = not(self.simple)
+         self._createTableau()
 
     def _createTableau(self):
          ex = self.expression.text()
          # créer un nouveau TableauQt provoquerait des pointeurs d'actions vides
          self.tableau.__init__(ex) 
-         self.bigEditor.setPlainText(self.tableau.tab2latex())
+         self.bigEditor.setPlainText(self.tableau.tab2latex(simplif = self.simple))
          # voir self.inequations dans __init__
          ineq = self.inequations[ self.choixIneq.currentText() ]
          self.solution.setText(self.tableau.get_solutions(ineq))        
@@ -169,8 +189,7 @@ if __name__ == '__main__':
     import sys
 
     app = QApplication(sys.argv)
-    dialog = QMW()
-    dialog.resize(700,500)
-    dialog.show()
-    #sys.exit(dialog.exec_())
+    d = QMW()
+    d.resize(700,500)
+    d.show()
     sys.exit(app.exec_())

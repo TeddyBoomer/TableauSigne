@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>1. Installation &mdash; documentation TableauSigne 0.9.3</title>
+    <title>1. Installation &mdash; documentation TableauSigne 0.9.9a</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.9.3',
+        VERSION:     '0.9.9a',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/translations.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="documentation TableauSigne 0.9.3" href="index.html" />
+    <link rel="top" title="documentation TableauSigne 0.9.9a" href="index.html" />
     <link rel="next" title="2. Scripts" href="script.html" />
     <link rel="prev" title="Bienvenue dans la doc de TableauSigne!" href="index.html" /> 
   </head>
@@ -45,7 +45,7 @@
         <li class="right" >
           <a href="index.html" title="Bienvenue dans la doc de TableauSigne!"
              accesskey="P">précédent</a> |</li>
-        <li><a href="index.html">documentation TableauSigne 0.9.3</a> &raquo;</li> 
+        <li><a href="index.html">documentation TableauSigne 0.9.9a</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -62,6 +62,7 @@ Il contient:</p>
 <li>le module tabsigne3.py</li>
 <li>l&#8217;executable <em>TabSigne.py</em></li>
 <li>l&#8217;executable <em>TabSigneSimplif.py</em></li>
+<li>l&#8217;executable <em>TabSigneGUI.py</em></li>
 <li>une copie de la license GNU GPL v3</li>
 <li>une copie du fichier tabvar.tex</li>
 <li>une copie du fichier pdftabvar.tex</li>
@@ -77,38 +78,40 @@ final. On peut insérer la sortie dans un document, moyennant l&#8217;ajout du f
 </div>
 <div class="section" id="python">
 <h2>1.2. Python<a class="headerlink" href="#python" title="Lien permanent vers ce titre">¶</a></h2>
-<p>Les scripts sont écrits en Python3 mais <em>ils fonctionnent aussi avec Python2.7</em>.
-Ils utilisent des modules standards ainsi que <strong>sympy</strong> et <strong>lxml</strong>.
-Attention, pour Windows, lxml n&#8217;est installable que pour python &lt;= 3.2.</p>
-<ul>
-<li><p class="first">Python: <a class="reference external" href="http://python.org/getit/">http://python.org/getit/</a> : sélectionnez votre plateforme (sous linux, débrouillez-vous avec apt, synaptic...)</p>
-</li>
-<li><p class="first">Sympy: le plus simple est sous Ubuntu/Debian en faisant:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c"># apt-get install python-sympy</span>
+<p>Les scripts sont écrits en Python3 mais <em>ils fonctionnent aussi avec Python2.7</em> (au moins les scripts en ligne de commande).
+Ils utilisent des modules standards ainsi que <strong>sympy</strong> et <strong>lxml</strong>;
+le script d&#8217;interface graphique <em>TabSigneGUI.py</em> utilise <strong>Qt5</strong> qui produit de jolies fenêtres.</p>
+<p>Attention, (pour Windows) lxml n&#8217;est installable que pour python &lt;= 3.2.
+Globalement, pour Ububtu/Debian, il y a des paquets disponibles dans la distribution. Vous pourrez essayer:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># apt-get install python-sympy python-lxml python-qt5</span>
+<span class="c"># apt-get install python3-sympy python3-lxml python3-qt5</span>
 </pre></div>
 </div>
-</li>
+<p>Ou de façon encore plus efficace, pour avoir les plus récentes versions des modules grâce à l&#8217;installateur python pip/pip3:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># pip install sympy</span>
+<span class="c"># pip3 install sympy</span>
+</pre></div>
+</div>
+<p>et de même pour lxml et PyQt5 (bien respecter la casse)</p>
+<ul class="simple">
+<li>Python: <a class="reference external" href="http://python.org/getit/">http://python.org/getit/</a> : sélectionnez votre plateforme (sous linux, débrouillez-vous avec apt, synaptic...)</li>
+<li>Sympy:</li>
 </ul>
 <p>Attention, le sympy-0.6.6 présentait un petit bug pénible: les polynômes
 étaient affichés par ordre croissant de puissance. C&#8217;est une chose corrigée
 dans les versions 0.7.x. Si vous avez une ancienne distribution linux et que
 votre <em>python-sympy</em> est trop ancien, je vous conseille de l&#8217;enlever et
-d&#8217;installer la dernière version de <em>sympy</em> avec <em>pip</em>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c"># pip install sympy</span>
-</pre></div>
-</div>
-<p>Pour Windows, voici le lien pour <a class="reference external" href="https://github.com/sympy/sympy/releases/download/sympy-0.7.5/sympy-0.7.5.win32.exe">sympy-0.7.5</a>.</p>
+d&#8217;installer la dernière version de <em>sympy</em> avec <em>pip</em> (voir ci-dessus).</p>
+<p>Lien pour <a class="reference external" href="https://github.com/sympy/sympy/releases/download/sympy-0.7.5/sympy-0.7.5.win32.exe">sympy-0.7.5</a>.</p>
 <p>sinon voir <a class="reference external" href="https://github.com/sympy/sympy/releases">https://github.com/sympy/sympy/releases</a></p>
-<ul>
-<li><p class="first">lxml: le plus simple est sous Ubuntu/Debian en faisant:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c"># apt-get install python-lxml</span>
-<span class="c"># apt-get install python3-lxml</span>
-</pre></div>
-</div>
-</li>
+<ul class="simple">
+<li>lxml:</li>
 </ul>
-<p>Pour Windows, voici le lien <a class="reference external" href="https://pypi.python.org/pypi/lxml/3.3.3">lxml-3.3.3</a> (choisissez votre version de python
+<p>Voici le lien <a class="reference external" href="https://pypi.python.org/pypi/lxml/3.3.5">lxml-3.3.5</a> (choisissez votre version de python
 et votre type de processeur).  sinon voir <a class="reference external" href="http://lxml.de/installation.html">http://lxml.de/installation.html</a></p>
+<ul class="simple">
+<li>Qt5: Lien <a class="reference external" href="http://www.riverbankcomputing.co.uk/software/pyqt/download5">Qt5</a></li>
+</ul>
 </div>
 </div>
 
@@ -170,7 +173,7 @@ et votre type de processeur).  sinon voir <a class="reference external" href="ht
         <li class="right" >
           <a href="index.html" title="Bienvenue dans la doc de TableauSigne!"
              >précédent</a> |</li>
-        <li><a href="index.html">documentation TableauSigne 0.9.3</a> &raquo;</li> 
+        <li><a href="index.html">documentation TableauSigne 0.9.9a</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
