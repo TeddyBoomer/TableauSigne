@@ -5,11 +5,12 @@
 
 __name__ == '__main__'
 from tabsigne3 import *
-from PyQt5.QtWidgets import (QAction, QApplication, QCheckBox, QComboBox, QDialog,\
+from PyQt5.QtWidgets import (QAction, QApplication, QCheckBox, QComboBox,\
                              QDialogButtonBox, QFileDialog, QFormLayout,\
-                             QGridLayout, QGroupBox, QHBoxLayout,\
-                             QLabel, QLineEdit, QMainWindow, QMenu, QMenuBar,\
-                             QMessageBox, QPushButton, QTextEdit, QVBoxLayout, QMainWindow, QWidget)
+                             QGroupBox, QHBoxLayout, QLabel, QLineEdit,\
+                             QMainWindow, QMenu, QMenuBar, QMessageBox,\
+                             QPushButton, QTextEdit, QVBoxLayout, QMainWindow,\
+                             QWidget)
 from PyQt5.QtCore import (QSaveFile, QIODevice, QByteArray, pyqtSlot)
 
 
@@ -44,8 +45,10 @@ class QMW(QMainWindow):
         super(QMW, self).__init__()
         self.tableau = TableauQt('x')
         self.simple = False #doit-on faire un tableau simplifié
-        self.inequations = {"<=0":"-0","<0":"--", ">=0":"+0",">0":"++"}
-
+        #symboles unicode 2a7d et 2a7e voir 
+        # http://fr.wikipedia.org/wiki/Table_des_caract%C3%A8res_Unicode_%282000-2FFF%29#Fl.C3.A8ches
+        self.inequations = {"⩽0":"-0","<0":"--", "⩾0":"+0",">0":"++"}
+        
         self.createMenu()
         self.createHorizontalGroupBox()
         self.createFormGroupBox()
@@ -55,8 +58,7 @@ class QMW(QMainWindow):
                 statusTip="Sortir de l'application", triggered=self.close)
 
         bigEditor = QTextEdit()
-        bigEditor.setPlainText("Création de la sortie latex ici pour un copier/coller "
-                "top-level.")
+        bigEditor.setPlainText("Création de la sortie latex ici pour un copier/coller ")
 
         buttonBox = QDialogButtonBox(QDialogButtonBox.Ok) #| QDialogButtonBox.Cancel
 
