@@ -52,6 +52,7 @@ class QMW(QMainWindow):
         self.createMenu()
         self.createHorizontalGroupBox()
         self.createFormGroupBox()
+        self.createBoundBox()
         self.createSolutionBox()
 
         self.exitAct = QAction("E&xit", self, shortcut="Ctrl+Q",
@@ -70,6 +71,7 @@ class QMW(QMainWindow):
         mainLayout = QVBoxLayout()
         mainLayout.setMenuBar(self.menuBar)
         mainLayout.addWidget(self.formGroupBox)
+        mainLayout.addWidget(self.BoundBox)
         mainLayout.addWidget(bigEditor)
         mainLayout.addWidget(self.solGroupBox)
         mainLayout.addWidget(self.horizontalGroupBox)
@@ -99,6 +101,43 @@ class QMW(QMainWindow):
 
         self.menuBar.addMenu(self.fileMenu)
         self.menuBar.addMenu(apropos)
+
+    def createBoundBox(self):
+        self.BoundBox = QGroupBox("Bornes")
+        layout = QHBoxLayout()
+
+        self.b_inf = QLineEdit(str(self.tableau.bornes[0]))
+        self.b_inf.editingFinished.connect(self._update_inf)
+        #self.b_inf.editingFinished.emit(self.b_inf.text())
+        self.b_sup = QLineEdit(str(self.tableau.bornes[1]))
+        self.b_sup.editingFinished.connect(self._update_sup)
+        #self.b_sup.editingFinished.emit(self.b_sup.text())
+
+        layout.addWidget(QLabel("borne inf :"))
+        layout.addWidget(self.b_inf)
+        layout.addWidget(QLabel("borne sup :"))
+        layout.addWidget(self.b_sup)
+        
+        self.BoundBox.setLayout(layout)
+
+    @pyqtSlot()
+    def _update_inf(self):
+        """ màj de la borne inférieure
+        la valeur est sympifiée
+
+        """
+        self.tableau.bornes[0] = sympify(self.b_inf.text())
+        self._createTableau()
+
+    @pyqtSlot()
+    def _update_sup(self):
+        """ màj de la borne supérieure
+        la valeur est sympifiée
+
+        """
+        self.tableau.bornes[1] = sympify(self.b_sup.text())
+        self._createTableau()
+
 
     def createHorizontalGroupBox(self):
         self.horizontalGroupBox = QGroupBox("Export")
