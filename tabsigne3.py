@@ -99,9 +99,16 @@ class TableauSigne():
         ligne = etree.SubElement(root, "Lignes")
         #ligne.text = str(len(self.facteurs)+2)
         ligne.text = str(len(self.tab))
+
+        ligne_simplif = etree.SubElement(root_simplif, "Lignes")
+        ligne_simplif.text = '2'
+
         col = etree.SubElement(root, "Colonnes")
         #col.text = str(2*len(self.racines)+2*len(self.vi)+4)
         col.text = str(len(self.tab[0]["Milieu"]))
+
+        col_simplif = etree.SubElement(root_simplif, "Colonnes")
+        col_simplif.text = col.text
 
         for l in self.tab:
             for e in ["Bas", "Milieu", "Haut"]:
