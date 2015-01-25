@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>tabsigne3 &mdash; documentation TableauSigne 0.9.9a</title>
+    <title>tabsigne3 &mdash; documentation TableauSigne 1.0</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.9.9a',
+        VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/translations.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="documentation TableauSigne 0.9.9a" href="../index.html" />
+    <link rel="top" title="documentation TableauSigne 1.0" href="../index.html" />
     <link rel="up" title="Code du module" href="index.html" /> 
   </head>
   <body>
@@ -38,7 +38,7 @@
         <li class="right" >
           <a href="../py-modindex.html" title="Index des modules Python"
              >modules</a> |</li>
-        <li><a href="../index.html">documentation TableauSigne 0.9.9a</a> &raquo;</li>
+        <li><a href="../index.html">documentation TableauSigne 1.0</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Code du module</a> &raquo;</li> 
       </ul>
     </div>  
@@ -81,7 +81,7 @@
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="nb">reduce</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="n">var</span><span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">)</span>
-<span class="n">version</span> <span class="o">=</span> <span class="s">&#39;0.9.9a&#39;</span>
+<span class="n">version</span> <span class="o">=</span> <span class="s">&#39;1.0&#39;</span>
 
 <div class="viewcode-block" id="TableauSigne"><a class="viewcode-back" href="../interface.html#tabsigne3.TableauSigne">[docs]</a><span class="k">class</span> <span class="nc">TableauSigne</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -150,9 +150,16 @@
         <span class="n">ligne</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s">&quot;Lignes&quot;</span><span class="p">)</span>
         <span class="c">#ligne.text = str(len(self.facteurs)+2)</span>
         <span class="n">ligne</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tab</span><span class="p">))</span>
+
+        <span class="n">ligne_simplif</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">root_simplif</span><span class="p">,</span> <span class="s">&quot;Lignes&quot;</span><span class="p">)</span>
+        <span class="n">ligne_simplif</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s">&#39;2&#39;</span>
+
         <span class="n">col</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s">&quot;Colonnes&quot;</span><span class="p">)</span>
         <span class="c">#col.text = str(2*len(self.racines)+2*len(self.vi)+4)</span>
         <span class="n">col</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tab</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s">&quot;Milieu&quot;</span><span class="p">]))</span>
+
+        <span class="n">col_simplif</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">root_simplif</span><span class="p">,</span> <span class="s">&quot;Colonnes&quot;</span><span class="p">)</span>
+        <span class="n">col_simplif</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">col</span><span class="o">.</span><span class="n">text</span>
 
         <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tab</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&quot;Bas&quot;</span><span class="p">,</span> <span class="s">&quot;Milieu&quot;</span><span class="p">,</span> <span class="s">&quot;Haut&quot;</span><span class="p">]:</span>
@@ -622,7 +629,7 @@
         <li class="right" >
           <a href="../py-modindex.html" title="Index des modules Python"
              >modules</a> |</li>
-        <li><a href="../index.html">documentation TableauSigne 0.9.9a</a> &raquo;</li>
+        <li><a href="../index.html">documentation TableauSigne 1.0</a> &raquo;</li>
           <li><a href="index.html" >Code du module</a> &raquo;</li> 
       </ul>
     </div>
