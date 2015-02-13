@@ -9,7 +9,7 @@ Il renvoie le fichier pst avec la ligne des valeurs et la ligne du signe.
 
 import sys
 import argparse
-from tabsigne3 import *
+from TableauSigne import *
 
 # ./TabSigneSimplif.py -h
 # ./TabSigneSimplif.py -b '[-3,6]' '8*x+3'

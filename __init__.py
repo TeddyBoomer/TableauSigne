@@ -30,7 +30,7 @@ from lxml import etree
 from functools import reduce
 
 x = var('x')
-version = '1.0'
+__version__ = '1.1'
 
 class TableauSigne():
     """

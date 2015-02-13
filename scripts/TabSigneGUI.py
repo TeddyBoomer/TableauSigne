@@ -4,7 +4,7 @@
 # script adapté des exemples basiclayout, mainwindows.menu en qt5
 
 __name__ == '__main__'
-from tabsigne3 import *
+from TableauSigne import *
 from PyQt5.QtWidgets import (QAction, QApplication, QCheckBox, QComboBox,\
                              QDialogButtonBox, QFileDialog, QFormLayout,\
                              QGroupBox, QHBoxLayout, QLabel, QLineEdit,\

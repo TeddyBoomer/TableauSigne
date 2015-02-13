@@ -8,7 +8,7 @@ Script d'utilisation du module de tableau de signe.
 
 import sys
 import argparse
-from tabsigne3 import *
+from TableauSigne import *
 
 # ./TabSigne.py -h
 # ./TabSigne.py -b '[-3,6]' '8*x+3'
