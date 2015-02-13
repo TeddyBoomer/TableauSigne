@@ -5,7 +5,7 @@ from os import path
 here = path.abspath(path.dirname(__file__))
 
 # Get the long description from the relevant file
-with open(path.join(here, 'tableausigne/DESCRIPTION.rst'), encoding='utf-8') as f:
+with open(path.join(here, 'DESCRIPTION.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
@@ -42,7 +42,7 @@ setup(
         'Topic :: Mathematical Software :: Build Tools',
 
         # Pick your license as you wish (should match "license" above)
-        'License :: OSI Approved :: MIT License',
+        'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
 
         # Specify the Python versions you support here. In particular, ensure
         # that you indicate whether you support Python 2, Python 3 or both.
@@ -77,11 +77,11 @@ setup(
     # If there are data files included in your packages that need to be
     # installed, specify them here.  If using Python 2.6 or less, then these
     # have to be included in MANIFEST.in as well.
-    package_dir={'TableauSigne':'tableausigne'},
+    package_dir={'TableauSigne':'.'},
     package_data={
         'TableauSigne':['*.tex','*.txt', 'doc/html/*.html', 'doc/html/_images/*.png']
     },
-
+    exclude_package_data = { 'TableauSigne': ['setup_tableausigne.py']},
     # Although 'package_data' is the preferred approach, in some case you may
     # need to place data files outside of your packages.
     # see http://docs.python.org/3.4/distutils/setupscript.html#installing-additional-files
