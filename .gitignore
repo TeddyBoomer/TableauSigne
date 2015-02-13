@@ -1,0 +1,17 @@
+__pycache__/
+build.xml
+build.xml~
+exos-persos.py
+paquet-TableauSigne*
+paquet-TableauSigne/
+tabsigne3.pyc
+TabSigne.pyc
+test/
+doc/img/
+doc/source/interface.rst
+doc/source/interface.rst~
+DESCRIPTION.rst
+build/
+*.whl
+TableauSigne.egg-info/
+
