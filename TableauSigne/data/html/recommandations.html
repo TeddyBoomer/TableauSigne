@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>3. Recommandations &mdash; documentation TableauSigne 1.1</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="documentation TableauSigne 1.1" href="index.html" />
+    <link rel="next" title="4. Historique" href="history.html" />
+    <link rel="prev" title="2. Scripts" href="script.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Index général"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="history.html" title="4. Historique"
+             accesskey="N">suivant</a> |</li>
+        <li class="right" >
+          <a href="script.html" title="2. Scripts"
+             accesskey="P">précédent</a> |</li>
+        <li><a href="index.html">documentation TableauSigne 1.1</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="recommandations">
+<h1>3. Recommandations<a class="headerlink" href="#recommandations" title="Lien permanent vers ce titre">¶</a></h1>
+<p>Vous pouvez préciser les bornes du tableau de signe en paramètre de la classe
+<em>TableauSigne</em>; c&#8217;est une liste de deux valeurs [a,b] à ajouter. Les nombres
+peuvent être sympifiés, ils seront alors plus joliment écrits dans le tableau.</p>
+<dl class="docutils">
+<dt><em>exemple</em>:</dt>
+<dd>Au lieu de 0.5, mettre <em>sympify(&#8216;0.5&#8217;)</em> ou bien
+<em>Rational(1,2)</em>. Attention, dans python 2.x le symbole / servait à la
+division euclidienne et on se retrouvait régulièrement avec des 2/3=0. Si
+vous voulez mettre la borne 2/3, sympifiez-la (ou mettez <em>Rational(2,3)</em>).</dd>
+</dl>
+<p>Par défaut les bornes sont à ± oo (oo est le symbole de l&#8217;infini dans sympy).</p>
+<p>Ce module ne gère pas les facteurs avec d&#8217;autres symboles que <em>x</em>.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Les scripts distribués avec le paquet ne montrent pas <em>toutes</em> les possibilités
+du module. Notamment il existe une classe <tt class="docutils literal"><span class="pre">TableauFactory</span></tt> pour générer en
+chaine une série de tableaux de signe. Vous pouvez la trouver à la fin du
+fichier __init__.py.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Sujet précédent</h4>
+  <p class="topless"><a href="script.html"
+                        title="Chapitre précédent">2. Scripts</a></p>
+  <h4>Sujet suivant</h4>
+  <p class="topless"><a href="history.html"
+                        title="Chapitre suivant">4. Historique</a></p>
+  <h3>Cette page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/recommandations.txt"
+           rel="nofollow">Montrer la source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Recherche rapide</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Saisissez un mot clef ou un nom de module, classe ou fonction.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Index général"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="history.html" title="4. Historique"
+             >suivant</a> |</li>
+        <li class="right" >
+          <a href="script.html" title="2. Scripts"
+             >précédent</a> |</li>
+        <li><a href="index.html">documentation TableauSigne 1.1</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013-, B.M. - GPL v3.
+      Créé avec <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

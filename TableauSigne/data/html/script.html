@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>2. Scripts &mdash; documentation TableauSigne 1.1</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="documentation TableauSigne 1.1" href="index.html" />
+    <link rel="next" title="3. Recommandations" href="recommandations.html" />
+    <link rel="prev" title="1. Le paquet" href="install.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Index général"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="recommandations.html" title="3. Recommandations"
+             accesskey="N">suivant</a> |</li>
+        <li class="right" >
+          <a href="install.html" title="1. Le paquet"
+             accesskey="P">précédent</a> |</li>
+        <li><a href="index.html">documentation TableauSigne 1.1</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="scripts">
+<h1>2. Scripts<a class="headerlink" href="#scripts" title="Lien permanent vers ce titre">¶</a></h1>
+<div class="section" id="tabsignegui">
+<h2>2.1. TabSigneGUI<a class="headerlink" href="#tabsignegui" title="Lien permanent vers ce titre">¶</a></h2>
+<p>C&#8217;est probablement le plus simple à utiliser car c&#8217;est une interface graphique: un double clic dessus devrait le lancer.</p>
+<p>Il y a des boutons d&#8217;export tex/pst/pag.</p>
+<p>Il y a une fenêtre de texte qui donne la sortie tex que vous pouvez directement utiliser pour un copier/coller.
+Idem pour produire l&#8217;ensemble des solutions d&#8217;une inéquation sur le signe.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/GUI.png"><img alt="interface graphique *TableauSigneGUI*" src="_images/GUI.png" style="width: 712.0px; height: 592.0px;" /></a>
+<p class="caption">Interface graphique <em>TableauSigneGUI</em></p>
+<div class="legend">
+La fonction de chaque élément est relativement intuitive.</div>
+</div>
+</div>
+<div class="section" id="tabsigne">
+<h2>2.2. TabSigne<a class="headerlink" href="#tabsigne" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Le fichier <em>TabSigne</em> est un script permettant d&#8217;utiliser le module
+directement en ligne de commande.</p>
+<p>En principe il fonctionne sur toute plateforme.
+Signature:</p>
+<dl class="function">
+<dt>
+<tt class="descname">TabSigne [-h] [--bornes [BORNES]] [--format {tex,pst,pag}] [--out [OUT]] [--version] expression</tt></dt>
+<dd><p>Construit le tableau de signe d&#8217;une expression.</p>
+<dl class="docutils">
+<dt>positional arguments:</dt>
+<dd><ul class="first last simple">
+<li>expression
+L&#8217;expression dont on doit construire le tableau de signe (format sympy)</li>
+</ul>
+</dd>
+<dt>optional arguments:</dt>
+<dd><ul class="first last simple">
+<li>-h, <cite>- -help</cite>
+show this help message and exit</li>
+<li><cite>- -bornes</cite> [BORNES], -b [BORNES]
+Liste [a,b] des bornes d&#8217;étude. L&#8217;infini se note oo.</li>
+<li><cite>- -format</cite> {tex,pst,pag}, -f {tex,pst,pag}
+Choix du format de sortie</li>
+<li><cite>- -out</cite> [OUT], -o [OUT]
+Nom du fichier de sortie (sans extension)</li>
+<li><cite>- -version</cite>, -v
+show program&#8217;s version number and exit</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<p>Ainsi, on peut taper:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ TabSigne -h
+$ TabSigne -b &#39;[-3,6]&#39; &#39;8*x+3&#39;
+$ TabSigne -b &#39;[-3,6]&#39; -o sortie &#39;8*x+3&#39;
+$ TabSigne -b &quot;[-3,sympify(&#39;13/2&#39;)]&quot; -o sortie -f pst &#39;8*x+3&#39;
+</pre></div>
+</div>
+<p>qui vous fera le tableau de signe dans le fichier sortie.tex ou sortie.pst. Remarquez que les crochets de l&#8217;intervalle de définition n&#8217;ont rien à voir avec les crochets mathématiques; ce sont des crochets de liste en Python.</p>
+<p>Attention, la syntaxe de l&#8217;expression doit être précise: n&#8217;oubliez pas les symboles de produit * et mettez des parenthèses autour des constantes négatives. Par exemple on tapera:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ TabSigne -b &#39;[-1,10]&#39; -o DM -f pst &#39;(-2)*x**2*(x+3)/(x+2)**2&#39;
+</pre></div>
+</div>
+<p>(et non pas &#8216;-2*x**2*(x+3)/(x+2)**2&#8217; pour l&#8217;expression)</p>
+</div>
+<div class="section" id="tabsignesimplif">
+<h2>2.3. TabSigneSimplif<a class="headerlink" href="#tabsignesimplif" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Le fichier <em>TabSigneSimplif</em> fonctionne sur le même principe et produira un tableau simplifié: il ne contient alors que la ligne de la variable et la ligne finale.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Il existe une classe <tt class="docutils literal"><span class="pre">TableauFactory</span></tt> très pratique pour générer directement une série de tableaux de signe.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table des Matières</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">2. Scripts</a><ul>
+<li><a class="reference internal" href="#tabsignegui">2.1. TabSigneGUI</a></li>
+<li><a class="reference internal" href="#tabsigne">2.2. TabSigne</a></li>
+<li><a class="reference internal" href="#tabsignesimplif">2.3. TabSigneSimplif</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Sujet précédent</h4>
+  <p class="topless"><a href="install.html"
+                        title="Chapitre précédent">1. Le paquet</a></p>
+  <h4>Sujet suivant</h4>
+  <p class="topless"><a href="recommandations.html"
+                        title="Chapitre suivant">3. Recommandations</a></p>
+  <h3>Cette page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/script.txt"
+           rel="nofollow">Montrer la source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Recherche rapide</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Saisissez un mot clef ou un nom de module, classe ou fonction.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Index général"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="recommandations.html" title="3. Recommandations"
+             >suivant</a> |</li>
+        <li class="right" >
+          <a href="install.html" title="1. Le paquet"
+             >précédent</a> |</li>
+        <li><a href="index.html">documentation TableauSigne 1.1</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013-, B.M. - GPL v3.
+      Créé avec <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>
