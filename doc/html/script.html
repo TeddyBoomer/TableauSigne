@@ -27,7 +27,7 @@
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="documentation TableauSigne 1.1" href="index.html" />
     <link rel="next" title="3. Recommandations" href="recommandations.html" />
-    <link rel="prev" title="1. Installation" href="install.html" /> 
+    <link rel="prev" title="1. Le paquet" href="install.html" /> 
   </head>
   <body>
     <div class="related">
@@ -37,10 +37,13 @@
           <a href="genindex.html" title="Index général"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="recommandations.html" title="3. Recommandations"
              accesskey="N">suivant</a> |</li>
         <li class="right" >
-          <a href="install.html" title="1. Installation"
+          <a href="install.html" title="1. Le paquet"
              accesskey="P">précédent</a> |</li>
         <li><a href="index.html">documentation TableauSigne 1.1</a> &raquo;</li> 
       </ul>
@@ -53,28 +56,28 @@
             
   <div class="section" id="scripts">
 <h1>2. Scripts<a class="headerlink" href="#scripts" title="Lien permanent vers ce titre">¶</a></h1>
-<div class="section" id="tabsignegui-py">
-<h2>2.1. TabSigneGUI.py<a class="headerlink" href="#tabsignegui-py" title="Lien permanent vers ce titre">¶</a></h2>
+<div class="section" id="tabsignegui">
+<h2>2.1. TabSigneGUI<a class="headerlink" href="#tabsignegui" title="Lien permanent vers ce titre">¶</a></h2>
 <p>C&#8217;est probablement le plus simple à utiliser car c&#8217;est une interface graphique: un double clic dessus devrait le lancer.</p>
 <p>Il y a des boutons d&#8217;export tex/pst/pag.</p>
 <p>Il y a une fenêtre de texte qui donne la sortie tex que vous pouvez directement utiliser pour un copier/coller.
 Idem pour produire l&#8217;ensemble des solutions d&#8217;une inéquation sur le signe.</p>
 <div class="figure align-center">
-<a class="reference internal image-reference" href="_images/GUI.png"><img alt="interface graphique *TableauSigneGUI.py*" src="_images/GUI.png" style="width: 712.0px; height: 592.0px;" /></a>
-<p class="caption">Interface graphique <em>TableauSigneGUI.py</em></p>
+<a class="reference internal image-reference" href="_images/GUI.png"><img alt="interface graphique *TableauSigneGUI*" src="_images/GUI.png" style="width: 712.0px; height: 592.0px;" /></a>
+<p class="caption">Interface graphique <em>TableauSigneGUI</em></p>
 <div class="legend">
 La fonction de chaque élément est relativement intuitive.</div>
 </div>
 </div>
-<div class="section" id="tabsigne-py">
-<h2>2.2. TabSigne.py<a class="headerlink" href="#tabsigne-py" title="Lien permanent vers ce titre">¶</a></h2>
-<p>Le fichier <em>TabSigne.py</em> est un script permettant d&#8217;utiliser le module
+<div class="section" id="tabsigne">
+<h2>2.2. TabSigne<a class="headerlink" href="#tabsigne" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Le fichier <em>TabSigne</em> est un script permettant d&#8217;utiliser le module
 directement en ligne de commande.</p>
 <p>En principe il fonctionne sur toute plateforme.
 Signature:</p>
 <dl class="function">
 <dt>
-<tt class="descname">TabSigne.py [-h] [--bornes [BORNES]] [--format {tex,pst,pag}] [--out [OUT]] [--version] expression</tt></dt>
+<tt class="descname">TabSigne [-h] [--bornes [BORNES]] [--format {tex,pst,pag}] [--out [OUT]] [--version] expression</tt></dt>
 <dd><p>Construit le tableau de signe d&#8217;une expression.</p>
 <dl class="docutils">
 <dt>positional arguments:</dt>
@@ -101,22 +104,22 @@ show program&#8217;s version number and exit</li>
 </dd></dl>
 
 <p>Ainsi, on peut taper:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ ./TabSigne.py -h
-$ ./TabSigne.py -b &#39;[-3,6]&#39; &#39;8*x+3&#39;
-$ ./TabSigne.py -b &#39;[-3,6]&#39; -o sortie &#39;8*x+3&#39;
-$ ./TabSigne.py -b &quot;[-3,sympify(&#39;13/2&#39;)]&quot; -o sortie -f pst &#39;8*x+3&#39;
+<div class="highlight-python"><div class="highlight"><pre>$ TabSigne -h
+$ TabSigne -b &#39;[-3,6]&#39; &#39;8*x+3&#39;
+$ TabSigne -b &#39;[-3,6]&#39; -o sortie &#39;8*x+3&#39;
+$ TabSigne -b &quot;[-3,sympify(&#39;13/2&#39;)]&quot; -o sortie -f pst &#39;8*x+3&#39;
 </pre></div>
 </div>
 <p>qui vous fera le tableau de signe dans le fichier sortie.tex ou sortie.pst. Remarquez que les crochets de l&#8217;intervalle de définition n&#8217;ont rien à voir avec les crochets mathématiques; ce sont des crochets de liste en Python.</p>
 <p>Attention, la syntaxe de l&#8217;expression doit être précise: n&#8217;oubliez pas les symboles de produit * et mettez des parenthèses autour des constantes négatives. Par exemple on tapera:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ ./TabSigne.py -b &#39;[-1,10]&#39; -o DM -f pst &#39;(-2)*x**2*(x+3)/(x+2)**2&#39;
+<div class="highlight-python"><div class="highlight"><pre>$ TabSigne -b &#39;[-1,10]&#39; -o DM -f pst &#39;(-2)*x**2*(x+3)/(x+2)**2&#39;
 </pre></div>
 </div>
 <p>(et non pas &#8216;-2*x**2*(x+3)/(x+2)**2&#8217; pour l&#8217;expression)</p>
 </div>
-<div class="section" id="tabsignesimplif-py">
-<h2>2.3. TabSigneSimplif.py<a class="headerlink" href="#tabsignesimplif-py" title="Lien permanent vers ce titre">¶</a></h2>
-<p>Le fichier <em>TabSigneSimplif.py</em> fonctionne sur le même principe et produira un tableau simplifié: il ne contient alors que la ligne de la variable et la ligne finale.</p>
+<div class="section" id="tabsignesimplif">
+<h2>2.3. TabSigneSimplif<a class="headerlink" href="#tabsignesimplif" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Le fichier <em>TabSigneSimplif</em> fonctionne sur le même principe et produira un tableau simplifié: il ne contient alors que la ligne de la variable et la ligne finale.</p>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
 <p class="last">Il existe une classe <tt class="docutils literal"><span class="pre">TableauFactory</span></tt> très pratique pour générer directement une série de tableaux de signe.</p>
@@ -133,16 +136,16 @@ $ ./TabSigne.py -b &quot;[-3,sympify(&#39;13/2&#39;)]&quot; -o sortie -f pst &#3
   <h3><a href="index.html">Table des Matières</a></h3>
   <ul>
 <li><a class="reference internal" href="#">2. Scripts</a><ul>
-<li><a class="reference internal" href="#tabsignegui-py">2.1. TabSigneGUI.py</a></li>
-<li><a class="reference internal" href="#tabsigne-py">2.2. TabSigne.py</a></li>
-<li><a class="reference internal" href="#tabsignesimplif-py">2.3. TabSigneSimplif.py</a></li>
+<li><a class="reference internal" href="#tabsignegui">2.1. TabSigneGUI</a></li>
+<li><a class="reference internal" href="#tabsigne">2.2. TabSigne</a></li>
+<li><a class="reference internal" href="#tabsignesimplif">2.3. TabSigneSimplif</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Sujet précédent</h4>
   <p class="topless"><a href="install.html"
-                        title="Chapitre précédent">1. Installation</a></p>
+                        title="Chapitre précédent">1. Le paquet</a></p>
   <h4>Sujet suivant</h4>
   <p class="topless"><a href="recommandations.html"
                         title="Chapitre suivant">3. Recommandations</a></p>
@@ -175,16 +178,19 @@ $ ./TabSigne.py -b &quot;[-3,sympify(&#39;13/2&#39;)]&quot; -o sortie -f pst &#3
           <a href="genindex.html" title="Index général"
              >index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="recommandations.html" title="3. Recommandations"
              >suivant</a> |</li>
         <li class="right" >
-          <a href="install.html" title="1. Installation"
+          <a href="install.html" title="1. Le paquet"
              >précédent</a> |</li>
         <li><a href="index.html">documentation TableauSigne 1.1</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, B.M. - GPL v3.
+        &copy; Copyright 2013-, B.M. - GPL v3.
       Créé avec <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>

@@ -1,13 +1,12 @@
-Installation
-------------
+Le paquet
+---------
 
-Décompressez le fichier paquet-TableauSigne-x.x.7z
 Il contient:
 
-* le module tabsigne3.py
-* l'executable *TabSigne.py*
-* l'executable *TabSigneSimplif.py*
-* l'executable *TabSigneGUI.py*
+* le module lui-même __init__.py
+* l'executable *TabSigne*
+* l'executable *TabSigneSimplif*
+* l'executable *TabSigneGUI*
 * une copie de la license GNU GPL v3
 * une copie du fichier tabvar.tex
 * une copie du fichier pdftabvar.tex
@@ -26,40 +25,22 @@ final. On peut insérer la sortie dans un document, moyennant l'ajout du fichier
 Python
 ^^^^^^
 
-Les scripts sont écrits en Python3 mais *ils fonctionnent aussi avec Python2.7* (au moins les scripts en ligne de commande).
+Les scripts sont écrits en Python3.
 Ils utilisent des modules standards ainsi que **sympy** et **lxml**; 
-le script d'interface graphique *TabSigneGUI.py* utilise **Qt5** qui produit de jolies fenêtres.
+le script d'interface graphique *TabSigneGUI* utilise **Qt5** qui produit de jolies fenêtres.
 
-Attention, (pour Windows) lxml n'est installable que pour python <= 3.2.
-Globalement, pour Ububtu/Debian, il y a des paquets disponibles dans la distribution. Vous pourrez essayer::
+Il vous est conseillé d'utiliser une version de Python >=3.4. En effet, à
+partir de là, l'installateur pip standardise l'installation des modules (et
+utilise le pluf récent format d'archive **wheel**)
 
-  # apt-get install python-sympy python-lxml python-qt5
-  # apt-get install python3-sympy python3-lxml python3-qt5
+Pour satisfaire les dépendances vitales, on commence par taper (sous Dos(win)/dans un shell(linux))::
 
-Ou de façon encore plus efficace, pour avoir les plus récentes versions des modules grâce à l'installateur python pip/pip3::
+  pip install sympy lxml
 
-  # pip install sympy      
-  # pip3 install sympy
+Pour l'interface graphique, on installe PyQt5 en choisissant ici `Riverbank Qt5 <http://www.riverbankcomputing.com/software/pyqt/download5>`_ ou, sous linux, en installant le paquet **python3-qt5**::
 
-et de même pour lxml et PyQt5 (bien respecter la casse)
+  sudo apt-get install python3-qt5
 
-* Python: `http://python.org/getit/ <http://python.org/getit/>`_ : sélectionnez votre plateforme (sous linux, débrouillez-vous avec apt, synaptic...)
-* Sympy:
+Puis on peut installer l'archive::
 
-Attention, le sympy-0.6.6 présentait un petit bug pénible: les polynômes
-étaient affichés par ordre croissant de puissance. C'est une chose corrigée
-dans les versions 0.7.x. Si vous avez une ancienne distribution linux et que
-votre *python-sympy* est trop ancien, je vous conseille de l'enlever et
-d'installer la dernière version de *sympy* avec *pip* (voir ci-dessus).
-
-Lien pour `sympy-0.7.5 <https://github.com/sympy/sympy/releases/download/sympy-0.7.5/sympy-0.7.5.win32.exe>`_.
-
-sinon voir `https://github.com/sympy/sympy/releases <https://github.com/sympy/sympy/releases>`_
-
-* lxml: 
-
-Voici le lien `lxml-3.3.5 <https://pypi.python.org/pypi/lxml/3.3.5>`_ (choisissez votre version de python
-et votre type de processeur).  sinon voir `http://lxml.de/installation.html
-<http://lxml.de/installation.html>`_
-
-* Qt5: Lien `Qt5 <http://www.riverbankcomputing.co.uk/software/pyqt/download5>`_
+  pip install TableauSigne-x.x-py3-none-any.whl

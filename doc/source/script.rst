@@ -2,8 +2,8 @@ Scripts
 -------
 
 
-TabSigneGUI.py
-^^^^^^^^^^^^^^
+TabSigneGUI
+^^^^^^^^^^^
 
 C'est probablement le plus simple à utiliser car c'est une interface graphique: un double clic dessus devrait le lancer.
 
@@ -14,24 +14,24 @@ Idem pour produire l'ensemble des solutions d'une inéquation sur le signe.
 
 .. figure:: ../img/GUI.png
    :scale: 100 %
-   :alt: interface graphique *TableauSigneGUI.py*
+   :alt: interface graphique *TableauSigneGUI*
    :align: center
 
-   Interface graphique *TableauSigneGUI.py*
+   Interface graphique *TableauSigneGUI*
 
    La fonction de chaque élément est relativement intuitive.
 
 
-TabSigne.py
-^^^^^^^^^^^
-Le fichier *TabSigne.py* est un script permettant d'utiliser le module
+TabSigne
+^^^^^^^^
+Le fichier *TabSigne* est un script permettant d'utiliser le module
 directement en ligne de commande.
 
 En principe il fonctionne sur toute plateforme.
 Signature:
 
 
-.. function:: TabSigne.py [-h] [--bornes [BORNES]] [--format {tex,pst,pag}] [--out [OUT]] [--version] expression
+.. function:: TabSigne [-h] [--bornes [BORNES]] [--format {tex,pst,pag}] [--out [OUT]] [--version] expression
 
 	   Construit le tableau de signe d'une expression.
 
@@ -53,24 +53,24 @@ Signature:
 
 Ainsi, on peut taper::
 
-       $ ./TabSigne.py -h
-       $ ./TabSigne.py -b '[-3,6]' '8*x+3'
-       $ ./TabSigne.py -b '[-3,6]' -o sortie '8*x+3'
-       $ ./TabSigne.py -b "[-3,sympify('13/2')]" -o sortie -f pst '8*x+3'
+       $ TabSigne -h
+       $ TabSigne -b '[-3,6]' '8*x+3'
+       $ TabSigne -b '[-3,6]' -o sortie '8*x+3'
+       $ TabSigne -b "[-3,sympify('13/2')]" -o sortie -f pst '8*x+3'
 
 
 qui vous fera le tableau de signe dans le fichier sortie.tex ou sortie.pst. Remarquez que les crochets de l'intervalle de définition n'ont rien à voir avec les crochets mathématiques; ce sont des crochets de liste en Python.
 
 Attention, la syntaxe de l'expression doit être précise: n'oubliez pas les symboles de produit * et mettez des parenthèses autour des constantes négatives. Par exemple on tapera::
 
-       $ ./TabSigne.py -b '[-1,10]' -o DM -f pst '(-2)*x**2*(x+3)/(x+2)**2'
+       $ TabSigne -b '[-1,10]' -o DM -f pst '(-2)*x**2*(x+3)/(x+2)**2'
 
 (et non pas '-2*x**2*(x+3)/(x+2)**2' pour l'expression) 
 
 
-TabSigneSimplif.py
-^^^^^^^^^^^^^^^^^^
-Le fichier *TabSigneSimplif.py* fonctionne sur le même principe et produira un tableau simplifié: il ne contient alors que la ligne de la variable et la ligne finale.
+TabSigneSimplif
+^^^^^^^^^^^^^^^
+Le fichier *TabSigneSimplif* fonctionne sur le même principe et produira un tableau simplifié: il ne contient alors que la ligne de la variable et la ligne finale.
 
 .. important:: Il existe une classe ``TableauFactory`` très pratique pour générer directement une série de tableaux de signe.
 

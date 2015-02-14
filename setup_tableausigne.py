@@ -58,7 +58,7 @@ setup(
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
     #packages=find_packages('.', exclude=['contrib', 'docs', 'tests*']),
-    packages=['TableauSigne'] ,#'doc/build'
+    packages=['TableauSigne'] ,
 
     # List run-time dependencies here.  These will be installed by pip when your
     # project is installed. For an analysis of "install_requires" vs pip's
@@ -79,10 +79,10 @@ setup(
     # have to be included in MANIFEST.in as well.
     package_dir={'TableauSigne':'.'},
     package_data={
-        'TableauSigne':['*.tex','*.txt', 'doc/html/*.html', 'doc/html/_images/*.png']
+        'TableauSigne':['*.tex','*.txt', 'doc/html/*.html', 'doc/html/_images/*.png', 'doc/html/_static/*', 'doc/html/_sources/*','doc/html/modules/*']
     },
     exclude_package_data = { 'TableauSigne': ['setup_tableausigne.py']},
-    scripts = ['scripts/TabSigne.py','scripts/TabSigneSimplif.py','scripts/TabSigneGUI.py'],
+    scripts = ['scripts/TabSigne','scripts/TabSigneSimplif','scripts/TabSigneGUI'],
     # Although 'package_data' is the preferred approach, in some case you may
     # need to place data files outside of your packages.
     # see http://docs.python.org/3.4/distutils/setupscript.html#installing-additional-files

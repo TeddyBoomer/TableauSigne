@@ -1,7 +1,7 @@
-API (Application programming interface) du module tabsigne3
-===========================================================
+API (Application programming interface) du paquet TableauSigne
+==============================================================
 
-.. automodule::    tabsigne3
+.. automodule::    __init__
    :members:
 
 

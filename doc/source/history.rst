@@ -3,6 +3,8 @@ Historique
 
 Versions:
 
+* 1.1   : Restructuration dans une archive *wheel*, prise en compte des paquets requis, simplification de l'installation. Renommage des scripts sans extension .py
+* 1.0   : Correction d'un bug d'export pour les tableaux simplifiés.
 * 0.9.9 : Ajout de l'option "Simplifier" dans l'interface graphique. Màj de la documentation. Dernière version alpha avant 1.0
 * 0.9.4 : Ajout d'une interface graphique Qt5. Correction d'un bug, l'expression 'x' seule n'était pas traitée.
 * 0.9.3 : Ajout de l'extension 'pag' pour les sorties vers pdfadd. Ajout du fichier pdftabvar.tex.
