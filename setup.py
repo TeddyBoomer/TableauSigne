@@ -79,8 +79,9 @@ setup(
     # have to be included in MANIFEST.in as well.
     package_data={
         'TableauSigne':['data/*.tex', 'data/doc/html/*.html',\
-                        'data/doc/html/_images/*', 'data/doc/html/_modules/*',\
-                        'data/doc/html/_sources/*','data/doc/html/_static/*']
+                        'data/doc/html/_images/*', 'data/doc/html/_modules/*.html',\
+                        'data/doc/html/_sources/*','data/doc/html/_static/*',\
+                        'data/doc/html/_modules/TableauSigne/*']
     },
     scripts = ['scripts/TabSigne','scripts/TabSigneSimplif','scripts/TabSigneGUI'],
     # Although 'package_data' is the preferred approach, in some case you may
