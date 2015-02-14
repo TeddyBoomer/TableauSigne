@@ -5,6 +5,9 @@ API (Application programming interface) du paquet TableauSigne
    :members:
 
 
+.. automodule::   TableauSigne.tableau
+   :members:
+
 
 Indices and tables
 ==================
