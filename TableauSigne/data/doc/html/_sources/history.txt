@@ -3,6 +3,7 @@ Historique
 
 Versions:
 
+* 1.2   : Restructuration du code (merci Serge!). Test d'existence de PyQt5 pour le script TabSigneGUI.
 * 1.1   : Restructuration dans une archive *wheel*, prise en compte des paquets requis, simplification de l'installation. Renommage des scripts sans extension .py
 * 1.0   : Correction d'un bug d'export pour les tableaux simplifiés.
 * 0.9.9 : Ajout de l'option "Simplifier" dans l'interface graphique. Màj de la documentation. Dernière version alpha avant 1.0
