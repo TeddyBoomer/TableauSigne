@@ -3,8 +3,7 @@
 
 # script adapté des exemples basiclayout, mainwindows.menu en qt5
 
-__name__ == '__main__'
-from TableauSigne import *
+from TableauSigne import __version__, TableauSigne
 from PyQt5.QtWidgets import (QAction, QApplication, QCheckBox, QComboBox,\
                              QDialogButtonBox, QFileDialog, QFormLayout,\
                              QGroupBox, QHBoxLayout, QLabel, QLineEdit,\
@@ -85,7 +84,7 @@ class QMW(QMainWindow):
     def _createApropos(self):
         QMessageBox.information(self,
                                 "À propos",\
-                                "<p><strong>Tableau de signe</strong> - v"+version+"</p>"+\
+                                "<p><strong>Tableau de signe</strong> - v"+__version__+"</p>"+\
                                 "<p>B. Mauricette - GPLv3</p>")
         
 

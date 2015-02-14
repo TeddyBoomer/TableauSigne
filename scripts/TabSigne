@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-__doc__ = """
+"""
 Script d'utilisation du module de tableau de signe.
-
 """
 
 import sys
 import argparse
-from TableauSigne import *
+from TableauSigne import __version__, TableauSigne
 
 # ./TabSigne.py -h
 # ./TabSigne.py -b '[-3,6]' '8*x+3'
@@ -24,7 +23,7 @@ parser.add_argument('--format', '-f', type=str, choices=['tex', 'pst', 'pag'], d
                     help="Choix du format de sortie")
 parser.add_argument('--out', '-o', type=str, nargs='?', default='tableau', 
                     help="Nom du fichier de sortie (sans extension)")
-parser.add_argument('--version', '-v', action='version', version='%(prog)s '+version)
+parser.add_argument('--version', '-v', action='version', version='%(prog)s '+__version__)
 
 A = parser.parse_args()
 # l'expresion est du type "'e'" dans A

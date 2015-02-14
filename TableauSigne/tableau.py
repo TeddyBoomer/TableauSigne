@@ -1,27 +1,9 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-# Copyright (C) 2013 Boris MAURICETTE
-# 
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; (GNU GPL v3)
-# 
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-# 
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-
-
-__doc__ = """
+# coding=utf8
+"""
 Classe de création de tableau de signe à l'aide de sympy et lxml.
 Elle génère au choix la sortie latex ou un tableau xml à lancer dans pst+.
-
 """
+
 import operator
 import re as regexp
 from random import choice
@@ -30,7 +12,6 @@ from lxml import etree
 from functools import reduce
 
 x = var('x')
-__version__ = '1.1'
 
 class TableauSigne():
     """
@@ -545,3 +526,4 @@ def randExpr(n=2, a=-5, b=5, denomin = True):
         F = [(random_poly(x, 1, a,b, polys=False), choice(ope)) for i in range(n)]
         out = sympify(reduce(lambda a,b: a+b[1]+'('+str(b[0])+')', F, '1'))
     return out
+

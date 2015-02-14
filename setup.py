@@ -77,11 +77,9 @@ setup(
     # If there are data files included in your packages that need to be
     # installed, specify them here.  If using Python 2.6 or less, then these
     # have to be included in MANIFEST.in as well.
-    package_dir={'TableauSigne':'.'},
     package_data={
-        'TableauSigne':['*.tex','*.txt', 'doc/html/*.html', 'doc/html/_images/*.png', 'doc/html/_static/*', 'doc/html/_sources/*','doc/html/modules/*']
+        'TableauSigne':['data/*.tex',]
     },
-    exclude_package_data = { 'TableauSigne': ['setup_tableausigne.py']},
     scripts = ['scripts/TabSigne','scripts/TabSigneSimplif','scripts/TabSigneGUI'],
     # Although 'package_data' is the preferred approach, in some case you may
     # need to place data files outside of your packages.
