@@ -1,6 +1,0 @@
-include LICENSE.txt
-include doc/html/*.html
-include doc/html/_images/*.png
-include doc/html/_static/*
-include doc/html/_sources/*
-include doc/html/modules/*

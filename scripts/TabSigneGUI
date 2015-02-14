@@ -4,13 +4,16 @@
 # script adapté des exemples basiclayout, mainwindows.menu en qt5
 
 from TableauSigne import __version__, TableauSigne
-from PyQt5.QtWidgets import (QAction, QApplication, QCheckBox, QComboBox,\
+try:
+    from PyQt5.QtWidgets import (QAction, QApplication, QCheckBox, QComboBox,\
                              QDialogButtonBox, QFileDialog, QFormLayout,\
                              QGroupBox, QHBoxLayout, QLabel, QLineEdit,\
                              QMainWindow, QMenu, QMenuBar, QMessageBox,\
                              QPushButton, QTextEdit, QVBoxLayout, QMainWindow,\
                              QWidget)
-from PyQt5.QtCore import (QSaveFile, QIODevice, QByteArray, pyqtSlot)
+    from PyQt5.QtCore import (QSaveFile, QIODevice, QByteArray, pyqtSlot)
+except ImportError as i:
+    print("Veuillez installer PyQt5 sur le site riverbank: http://www.riverbankcomputing.com/software/pyqt/download5")   
 
 
 class TableauQt(TableauSigne):
