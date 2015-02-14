@@ -1,4 +1,4 @@
-# coding=utf8
+# -*- coding: utf-8 -*-
 """
 Classe de création de tableau de signe à l'aide de sympy et lxml.
 Elle génère au choix la sortie latex ou un tableau xml à lancer dans pst+.
