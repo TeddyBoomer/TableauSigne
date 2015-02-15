@@ -9,7 +9,7 @@ Une petite illustration des capacités du module:
 Exemple::
 
 
-  >>> from TableaSigne import *
+  >>> from TableauSigne import *
   
   >>> A = randExpr(3)
   
