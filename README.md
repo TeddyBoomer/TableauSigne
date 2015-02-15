@@ -37,6 +37,6 @@ Exemple::
   
   >>> B.export_pst()
   
-Deux scripts python TabSigne.py et TabSigneSimplif.py utilisent le module pour produire directement des sorties tex/pst/pag.
+Des scripts python TabSigne, TabSigneSimplif et TabSigneGUI utilisent le module pour produire directement des sorties tex/pst/pag. Le dernier script est une interface graphique et nécessite l'installation de PyQt5.
 
 voir le site http://www.xm1math.net/pdfadd/index.html
