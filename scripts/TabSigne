@@ -7,6 +7,7 @@ Script d'utilisation du module de tableau de signe.
 
 import sys
 import argparse
+from sympy import sympify
 from TableauSigne import __version__, TableauSigne
 
 # TabSigne.py -h

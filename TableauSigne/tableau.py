@@ -32,7 +32,7 @@ class TableauSigne():
         >>> f = TableauSigne('3*x+1') # expression du 1er degré prise en compte
 
     """
-    def __init__(self, expr, bornes = [-oo, oo]):
+    def __init__(self, expr, bornes=[-oo, oo]):
         self.expr = sympify(expr)
         self.bornes = bornes
         self.tab = []
@@ -242,7 +242,7 @@ class TableauSigne():
         self.tabsimplif = [self.tab[0]]+[self.tab[-1]]
 
 
-    def tab2latex(self, simplif = False):
+    def tab2latex(self, simplif=False):
         """Sortie latex du tableau de signe. Il utilise le fichier tabvar.tex comme 
         suggéré par pstplus.
 
@@ -472,7 +472,7 @@ class TableauFactory(list):
         for e in L:
             self.append(TableauSigne(e))
 
-    def export_pst(self, simplif = False, ext = "pag"):
+    def export_pst(self, simplif=False, ext="pag"):
         """créer les fichiers sortie au format pag/pst avec option 
         de simplification (False par défaut)
 
@@ -483,7 +483,7 @@ class TableauFactory(list):
         for i,t in enumerate(self):
             t.export_pst(nom="tableau"+str(i+1), simplif = simplif, ext = ext)
 
-    def export_latex(self, nom="tableaux_liste", simplif = False, ext = "tex"):
+    def export_latex(self, nom="tableaux_liste", simplif=False, ext="tex"):
         """créer la sortie latex des tableaux dans un seul fichier avec option
         de simplification.
 
@@ -500,7 +500,7 @@ class TableauFactory(list):
         out.close()
 
 
-def randExpr(n=2, a=-5, b=5, denomin = True):
+def randExpr(n=2, a=-5, b=5, denomin=True):
     """créer aléatoirement une expression avec n facteurs du 1er degré à coef
     entiers compris entre a et b. Le placement au numérateur/dénominateur se
     fait aussi au hasard.
