@@ -9,6 +9,7 @@ Il renvoie le fichier pst avec la ligne des valeurs et la ligne du signe.
 
 import sys
 import argparse
+from sympy import sympify
 from TableauSigne import __version__, TableauSigne
 
 # TabSigneSimplif.py -h
@@ -29,7 +30,7 @@ parser.add_argument('--version', '-v', action='version', version='%(prog)s '+__v
 
 A = parser.parse_args()
 # l'expresion est du type "'e'" dans A
-tmp = TableauSigne(eval(A.expr), bornes = eval(A.bornes))
+tmp = TableauSigne(sympify(A.expr), bornes = eval(A.bornes))
 # choix du format dans le dictionnaire fin des 2 méthodes.
 fin = {'tex':tmp.export_latex, 'pst':tmp.export_pst, 'pag':tmp.export_pst}
 fin[A.format](nom = A.out, simplif = True, ext = A.format)
