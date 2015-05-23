@@ -83,7 +83,7 @@ setup(
                         'data/doc/html/_sources/*','data/doc/html/_static/*',\
                         'data/doc/html/_modules/TableauSigne/*']
     },
-    scripts = ['scripts/TabSigne','scripts/TabSigneSimplif','scripts/TabSigneGUI'],
+    scripts = ['scripts/TabSigne.py','scripts/TabSigneSimplif.py','scripts/TabSigneGUI.py'],
     # Although 'package_data' is the preferred approach, in some case you may
     # need to place data files outside of your packages.
     # see http://docs.python.org/3.4/distutils/setupscript.html#installing-additional-files
