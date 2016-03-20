@@ -346,6 +346,7 @@ class TableauSigne():
         f = nom+"."+ext
         choix ={True: self.xmlsimplif, False: self.xml}
         out = open(f, 'w')
+        # a modifier? out.write( etree.tostring(choix[simplif], pretty_print=True, encoding="unicode") )
         out.write( etree.tostring(choix[simplif], pretty_print=True).decode("utf-8") )
         out.close()
 
@@ -525,5 +526,5 @@ def randExpr(n=2, a=-5, b=5, denomin=True):
     while (n>=2 and (degree(Poly(numer(out),x)) + degree(Poly(denom(out),x)) !=n)):
         F = [(random_poly(x, 1, a,b, polys=False), choice(ope)) for i in range(n)]
         out = sympify(reduce(lambda a,b: a+b[1]+'('+str(b[0])+')', F, '1'))
-    return out
+    return factor(out)
 
