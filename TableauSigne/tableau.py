@@ -6,10 +6,11 @@ Elle génère au choix la sortie latex ou un tableau xml à lancer dans pst+.
 
 import operator
 import re as regexp
-from random import choice
+from random import choice, randint
 from sympy import *
 from lxml import etree
 from functools import reduce
+from copy import deepcopy
 
 x = var('x')
 
@@ -20,6 +21,8 @@ class TableauSigne():
 
     :param string expr: expression à étudier, sous forme d'un produit ou quotient; avec la syntaxe sympy.
     :param list bornes: liste à deux éléments pour les bornes. [-oo, oo] par défaut
+    :param int niveau: niveau de difficulté pour générer un tableau à compléter: 1 \
+                - juste les signes à remplir; 2 - aussi les valeurs particulières.
 
     exemple::
 
@@ -32,9 +35,10 @@ class TableauSigne():
         >>> f = TableauSigne('3*x+1') # expression du 1er degré prise en compte
 
     """
-    def __init__(self, expr, bornes=[-oo, oo]):
+    def __init__(self, expr, bornes=[-oo, oo], niveau=1):
         self.expr = sympify(expr)
         self.bornes = bornes
+        self.niveau = niveau
         self.tab = []
         if self.expr.is_Mul:
             self.facteurs = self.expr.args
@@ -68,15 +72,18 @@ class TableauSigne():
         except TypeError:
             self.vi = []
         self._create_tab()
+        self._create_tab_nosign(niveau = niveau)
         self._arbrepst()
 
     def _arbrepst(self):
-        """Création de l'arbre xml et de l'arbre simplifié selon le format de PST+;
-        stockés dans self.xml, self.xmlsimplif
+        """Création de l'arbre xml, de l'arbre simplifié selon le format de PST+;
+        de l'arbre xml version nosign (les +- sont remplacés par …
+        stockés dans self.xml, self.xmlsimplif, self.xmlnosign
 
         """
         root = etree.Element("Tableau")
         root_simplif = etree.Element("Tableau")
+        root_nosign =  etree.Element("Tableau")
         ligne = etree.SubElement(root, "Lignes")
         #ligne.text = str(len(self.facteurs)+2)
         ligne.text = str(len(self.tab))
@@ -84,12 +91,20 @@ class TableauSigne():
         ligne_simplif = etree.SubElement(root_simplif, "Lignes")
         ligne_simplif.text = '2'
 
+        ligne_nosign = etree.SubElement(root_nosign, "Lignes")
+        #ligne.text = str(len(self.facteurs)+2)
+        ligne_nosign.text = str(len(self.tabnosign))
+
         col = etree.SubElement(root, "Colonnes")
         #col.text = str(2*len(self.racines)+2*len(self.vi)+4)
         col.text = str(len(self.tab[0]["Milieu"]))
 
         col_simplif = etree.SubElement(root_simplif, "Colonnes")
         col_simplif.text = col.text
+
+        col_nosign = etree.SubElement(root_nosign, "Colonnes")
+        #col.text = str(2*len(self.racines)+2*len(self.vi)+4)
+        col_nosign.text = str(len(self.tabnosign[0]["Milieu"]))
 
         for l in self.tab:
             for e in ["Bas", "Milieu", "Haut"]:
@@ -106,7 +121,16 @@ class TableauSigne():
                                r'',
                                self._list2pststring(l[e]))
         self.xmlsimplif = root_simplif
+        for l in self.tabnosign:
+            for e in ["Bas", "Milieu", "Haut"]:
+                etree.SubElement(root_nosign, e).text =\
+                    regexp.sub(r'\$',
+                               r'',
+                               self._list2pststring(l[e]))
 
+        self.xmlnosign = root_nosign
+
+        
     def _list2pststring(self, l):
         # disparition du + dans le cas de latex(+oo)
         return reduce(lambda u,v: str(u)+"#"+(latex(v) if (v!=oo) else '+\\infty'), l)
@@ -241,12 +265,41 @@ class TableauSigne():
         self.tab.append(self._fill_last_ligne(tete))
         self.tabsimplif = [self.tab[0]]+[self.tab[-1]]
 
+    def _create_tab_nosign(self, niveau=1):
+        """Création d'un tableau de signe où les signes, les zéros, les vi 
+        sont laissés vides pour êtres complétés. À créer après le tableau 
+        de create_tab()
+        niveau: 1 ou 2 - 1 on enlève les signes; 2 on enlève aussi les valeurs
+                d'annulation
+        """
+        self.tabnosign = deepcopy(self.tab)
+        for i,e in enumerate(self.tabnosign):
+            if i==0 and niveau==1:
+                pass
+            elif i==0 and niveau==2:
+                # recalcul de l'entête en mettant des … sauf aux bords
+                values = [r for r in self.racines+self.vi \
+                      if (r > self.bornes[0]) and (r< self.bornes[1])]
+                values.sort()
+                tete = ["x", self.bornes[0]]+reduce(operator.concat, \
+                                    [["vide","\\dots"] for u in values])\
+                                    +["vide",self.bornes[1]]
+                self.tabnosign[i]["Milieu"] = tete
+            else:
+                L = e["Milieu"]
+                self.tabnosign[i]["Milieu"] = [(x if not(x == '+' or x =='-') else '\\dots') for x in L]
 
-    def tab2latex(self, simplif=False):
+
+    def tab2latex(self, option='whole'):
         """Sortie latex du tableau de signe. Il utilise le fichier tabvar.tex comme 
         suggéré par pstplus.
 
-        :param boolean simplif: utiliser le tableau simplifié, par défaut False.
+
+        :param string option: in ['whole', 'simplif', 'nosign']: 'simplif': utiliser le tableau simplifié
+           qui ne comporte que la 1ere et la dernière ligne.
+           'nosign': générer le tableau avec pointillés à compléter (le niveau de difficulté 1 ou 2
+           a été réglé à l'initialisation)
+           'whole': tableau complet normal
 
         exemple::
 
@@ -260,16 +313,20 @@ class TableauSigne():
 
         """
         # choix du tableau
-        if simplif:
+        if option=='simplif':
             T = self.tabsimplif
-        else:
+        elif option=='nosign':
+            T = self.tabnosign
+        else: #option=='whole'
             T = self.tab
         # appliquer plusieurs substitution sur les éléments d'une ligne
+        #'|': '\\tx{|}'
         trad = {'+': '\\tx{+}', \
                      '-': '\\tx{-}',\
-                     '|': '\\tx{|}',\
+                     '|': '\\trait' ,\
                      '||': '\\dbt',\
                      0: '\\txt{0}',\
+                     '\\dots': '\\tx{\\dots}',\
                     'vide': ''}
         out = "$$\\tabvar{%"
         #traitement à part pour la 1ere ligne
@@ -320,7 +377,7 @@ class TableauSigne():
 
     def get_solutions(self, choix):
         """renvoie les solutions d'une inéquation au format latex
-        choix est dans ['++', '+0', '-\-', '-0'] pour signifier strictiment positif ou pas
+        choix est dans ['++', '+0', '-\-', '-0'] pour signifier strictement positif ou pas
 
         :param string choix: nature de l'inéquation ['++', '+0', '-\-', '-0']
 
@@ -333,31 +390,42 @@ class TableauSigne():
         """
 
         paires = self._get_pm(choix[0])
-        intervs = [self._create_latex_intervalle(choix, x[0], x[1]) for x in paires]
-        I = reduce(lambda a,b: a+'\\cup '+b, intervs[1:], intervs[0])
-        return I
+        if paires == []:
+            return "\\emptyset"
+        else:
+            intervs = [self._create_latex_intervalle(choix, x[0], x[1]) for x in paires]
+            I = reduce(lambda a,b: a+'\\cup '+b, intervs[1:], intervs[0])
+            return I
 
-    def export_pst(self, nom="tableau", ext="pag", simplif = False):
+    def export_pst(self, nom="tableau", ext="pag", simplif = False, sign =True):
         """Exporter l'arbre xml dans un fichier. Format pag ou pst.
 
         """
         #self.arbrepst()
         #
         f = nom+"."+ext
-        choix ={True: self.xmlsimplif, False: self.xml}
+        if not(sign):
+            choix = self.xmlnosign
+        elif simplif:
+            choix = self.xmlsimplif
+        else:
+            choix = self.xml
+        #choix ={True: self.xmlsimplif, False: self.xml}
         out = open(f, 'w')
         # a modifier? out.write( etree.tostring(choix[simplif], pretty_print=True, encoding="unicode") )
-        out.write( etree.tostring(choix[simplif], pretty_print=True).decode("utf-8") )
+        out.write( etree.tostring(choix, pretty_print=True).decode("utf-8") ) #choix[simplif]
         out.close()
 
-    def export_latex(self, nom="tableau", simplif = False, ext = "tex"):
+    def export_latex(self, nom="tableau", option='whole', ext = "tex"): #simplif = False, sign=True
         """Exporter la sortie latex dans un fichier. Format tex.
         paramètre ext pour compatibilite avec export_pst
+        paramètre sign: True par défaut on laisse des +-
+                        False pour mettre des … pour faire un énoncé de tableau à compléter.
         """
-        #
+        
         f = nom+".tex"
         out = open(f, 'w')
-        out.write( self.tab2latex(simplif = simplif) )
+        out.write( self.tab2latex(option=option) )
         out.close()
 
 # class TableauVariation(TableauSigne):
@@ -451,13 +519,13 @@ class TableauFactory(list):
       >>> test = ['(3*x+2)', '(5*x+4)*(2*x+8)', '(9*x-3)/(5*x-1)']
       >>> t = TableauFactory(test)
       >>> t.export_pst(simplif = False, ext='pag')
-      >>> t.export_latex(simplif = True)
+      >>> t.export_latex(option='simplif')
       >>> for e in t: print(e.get_solutions('++'))
       \\left] - \\frac{2}{3};+\\infty \\right[
       \\left] -\\infty;-4\\right[\\cup \\left] - \\frac{4}{5};+\\infty \\right[
       \\left] -\\infty;\\frac{1}{5}\\right[\\cup \\left] \\frac{1}{3};+\\infty \\right[
       >>> t2 = TableauFactory([randExpr(3) for i in range(2)])
-      >>> for x in t2: print(latex(x.expr)+'\\n'+ x.tab2latex(simplif = True)+'\\n')
+      >>> for x in t2: print(latex(x.expr)+'\\n'+ x.tab2latex(option='simplif')+'\\n')
       - \\frac{4 x + 1}{x \\left(- 3 x -2\\right)}
       $$\\tabvar{%
       \\tx{x} & \\tx{-\\infty} &  & \\tx{- \\frac{2}{3}} &  & \\tx{- \\frac{1}{4}} &  & \\tx{0} &  & \\tx{+\\infty}\\cr
@@ -484,7 +552,7 @@ class TableauFactory(list):
         for i,t in enumerate(self):
             t.export_pst(nom="tableau"+str(i+1), simplif = simplif, ext = ext)
 
-    def export_latex(self, nom="tableaux_liste", simplif=False, ext="tex"):
+    def export_latex(self, nom="tableaux_liste", option='whole', ext="tex"):
         """créer la sortie latex des tableaux dans un seul fichier avec option
         de simplification.
 
@@ -496,15 +564,16 @@ class TableauFactory(list):
         f = nom+"."+ext
         out = open(f, 'w')
         for t in self:
-            out.write( t.tab2latex(simplif = simplif))
+            out.write( t.tab2latex(option=option))
             out.write('\n\n')
         out.close()
 
 
-def randExpr(n=2, a=-5, b=5, denomin=True):
+def randExpr(n=2, a=-5, b=5, denomin=True, nopower =True):
     """créer aléatoirement une expression avec n facteurs du 1er degré à coef
     entiers compris entre a et b. Le placement au numérateur/dénominateur se
     fait aussi au hasard.
+    Attention, si nopower est activé, il faut b-a>sqrt(n).
 
     :param int n: le nombre de facteurs, 2 par défaut
     :param int a: borne inférieure des coefs, -5 par défaut
@@ -520,11 +589,41 @@ def randExpr(n=2, a=-5, b=5, denomin=True):
 
     """
     ope = (['/','*'] if denomin else ['*'])
-    F = [(random_poly(x, 1, a,b, polys=False), choice(ope)) for i in range(n)]
+    # éviter des puissances d'un même facteur
+    # le 1er terme du couple est un coef directeur, doit être non nul
+    A = [[choice([-1,1])*randint(1, b), randint(a,b)] for i in range(n)]
+    # tester toutes les colinéarités 2 à 2
+    if nopower:
+        nocolin = False
+        # for i in range(n):
+        #     for j in range(i+1,n):
+        #         if det(Matrix([A[i], A[j]])) ==0:
+        #             nocolin = False
+        #             break
+        while not(nocolin):
+            A = [[choice([-1,1])*randint(1, b), randint(a,b)] for i in range(n)]
+            # tester toutes les colinéarités 2 à 2
+            nocolin = True
+            for i in range(n):
+                for j in range(i+1,n):
+                    # calcul de colinéarité
+                    if det(Matrix([A[i], A[j]])) ==0:
+                    #if A[i][0]*A[j][1]-A[j][0]*A[i][1] ==0:
+                        nocolin = False
+                        break
+    else:
+        # le 1er terme du couple est un coef directeur, doit être non nul
+        A = [[choice([-1,1])*randint(1, b), randint(a,b)] for i in range(n)]
+        
+    #F = [(random_poly(x, 1, a,b, polys=False), choice(ope)) for i in range(n)]
+    F = [(x*e[0]+e[1], choice(ope)) for e in A]
     out = sympify(reduce(lambda a,b: a+b[1]+'('+str(b[0])+')', F, '1'))
     # sadly certains facteurs "colinéaires" pourraient se neutraliser
+    # ce cas ne se produit pas si nopower est activé
     while (n>=2 and (degree(Poly(numer(out),x)) + degree(Poly(denom(out),x)) !=n)):
         F = [(random_poly(x, 1, a,b, polys=False), choice(ope)) for i in range(n)]
-        out = sympify(reduce(lambda a,b: a+b[1]+'('+str(b[0])+')', F, '1'))
-    return factor(out)
+        # besoin de sympifier pour des expressions avec fractions…
+        #out = sympify(reduce(lambda a,b: a+b[1]+'('+str(b[0])+')', F, '1'))
+        out = reduce(lambda a,b: a+b[1]+'('+str(b[0])+')', F, '1')
+    return out #factor(out)
 

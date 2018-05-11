@@ -11,3 +11,5 @@ build/
 TableauSigne.egg-info/
 TableauSigne/data/html/.buildinfo
 TableauSigne/data/doctrees/
+TableauSigne/data/doc/
+.gitignore

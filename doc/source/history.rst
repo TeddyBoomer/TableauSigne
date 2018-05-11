@@ -3,6 +3,9 @@ Historique
 
 Versions:
 
+* 1.3   : Ajout d'un export de tableau à compléter (option 'nosign' dans TableauSigne.tab2latex).
+  Niveau de difficulté à choisir à l'initialisation (niveau 1 ou 2: 1 - juste les signes à remplir; 2-remplir aussi les zéros et valeurs interdites)
+          Amélioration de randExpr: l'option 'nopower' garanti qu'il n'y aura pas de facteurs se regroupant en puissances (non colinéarité des couples (coef dir, ord. orig.) deux à deux).
 * 1.2   : Restructuration du code (merci Serge!). Test d'existence de PyQt5 pour le script TabSigneGUI.
 * 1.1   : Restructuration dans une archive *wheel*, prise en compte des paquets requis, simplification de l'installation. Renommage des scripts sans extension .py
 * 1.0   : Correction d'un bug d'export pour les tableaux simplifiés.

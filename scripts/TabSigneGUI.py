@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # script adapté des exemples basiclayout, mainwindows.menu en qt5
-
+from lxml import etree
 from TableauSigne import __version__, TableauSigne
 try:
     from PyQt5.QtWidgets import (QAction, QApplication, QCheckBox, QComboBox,\
