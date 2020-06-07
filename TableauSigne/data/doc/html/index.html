@@ -1,33 +1,24 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Bienvenue dans la doc de TableauSigne! &#8212; documentation TableauSigne 1.3</title>
+    <meta charset="utf-8" />
+    <title>Bienvenue dans la doc de TableauSigne! &#8212; Documentation TableauSigne 1.3.5</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '1.3',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
     <script type="text/javascript" src="_static/translations.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Recherche" href="search.html" />
     <link rel="next" title="1. Le paquet" href="install.html" /> 
-  </head>
-  <body>
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -40,7 +31,7 @@
         <li class="right" >
           <a href="install.html" title="1. Le paquet"
              accesskey="N">suivant</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">documentation TableauSigne 1.3</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="#">Documentation TableauSigne 1.3.5</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -51,22 +42,23 @@
             
   <div class="section" id="bienvenue-dans-la-doc-de-tableausigne">
 <h1>Bienvenue dans la doc de TableauSigne!<a class="headerlink" href="#bienvenue-dans-la-doc-de-tableausigne" title="Lien permanent vers ce titre">¶</a></h1>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Author:</th><td class="field-body">Boris Mauricette &lt;Boris point Mauricette at ac - lyon point fr&gt; ou &lt;teddy_boomer at yahoo point fr&gt;</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Date:</th><td class="field-body">11 mai, 2018</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Revision:</th><td class="field-body">1.3</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Description:</th><td class="field-body">Voici la documentation du paquet pour les tableaux de signe.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Contents:</th><td class="field-body">Informations sur le module TableauSigne</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Author</dt>
+<dd class="field-odd"><p>Boris Mauricette &lt;Boris point Mauricette at ac - lyon point fr&gt; ou &lt;teddy_boomer at yahoo point fr&gt;</p>
+</dd>
+<dt class="field-even">Date</dt>
+<dd class="field-even"><p>26 mai, 2020</p>
+</dd>
+<dt class="field-odd">Revision</dt>
+<dd class="field-odd"><p>1.3.5</p>
+</dd>
+<dt class="field-even">Description</dt>
+<dd class="field-even"><p>Voici la documentation du paquet pour les tableaux de signe.</p>
+</dd>
+<dt class="field-odd">Contents</dt>
+<dd class="field-odd"><p>Informations sur le module TableauSigne</p>
+</dd>
+</dl>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="install.html">1. Le paquet</a><ul>
@@ -88,7 +80,7 @@
 </div>
 <p>Une petite illustration des capacités du module:</p>
 <p>Exemple:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">tabsigne3</span> <span class="k">import</span> <span class="o">*</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">tabsigne3</span> <span class="k">import</span> <span class="o">*</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">A</span> <span class="o">=</span> <span class="n">randExpr</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <span class="go">(4*x - 3)/((-3*x + 4)*(5*x + 5))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">B</span> <span class="o">=</span> <span class="n">TableauSigne</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
@@ -125,13 +117,13 @@
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Recherche rapide</h3>
+  <h3 id="searchlabel">Recherche rapide</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -150,12 +142,12 @@
         <li class="right" >
           <a href="install.html" title="1. Le paquet"
              >suivant</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">documentation TableauSigne 1.3</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="#">Documentation TableauSigne 1.3.5</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-, B.M. - GPL v3.
-      Créé avec <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
+      Créé avec <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
     </div>
   </body>
 </html>

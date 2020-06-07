@@ -1,34 +1,25 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>2. Scripts &#8212; documentation TableauSigne 1.3</title>
+    <meta charset="utf-8" />
+    <title>2. Scripts &#8212; Documentation TableauSigne 1.3.5</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '1.3',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
     <script type="text/javascript" src="_static/translations.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Recherche" href="search.html" />
     <link rel="next" title="3. Recommandations" href="recommandations.html" />
     <link rel="prev" title="1. Le paquet" href="install.html" /> 
-  </head>
-  <body>
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -44,7 +35,7 @@
         <li class="right" >
           <a href="install.html" title="1. Le paquet"
              accesskey="P">précédent</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">documentation TableauSigne 1.3</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Documentation TableauSigne 1.3.5</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -63,9 +54,10 @@
 Idem pour produire l’ensemble des solutions d’une inéquation sur le signe.</p>
 <div class="figure align-center" id="id1">
 <a class="reference internal image-reference" href="_images/GUI.png"><img alt="interface graphique *TableauSigneGUI*" src="_images/GUI.png" style="width: 712.0px; height: 592.0px;" /></a>
-<p class="caption"><span class="caption-text">Interface graphique <em>TableauSigneGUI</em></span></p>
+<p class="caption"><span class="caption-text">Interface graphique <em>TableauSigneGUI</em></span><a class="headerlink" href="#id1" title="Lien permanent vers cette image">¶</a></p>
 <div class="legend">
-La fonction de chaque élément est relativement intuitive.</div>
+<p>La fonction de chaque élément est relativement intuitive.</p>
+</div>
 </div>
 </div>
 <div class="section" id="tabsigne">
@@ -76,34 +68,32 @@ directement en ligne de commande.</p>
 Signature:</p>
 <dl class="function">
 <dt>
-<code class="descname">TabSigne [-h] [--bornes [BORNES]] [--format {tex,pst,pag}] [--out [OUT]] [--version] expression</code></dt>
+<code class="sig-name descname">TabSigne [-h] [--bornes [BORNES]] [--format {tex,pst,pag}] [--out [OUT]] [--version] expression</code></dt>
 <dd><p>Construit le tableau de signe d’une expression.</p>
-<dl class="docutils">
-<dt>positional arguments:</dt>
-<dd><ul class="first last simple">
-<li>expression
-L’expression dont on doit construire le tableau de signe (format sympy)</li>
+<dl class="simple">
+<dt>positional arguments:</dt><dd><ul class="simple">
+<li><p>expression
+L’expression dont on doit construire le tableau de signe (format sympy)</p></li>
 </ul>
 </dd>
-<dt>optional arguments:</dt>
-<dd><ul class="first last simple">
-<li>-h, <cite>- -help</cite>
-show this help message and exit</li>
-<li><cite>- -bornes</cite> [BORNES], -b [BORNES]
-Liste [a,b] des bornes d’étude. L’infini se note oo.</li>
-<li><cite>- -format</cite> {tex,pst,pag}, -f {tex,pst,pag}
-Choix du format de sortie</li>
-<li><cite>- -out</cite> [OUT], -o [OUT]
-Nom du fichier de sortie (sans extension)</li>
-<li><cite>- -version</cite>, -v
-show program’s version number and exit</li>
+<dt>optional arguments:</dt><dd><ul class="simple">
+<li><p>-h, <cite>- -help</cite>
+show this help message and exit</p></li>
+<li><p><cite>- -bornes</cite> [BORNES], -b [BORNES]
+Liste [a,b] des bornes d’étude. L’infini se note oo.</p></li>
+<li><p><cite>- -format</cite> {tex,pst,pag}, -f {tex,pst,pag}
+Choix du format de sortie</p></li>
+<li><p><cite>- -out</cite> [OUT], -o [OUT]
+Nom du fichier de sortie (sans extension)</p></li>
+<li><p><cite>- -version</cite>, -v
+show program’s version number and exit</p></li>
 </ul>
 </dd>
 </dl>
 </dd></dl>
 
 <p>Ainsi, on peut taper:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ TabSigne -h
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ TabSigne -h
 $ TabSigne -b &#39;[-3,6]&#39; &#39;8*x+3&#39;
 $ TabSigne -b &#39;[-3,6]&#39; -o sortie &#39;8*x+3&#39;
 $ TabSigne -b &quot;[-3,sympify(&#39;13/2&#39;)]&quot; -o sortie -f pst &#39;8*x+3&#39;
@@ -111,7 +101,7 @@ $ TabSigne -b &quot;[-3,sympify(&#39;13/2&#39;)]&quot; -o sortie -f pst &#39;8*x
 </div>
 <p>qui vous fera le tableau de signe dans le fichier sortie.tex ou sortie.pst. Remarquez que les crochets de l’intervalle de définition n’ont rien à voir avec les crochets mathématiques; ce sont des crochets de liste en Python.</p>
 <p>Attention, la syntaxe de l’expression doit être précise: n’oubliez pas les symboles de produit * et mettez des parenthèses autour des constantes négatives. Par exemple on tapera:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ TabSigne -b &#39;[-1,10]&#39; -o DM -f pst &#39;(-2)*x**2*(x+3)/(x+2)**2&#39;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ TabSigne -b &#39;[-1,10]&#39; -o DM -f pst &#39;(-2)*x**2*(x+3)/(x+2)**2&#39;
 </pre></div>
 </div>
 <p>(et non pas “-2*x**2*(x+3)/(x+2)**2” pour l’expression)</p>
@@ -120,8 +110,8 @@ $ TabSigne -b &quot;[-3,sympify(&#39;13/2&#39;)]&quot; -o sortie -f pst &#39;8*x
 <h2>2.3. TabSigneSimplif<a class="headerlink" href="#tabsignesimplif" title="Lien permanent vers ce titre">¶</a></h2>
 <p>Le fichier <em>TabSigneSimplif</em> fonctionne sur le même principe et produira un tableau simplifié: il ne contient alors que la ligne de la variable et la ligne finale.</p>
 <div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last">Il existe une classe <code class="docutils literal"><span class="pre">TableauFactory</span></code> très pratique pour générer directement une série de tableaux de signe.</p>
+<p class="admonition-title">Important</p>
+<p>Il existe une classe <code class="docutils literal notranslate"><span class="pre">TableauFactory</span></code> très pratique pour générer directement une série de tableaux de signe.</p>
 </div>
 </div>
 </div>
@@ -132,7 +122,7 @@ $ TabSigne -b &quot;[-3,sympify(&#39;13/2&#39;)]&quot; -o sortie -f pst &#39;8*x
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table des Matières</a></h3>
+  <h3><a href="index.html">Table des matières</a></h3>
   <ul>
 <li><a class="reference internal" href="#">2. Scripts</a><ul>
 <li><a class="reference internal" href="#tabsignegui">2.1. TabSigneGUI</a></li>
@@ -156,13 +146,13 @@ $ TabSigne -b &quot;[-3,sympify(&#39;13/2&#39;)]&quot; -o sortie -f pst &#39;8*x
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Recherche rapide</h3>
+  <h3 id="searchlabel">Recherche rapide</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -184,12 +174,12 @@ $ TabSigne -b &quot;[-3,sympify(&#39;13/2&#39;)]&quot; -o sortie -f pst &#39;8*x
         <li class="right" >
           <a href="install.html" title="1. Le paquet"
              >précédent</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">documentation TableauSigne 1.3</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Documentation TableauSigne 1.3.5</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-, B.M. - GPL v3.
-      Créé avec <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
+      Créé avec <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
     </div>
   </body>
 </html>

@@ -18,4 +18,4 @@
 
 from TableauSigne.tableau import TableauSigne, TableauFactory, randExpr
 
-__version__ = '1.2'
+__version__ = '1.3.5'

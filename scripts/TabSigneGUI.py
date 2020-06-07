@@ -3,14 +3,15 @@
 
 # script adapté des exemples basiclayout, mainwindows.menu en qt5
 from lxml import etree
+from sympy import sympify, oo
 from TableauSigne import __version__, TableauSigne
 try:
-    from PyQt5.QtWidgets import (QAction, QApplication, QCheckBox, QComboBox,\
-                             QDialogButtonBox, QFileDialog, QFormLayout,\
-                             QGroupBox, QHBoxLayout, QLabel, QLineEdit,\
-                             QMainWindow, QMenu, QMenuBar, QMessageBox,\
-                             QPushButton, QTextEdit, QVBoxLayout, QMainWindow,\
-                             QWidget)
+    from PyQt5.QtWidgets import (QAction, QApplication, QCheckBox, QComboBox,
+                                 QDialogButtonBox, QFileDialog, QFormLayout,
+                                 QGroupBox, QHBoxLayout, QLabel, QLineEdit,
+                                 QMainWindow, QMenu, QMenuBar, QMessageBox,
+                                 QPushButton, QTextEdit, QVBoxLayout, QMainWindow,
+                                 QWidget)
     from PyQt5.QtCore import (QSaveFile, QIODevice, QByteArray, pyqtSlot)
 except ImportError as i:
     print("Veuillez installer PyQt5 sur le site riverbank: http://www.riverbankcomputing.com/software/pyqt/download5")   
@@ -19,20 +20,28 @@ except ImportError as i:
 class TableauQt(TableauSigne):
     """Réécriture des exports avec un QSaveFile Widget
     """
-    def export(self, file, simplif = False):
+    def export(self, file, option='simplif'):
         """le type d'export est obtenu par analyse de l'extension
         file est un QString: tuple (nom de fichier, filtre)
         la simplification est lue depuis l'attribut QMW.simple
+
+        :param string option: in ['whole', 'simplif', 'nosign']: 'simplif': utiliser le tableau simplifié
+           qui ne comporte que la 1ere et la dernière ligne.
+           'nosign': générer le tableau avec pointillés à compléter (le niveau de difficulté 1 ou 2
+           a été réglé à l'initialisation)
+           'whole': tableau complet normal
+
         """
         # choix pour pst,pag
-        choix ={True: self.xmlsimplif, False: self.xml}
+        choix ={'simplif': self.xmlsimplif, 'whole': self.xml,
+                'nosign': self.xmlnosign}
         f = file[0]
         ext = f[-3:] #3 derniers caractères
         if ext == "tex":
-            o = self.tab2latex(simplif = simplif)
+            o = self.tab2latex(option=option)
             t = QByteArray(o.encode('utf-8'))
         elif ext in ["pst", "pag"]:
-            o = etree.tostring(choix[simplif], pretty_print=True)
+            o = etree.tostring(choix[option], pretty_print=True)
             t = QByteArray(o)
         out = QSaveFile(file[0])
         out.open(QIODevice.WriteOnly) # cette constante de classe vaut 2
@@ -46,7 +55,10 @@ class QMW(QMainWindow):
     def __init__(self):
         super(QMW, self).__init__()
         self.tableau = TableauQt('x')
-        self.simple = False #doit-on faire un tableau simplifié
+        self.simple = 'whole' #doit-on faire un tableau simplifié
+        self.simple_toggle = {'whole': 'simplif', 'simplif': 'whole'} # manque une association vers 'nosign'
+        # v1.3 paramètre qui devient in ['whole', 'simplif', 'nosign']: 'simplif': utiliser le tableau simplifié
+        # voir TableauSigne.tab2latex.__doc__
         #symboles unicode 2a7d et 2a7e voir 
         # http://fr.wikipedia.org/wiki/Table_des_caract%C3%A8res_Unicode_%282000-2FFF%29#Fl.C3.A8ches
         self.inequations = {"⩽0":"-0","<0":"--", "⩾0":"+0",">0":"++"}
@@ -86,8 +98,8 @@ class QMW(QMainWindow):
     @pyqtSlot()
     def _createApropos(self):
         QMessageBox.information(self,
-                                "À propos",\
-                                "<p><strong>Tableau de signe</strong> - v"+__version__+"</p>"+\
+                                "À propos",
+                                f"<p><strong>Tableau de signe</strong> - v{__version__}</p>"+
                                 "<p>B. Mauricette - GPLv3</p>")
         
 
@@ -110,10 +122,8 @@ class QMW(QMainWindow):
 
         self.b_inf = QLineEdit(str(self.tableau.bornes[0]))
         self.b_inf.editingFinished.connect(self._update_inf)
-        #self.b_inf.editingFinished.emit(self.b_inf.text())
         self.b_sup = QLineEdit(str(self.tableau.bornes[1]))
         self.b_sup.editingFinished.connect(self._update_sup)
-        #self.b_sup.editingFinished.emit(self.b_sup.text())
 
         layout.addWidget(QLabel("borne inf :"))
         layout.addWidget(self.b_inf)
@@ -160,7 +170,7 @@ class QMW(QMainWindow):
                                           "Enregistrer sous…", 
                                           "/home/boris/Documents/tableau.tex", 
                                           "Fichiers LaTeX (*.tex)")
-        self.tableau.export(fichier, simplif = self.simple)
+        self.tableau.export(fichier, option=self.simple)
 
     @pyqtSlot()
     def _export_pst(self):
@@ -168,7 +178,7 @@ class QMW(QMainWindow):
                                           "Enregistrer sous…", 
                                           "/home/boris/Documents/tableau.pst", 
                                           "Fichiers PST+ (*.pst)")
-        self.tableau.export(fichier, simplif = self.simple)
+        self.tableau.export(fichier, option=self.simple)
 
     @pyqtSlot()
     def _export_pag(self):
@@ -176,7 +186,7 @@ class QMW(QMainWindow):
                                           "Enregistrer sous…", 
                                           "tableau.pag", 
                                           "Fichiers PAG (PdfAdd) (*.pag)")
-        self.tableau.export(fichier, simplif = self.simple)
+        self.tableau.export(fichier, option=self.simple)
 
 
     def createFormGroupBox(self):
@@ -193,14 +203,14 @@ class QMW(QMainWindow):
         self.formGroupBox.setLayout(layout)
 
     def _simple(self):
-         self.simple = not(self.simple)
+         self.simple = self.simple_toggle[self.simple] # not(self.simple)
          self._createTableau()
 
     def _createTableau(self):
          ex = self.expression.text()
          # créer un nouveau TableauQt provoquerait des pointeurs d'actions vides
          self.tableau.__init__(ex) 
-         self.bigEditor.setPlainText(self.tableau.tab2latex(simplif = self.simple))
+         self.bigEditor.setPlainText(self.tableau.tab2latex(option=self.simple))
          # voir self.inequations dans __init__
          ineq = self.inequations[ self.choixIneq.currentText() ]
          self.solution.setText(self.tableau.get_solutions(ineq))        
@@ -228,9 +238,7 @@ class QMW(QMainWindow):
 
 
 if __name__ == '__main__':
-
     import sys
-
     app = QApplication(sys.argv)
     d = QMW()
     d.resize(700,500)

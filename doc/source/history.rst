@@ -3,6 +3,9 @@ Historique
 
 Versions:
 
+* 1.3.5 : correctif de propagation des options, nettoyage du code;
+* 1.3.1 : propagation des options 'whole' 'simplif 'nosign' dans les exports et les scripts;
+  l'activation de nosign dans TableauSigneGUI et TableauSigne manque encore.
 * 1.3   : Ajout d'un export de tableau à compléter (option 'nosign' dans TableauSigne.tab2latex).
   Niveau de difficulté à choisir à l'initialisation (niveau 1 ou 2: 1 - juste les signes à remplir; 2-remplir aussi les zéros et valeurs interdites)
           Amélioration de randExpr: l'option 'nopower' garanti qu'il n'y aura pas de facteurs se regroupant en puissances (non colinéarité des couples (coef dir, ord. orig.) deux à deux).

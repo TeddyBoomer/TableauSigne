@@ -7,10 +7,10 @@ Elle génère au choix la sortie latex ou un tableau xml à lancer dans pst+.
 import operator
 import re as regexp
 from random import choice, randint
-from sympy import *
 from lxml import etree
 from functools import reduce
 from copy import deepcopy
+from sympy import *
 
 x = var('x')
 
@@ -371,8 +371,8 @@ class TableauSigne():
     def _get_pm(self, signe):
         S = self.tab[-1]['Milieu']
         positions = [ i for i,x in enumerate(S) if x==signe]
-        datas = [(self.tab[0]['Milieu'][i-1:i+2:2],\
-                        self.tab[-1]['Milieu'][i-1:i+2:2]) for i in positions]
+        datas = [(self.tab[0]['Milieu'][i-1:i+2:2],
+                  self.tab[-1]['Milieu'][i-1:i+2:2]) for i in positions]
         return datas
 
     def get_solutions(self, choix):
@@ -397,16 +397,14 @@ class TableauSigne():
             I = reduce(lambda a,b: a+'\\cup '+b, intervs[1:], intervs[0])
             return I
 
-    def export_pst(self, nom="tableau", ext="pag", simplif = False, sign =True):
+    def export_pst(self, nom="tableau", ext="pag", option='simplif', sign =True):
         """Exporter l'arbre xml dans un fichier. Format pag ou pst.
 
         """
-        #self.arbrepst()
-        #
-        f = nom+"."+ext
+        f = f"{nom}.{ext}"
         if not(sign):
             choix = self.xmlnosign
-        elif simplif:
+        elif option=='simplif':
             choix = self.xmlsimplif
         else:
             choix = self.xml
@@ -416,14 +414,15 @@ class TableauSigne():
         out.write( etree.tostring(choix, pretty_print=True).decode("utf-8") ) #choix[simplif]
         out.close()
 
-    def export_latex(self, nom="tableau", option='whole', ext = "tex"): #simplif = False, sign=True
+    def export_latex(self, nom="tableau", option='whole', ext="tex"): #simplif = False, sign=True
         """Exporter la sortie latex dans un fichier. Format tex.
-        paramètre ext pour compatibilite avec export_pst
-        paramètre sign: True par défaut on laisse des +-
-                        False pour mettre des … pour faire un énoncé de tableau à compléter.
+        
+        :param ext: pour compatibilite avec export_pst
+        :type ext: str in 'tex', 'pag', 'pst'
+        :param option: 'simplif', 'whole', 'nosign' par défaut on laisse des +- pour mettre des … pour faire un énoncé de tableau à compléter.
         """
         
-        f = nom+".tex"
+        f = f"{nom}.{ext}"
         out = open(f, 'w')
         out.write( self.tab2latex(option=option) )
         out.close()
@@ -518,7 +517,7 @@ class TableauFactory(list):
 
       >>> test = ['(3*x+2)', '(5*x+4)*(2*x+8)', '(9*x-3)/(5*x-1)']
       >>> t = TableauFactory(test)
-      >>> t.export_pst(simplif = False, ext='pag')
+      >>> t.export_pst(option='whole', ext='pag')
       >>> t.export_latex(option='simplif')
       >>> for e in t: print(e.get_solutions('++'))
       \\left] - \\frac{2}{3};+\\infty \\right[
@@ -530,7 +529,6 @@ class TableauFactory(list):
       $$\\tabvar{%
       \\tx{x} & \\tx{-\\infty} &  & \\tx{- \\frac{2}{3}} &  & \\tx{- \\frac{1}{4}} &  & \\tx{0} &  & \\tx{+\\infty}\\cr
       \\tx{\\text{signe de }f} &  & \\tx{-} & \\dbt & \\tx{+} & \\txt{0} & \\tx{-} & \\dbt & \\tx{+} & \\cr}$$
-      
       3 \\frac{x}{\\left(x -3\\right) \\left(2 x -4\\right)}
       $$\\tabvar{%
       \\tx{x} & \\tx{-\\infty} &  & \\tx{0} &  & \\tx{2} &  & \\tx{3} &  & \\tx{+\\infty}\\cr
@@ -541,7 +539,7 @@ class TableauFactory(list):
         for e in L:
             self.append(TableauSigne(e))
 
-    def export_pst(self, simplif=False, ext="pag"):
+    def export_pst(self, option='simplif', ext="pag"):
         """créer les fichiers sortie au format pag/pst avec option 
         de simplification (False par défaut)
 
@@ -550,16 +548,18 @@ class TableauFactory(list):
 
         """
         for i,t in enumerate(self):
-            t.export_pst(nom="tableau"+str(i+1), simplif = simplif, ext = ext)
+            t.export_pst(nom="tableau"+str(i+1), option=simplif, ext=ext)
 
     def export_latex(self, nom="tableaux_liste", option='whole', ext="tex"):
-        """créer la sortie latex des tableaux dans un seul fichier avec option
+        """créer la sortie latex des tableaux dans un seul fichier avec option\
         de simplification.
 
         :param string nom: le nom de la sortie .tex
-        :param boolean simplif: simplifier les tableaux ou pas
+        :param string option: in ['whole', 'simplif', 'nosign']: 'simplif': utiliser\
+        le tableau simplifié qui ne comporte que la 1ere et la dernière ligne.\
+        'nosign': générer le tableau avec pointillés à compléter (le niveau de difficulté\
+        1 ou 2 a été réglé à l'initialisation) 'whole': tableau complet normal
         :param string ext: extension de la sortie (pour compatibilite)
-
         """
         f = nom+"."+ext
         out = open(f, 'w')

@@ -1,33 +1,24 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>5. API (Application programming interface) du paquet TableauSigne &#8212; documentation TableauSigne 1.3</title>
+    <meta charset="utf-8" />
+    <title>5. API (Application programming interface) du paquet TableauSigne &#8212; Documentation TableauSigne 1.3.5</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '1.3',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
     <script type="text/javascript" src="_static/translations.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Recherche" href="search.html" />
     <link rel="prev" title="4. Historique" href="history.html" /> 
-  </head>
-  <body>
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -40,7 +31,7 @@
         <li class="right" >
           <a href="history.html" title="4. Historique"
              accesskey="P">précédent</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">documentation TableauSigne 1.3</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Documentation TableauSigne 1.3.5</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -55,13 +46,13 @@
 Elle génère au choix la sortie latex ou un tableau xml à lancer dans pst+.</p>
 <dl class="class">
 <dt id="TableauSigne.tableau.TableauFactory">
-<em class="property">class </em><code class="descname">TableauFactory</code><span class="sig-paren">(</span><em>L</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TableauSigne/tableau.html#TableauFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TableauSigne.tableau.TableauFactory" title="Lien permanent vers cette définition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">TableauFactory</code><span class="sig-paren">(</span><em class="sig-param">L</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TableauSigne/tableau.html#TableauFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TableauSigne.tableau.TableauFactory" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Génère une liste de tableaux de signe.
 On peut à l’envie générer une liste de solutions d’inéquations …</p>
 <p>exemple:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;(3*x+2)&#39;</span><span class="p">,</span> <span class="s1">&#39;(5*x+4)*(2*x+8)&#39;</span><span class="p">,</span> <span class="s1">&#39;(9*x-3)/(5*x-1)&#39;</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;(3*x+2)&#39;</span><span class="p">,</span> <span class="s1">&#39;(5*x+4)*(2*x+8)&#39;</span><span class="p">,</span> <span class="s1">&#39;(9*x-3)/(5*x-1)&#39;</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">TableauFactory</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span><span class="o">.</span><span class="n">export_pst</span><span class="p">(</span><span class="n">simplif</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="s1">&#39;pag&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span><span class="o">.</span><span class="n">export_pst</span><span class="p">(</span><span class="n">option</span><span class="o">=</span><span class="s1">&#39;whole&#39;</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="s1">&#39;pag&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">t</span><span class="o">.</span><span class="n">export_latex</span><span class="p">(</span><span class="n">option</span><span class="o">=</span><span class="s1">&#39;simplif&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">t</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">get_solutions</span><span class="p">(</span><span class="s1">&#39;++&#39;</span><span class="p">))</span>
 <span class="go">\left] - \frac{2}{3};+\infty \right[</span>
@@ -73,7 +64,6 @@ On peut à l’envie générer une liste de solutions d’inéquations …</p>
 <span class="go">$$\tabvar{%</span>
 <span class="go">\tx{x} &amp; \tx{-\infty} &amp;  &amp; \tx{- \frac{2}{3}} &amp;  &amp; \tx{- \frac{1}{4}} &amp;  &amp; \tx{0} &amp;  &amp; \tx{+\infty}\cr</span>
 <span class="go">\tx{\text{signe de }f} &amp;  &amp; \tx{-} &amp; \dbt &amp; \tx{+} &amp; \txt{0} &amp; \tx{-} &amp; \dbt &amp; \tx{+} &amp; \cr}$$</span>
-
 <span class="go">3 \frac{x}{\left(x -3\right) \left(2 x -4\right)}</span>
 <span class="go">$$\tabvar{%</span>
 <span class="go">\tx{x} &amp; \tx{-\infty} &amp;  &amp; \tx{0} &amp;  &amp; \tx{2} &amp;  &amp; \tx{3} &amp;  &amp; \tx{+\infty}\cr</span>
@@ -82,65 +72,52 @@ On peut à l’envie générer une liste de solutions d’inéquations …</p>
 </div>
 <dl class="method">
 <dt id="TableauSigne.tableau.TableauFactory.export_latex">
-<code class="descname">export_latex</code><span class="sig-paren">(</span><em>nom='tableaux_liste'</em>, <em>option='whole'</em>, <em>ext='tex'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TableauSigne/tableau.html#TableauFactory.export_latex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TableauSigne.tableau.TableauFactory.export_latex" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>créer la sortie latex des tableaux dans un seul fichier avec option
-de simplification.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Paramètres:</th><td class="field-body"><ul class="first last simple">
-<li><strong>nom</strong> (<a class="reference external" href="https://docs.python.org/3/library/string.html#module-string" title="(disponible dans Python v3.6)"><em>string</em></a>) – le nom de la sortie .tex</li>
-<li><strong>simplif</strong> (<em>boolean</em>) – simplifier les tableaux ou pas</li>
-<li><strong>ext</strong> (<a class="reference external" href="https://docs.python.org/3/library/string.html#module-string" title="(disponible dans Python v3.6)"><em>string</em></a>) – extension de la sortie (pour compatibilite)</li>
+<code class="sig-name descname">export_latex</code><span class="sig-paren">(</span><em class="sig-param">nom='tableaux_liste'</em>, <em class="sig-param">option='whole'</em>, <em class="sig-param">ext='tex'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TableauSigne/tableau.html#TableauFactory.export_latex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TableauSigne.tableau.TableauFactory.export_latex" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>créer la sortie latex des tableaux dans un seul fichier avec option        de simplification.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nom</strong> (<em>string</em>) – le nom de la sortie .tex</p></li>
+<li><p><strong>option</strong> (<em>string</em>) – in [“whole”, “simplif”, “nosign”]: “simplif”: utiliser        le tableau simplifié qui ne comporte que la 1ere et la dernière ligne.        “nosign”: générer le tableau avec pointillés à compléter (le niveau de difficulté        1 ou 2 a été réglé à l’initialisation) “whole”: tableau complet normal</p></li>
+<li><p><strong>ext</strong> (<em>string</em>) – extension de la sortie (pour compatibilite)</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="TableauSigne.tableau.TableauFactory.export_pst">
-<code class="descname">export_pst</code><span class="sig-paren">(</span><em>simplif=False</em>, <em>ext='pag'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TableauSigne/tableau.html#TableauFactory.export_pst"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TableauSigne.tableau.TableauFactory.export_pst" title="Lien permanent vers cette définition">¶</a></dt>
+<code class="sig-name descname">export_pst</code><span class="sig-paren">(</span><em class="sig-param">option='simplif'</em>, <em class="sig-param">ext='pag'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TableauSigne/tableau.html#TableauFactory.export_pst"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TableauSigne.tableau.TableauFactory.export_pst" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>créer les fichiers sortie au format pag/pst avec option 
 de simplification (False par défaut)</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Paramètres:</th><td class="field-body"><ul class="first last simple">
-<li><strong>simplif</strong> (<em>boolean</em>) – simplifier les tableaux ou pas</li>
-<li><strong>ext</strong> (<a class="reference external" href="https://docs.python.org/3/library/string.html#module-string" title="(disponible dans Python v3.6)"><em>string</em></a>) – extension de la sortie pag (pdfadd) pst (pstplus)</li>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>simplif</strong> (<em>boolean</em>) – simplifier les tableaux ou pas</p></li>
+<li><p><strong>ext</strong> (<em>string</em>) – extension de la sortie pag (pdfadd) pst (pstplus)</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="TableauSigne.tableau.TableauSigne">
-<em class="property">class </em><code class="descname">TableauSigne</code><span class="sig-paren">(</span><em>expr, bornes=[-oo, oo], niveau=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TableauSigne/tableau.html#TableauSigne"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TableauSigne.tableau.TableauSigne" title="Lien permanent vers cette définition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">TableauSigne</code><span class="sig-paren">(</span><em class="sig-param">expr, bornes=[-oo, oo], niveau=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TableauSigne/tableau.html#TableauSigne"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TableauSigne.tableau.TableauSigne" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Classe de creation du tableau de signe.
 Les bornes par défaut sont pm oo réglable avec le paramètre bornes.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Paramètres:</th><td class="field-body"><ul class="first last simple">
-<li><strong>expr</strong> (<a class="reference external" href="https://docs.python.org/3/library/string.html#module-string" title="(disponible dans Python v3.6)"><em>string</em></a>) – expression à étudier, sous forme d’un produit ou quotient; avec la syntaxe sympy.</li>
-<li><strong>bornes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(disponible dans Python v3.6)"><em>list</em></a>) – liste à deux éléments pour les bornes. [-oo, oo] par défaut</li>
-<li><strong>niveau</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(disponible dans Python v3.6)"><em>int</em></a>) – niveau de difficulté pour générer un tableau à compléter: 1                 - juste les signes à remplir; 2 - aussi les valeurs particulières.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>expr</strong> (<em>string</em>) – expression à étudier, sous forme d’un produit ou quotient; avec la syntaxe sympy.</p></li>
+<li><p><strong>bornes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(disponible dans Python v3.8)"><em>list</em></a>) – liste à deux éléments pour les bornes. [-oo, oo] par défaut</p></li>
+<li><p><strong>niveau</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(disponible dans Python v3.8)"><em>int</em></a>) – niveau de difficulté pour générer un tableau à compléter: 1                 - juste les signes à remplir; 2 - aussi les valeurs particulières.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <p>exemple:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">TableauSigne</span><span class="p">(</span><span class="s1">&#39;-1*(3*x+2)*(-5*x +4)&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">TableauSigne</span><span class="p">(</span><span class="s1">&#39;-1*(3*x+2)*(-5*x +4)&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">TableauSigne</span><span class="p">(</span><span class="s1">&#39;(3*x+2)**3 /(2*x - 5)**2 *(5*x+1) * -8&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">b</span><span class="o">.</span><span class="n">export_pst</span><span class="p">(</span><span class="n">nom</span><span class="o">=</span><span class="s2">&quot;SuperTest&quot;</span><span class="p">,</span> <span class="n">simplif</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="s1">&#39;pag&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">TableauSigne</span><span class="p">(</span><span class="s1">&#39;(3*x+2)**3 /(2*x - 5)**2 *(5*x+1) * -8&#39;</span><span class="p">,</span> <span class="n">bornes</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
@@ -151,35 +128,36 @@ Les bornes par défaut sont pm oo réglable avec le paramètre bornes.</p>
 </div>
 <dl class="method">
 <dt id="TableauSigne.tableau.TableauSigne.export_latex">
-<code class="descname">export_latex</code><span class="sig-paren">(</span><em>nom='tableau'</em>, <em>option='whole'</em>, <em>ext='tex'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TableauSigne/tableau.html#TableauSigne.export_latex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TableauSigne.tableau.TableauSigne.export_latex" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Exporter la sortie latex dans un fichier. Format tex.
-paramètre ext pour compatibilite avec export_pst
-paramètre sign: True par défaut on laisse des +-</p>
-<blockquote>
-<div>False pour mettre des … pour faire un énoncé de tableau à compléter.</div></blockquote>
+<code class="sig-name descname">export_latex</code><span class="sig-paren">(</span><em class="sig-param">nom='tableau'</em>, <em class="sig-param">option='whole'</em>, <em class="sig-param">ext='tex'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TableauSigne/tableau.html#TableauSigne.export_latex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TableauSigne.tableau.TableauSigne.export_latex" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Exporter la sortie latex dans un fichier. Format tex.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ext</strong> (<em>str in 'tex'</em><em>, </em><em>'pag'</em><em>, </em><em>'pst'</em>) – pour compatibilite avec export_pst</p></li>
+<li><p><strong>option</strong> – “simplif”, “whole”, “nosign” par défaut on laisse des +- pour mettre des … pour faire un énoncé de tableau à compléter.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="TableauSigne.tableau.TableauSigne.export_pst">
-<code class="descname">export_pst</code><span class="sig-paren">(</span><em>nom='tableau'</em>, <em>ext='pag'</em>, <em>simplif=False</em>, <em>sign=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TableauSigne/tableau.html#TableauSigne.export_pst"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TableauSigne.tableau.TableauSigne.export_pst" title="Lien permanent vers cette définition">¶</a></dt>
+<code class="sig-name descname">export_pst</code><span class="sig-paren">(</span><em class="sig-param">nom='tableau'</em>, <em class="sig-param">ext='pag'</em>, <em class="sig-param">option='simplif'</em>, <em class="sig-param">sign=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TableauSigne/tableau.html#TableauSigne.export_pst"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TableauSigne.tableau.TableauSigne.export_pst" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Exporter l’arbre xml dans un fichier. Format pag ou pst.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="TableauSigne.tableau.TableauSigne.get_solutions">
-<code class="descname">get_solutions</code><span class="sig-paren">(</span><em>choix</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TableauSigne/tableau.html#TableauSigne.get_solutions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TableauSigne.tableau.TableauSigne.get_solutions" title="Lien permanent vers cette définition">¶</a></dt>
+<code class="sig-name descname">get_solutions</code><span class="sig-paren">(</span><em class="sig-param">choix</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TableauSigne/tableau.html#TableauSigne.get_solutions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TableauSigne.tableau.TableauSigne.get_solutions" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>renvoie les solutions d’une inéquation au format latex
 choix est dans [“++”, “+0”, “–”, “-0”] pour signifier strictement positif ou pas</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Paramètres:</th><td class="field-body"><strong>choix</strong> (<a class="reference external" href="https://docs.python.org/3/library/string.html#module-string" title="(disponible dans Python v3.6)"><em>string</em></a>) – nature de l’inéquation [“++”, “+0”, “–”, “-0”]</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><p><strong>choix</strong> (<em>string</em>) – nature de l’inéquation [“++”, “+0”, “–”, “-0”]</p>
+</dd>
+</dl>
 <p>exemple:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">TableauSigne</span><span class="p">(</span><span class="s1">&#39;-1*(3*x+2)*(-5*x +4)&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">TableauSigne</span><span class="p">(</span><span class="s1">&#39;-1*(3*x+2)*(-5*x +4)&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">get_solutions</span><span class="p">(</span><span class="s1">&#39;+0&#39;</span><span class="p">))</span>
 <span class="go">\left] -\infty;- \frac{2}{3}\right]\cup \left[ \frac{4}{5};+\infty \right[</span>
 </pre></div>
@@ -188,23 +166,20 @@ choix est dans [“++”, “+0”, “–”, “-0”] pour signifier strictem
 
 <dl class="method">
 <dt id="TableauSigne.tableau.TableauSigne.tab2latex">
-<code class="descname">tab2latex</code><span class="sig-paren">(</span><em>option='whole'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TableauSigne/tableau.html#TableauSigne.tab2latex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TableauSigne.tableau.TableauSigne.tab2latex" title="Lien permanent vers cette définition">¶</a></dt>
+<code class="sig-name descname">tab2latex</code><span class="sig-paren">(</span><em class="sig-param">option='whole'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TableauSigne/tableau.html#TableauSigne.tab2latex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TableauSigne.tableau.TableauSigne.tab2latex" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Sortie latex du tableau de signe. Il utilise le fichier tabvar.tex comme 
 suggéré par pstplus.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Paramètres:</th><td class="field-body"><strong>option</strong> (<a class="reference external" href="https://docs.python.org/3/library/string.html#module-string" title="(disponible dans Python v3.6)"><em>string</em></a>) – in [“whole”, “simplif”, “nosign”]: “simplif”: utiliser le tableau simplifié
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><p><strong>option</strong> (<em>string</em>) – in [“whole”, “simplif”, “nosign”]: “simplif”: utiliser le tableau simplifié
 qui ne comporte que la 1ere et la dernière ligne.
 “nosign”: générer le tableau avec pointillés à compléter (le niveau de difficulté 1 ou 2
 a été réglé à l’initialisation)
-“whole”: tableau complet normal</td>
-</tr>
-</tbody>
-</table>
+“whole”: tableau complet normal</p>
+</dd>
+</dl>
 <p>exemple:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">TableauSigne</span><span class="p">(</span><span class="s1">&#39;-1*(3*x+2)*(-5*x +4)&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">TableauSigne</span><span class="p">(</span><span class="s1">&#39;-1*(3*x+2)*(-5*x +4)&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">tab2latex</span><span class="p">())</span>
 <span class="go">$$\tabvar{%</span>
 <span class="go">\tx{x} &amp; \tx{-\infty} &amp;  &amp; \tx{- \frac{2}{3}} &amp;  &amp; \tx{\frac{4}{5}} &amp;  &amp; \tx{+\infty}\cr</span>
@@ -219,27 +194,23 @@ a été réglé à l’initialisation)
 
 <dl class="function">
 <dt id="TableauSigne.tableau.randExpr">
-<code class="descname">randExpr</code><span class="sig-paren">(</span><em>n=2</em>, <em>a=-5</em>, <em>b=5</em>, <em>denomin=True</em>, <em>nopower=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TableauSigne/tableau.html#randExpr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TableauSigne.tableau.randExpr" title="Lien permanent vers cette définition">¶</a></dt>
+<code class="sig-name descname">randExpr</code><span class="sig-paren">(</span><em class="sig-param">n=2</em>, <em class="sig-param">a=-5</em>, <em class="sig-param">b=5</em>, <em class="sig-param">denomin=True</em>, <em class="sig-param">nopower=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TableauSigne/tableau.html#randExpr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TableauSigne.tableau.randExpr" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>créer aléatoirement une expression avec n facteurs du 1er degré à coef
 entiers compris entre a et b. Le placement au numérateur/dénominateur se
 fait aussi au hasard.
 Attention, si nopower est activé, il faut b-a&gt;sqrt(n).</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Paramètres:</th><td class="field-body"><ul class="first last simple">
-<li><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(disponible dans Python v3.6)"><em>int</em></a>) – le nombre de facteurs, 2 par défaut</li>
-<li><strong>a</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(disponible dans Python v3.6)"><em>int</em></a>) – borne inférieure des coefs, -5 par défaut</li>
-<li><strong>b</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(disponible dans Python v3.6)"><em>int</em></a>) – borne supérieure des coefs, 5 par défaut</li>
-<li><strong>denomin</strong> (<em>boolean</em>) – autoriser des expressions au dénominateur, True par défaut</li>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(disponible dans Python v3.8)"><em>int</em></a>) – le nombre de facteurs, 2 par défaut</p></li>
+<li><p><strong>a</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(disponible dans Python v3.8)"><em>int</em></a>) – borne inférieure des coefs, -5 par défaut</p></li>
+<li><p><strong>b</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(disponible dans Python v3.8)"><em>int</em></a>) – borne supérieure des coefs, 5 par défaut</p></li>
+<li><p><strong>denomin</strong> (<em>boolean</em>) – autoriser des expressions au dénominateur, True par défaut</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <p>exemple:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">randExpr</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">randExpr</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="go">(-x + 2)/(2*x + 3)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">randExpr</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">15</span><span class="p">,</span><span class="mi">15</span><span class="p">)</span>
 <span class="go">(-3*x + 2)*(14*x - 10)/(5*x - 14)</span>
@@ -251,9 +222,9 @@ Attention, si nopower est activé, il faut b-a&gt;sqrt(n).</p>
 <div class="section" id="indices-and-tables">
 <h1>6. Indices and tables<a class="headerlink" href="#indices-and-tables" title="Lien permanent vers ce titre">¶</a></h1>
 <ul class="simple">
-<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
-<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Index du module</span></a></li>
-<li><a class="reference internal" href="search.html"><span class="std std-ref">Page de recherche</span></a></li>
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Index du module</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Page de recherche</span></a></p></li>
 </ul>
 </div>
 
@@ -263,7 +234,7 @@ Attention, si nopower est activé, il faut b-a&gt;sqrt(n).</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table des Matières</a></h3>
+  <h3><a href="index.html">Table des matières</a></h3>
   <ul>
 <li><a class="reference internal" href="#">5. API (Application programming interface) du paquet TableauSigne</a></li>
 <li><a class="reference internal" href="#indices-and-tables">6. Indices and tables</a></li>
@@ -280,13 +251,13 @@ Attention, si nopower est activé, il faut b-a&gt;sqrt(n).</p>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Recherche rapide</h3>
+  <h3 id="searchlabel">Recherche rapide</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -305,12 +276,12 @@ Attention, si nopower est activé, il faut b-a&gt;sqrt(n).</p>
         <li class="right" >
           <a href="history.html" title="4. Historique"
              >précédent</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">documentation TableauSigne 1.3</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Documentation TableauSigne 1.3.5</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-, B.M. - GPL v3.
-      Créé avec <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
+      Créé avec <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
     </div>
   </body>
 </html>
