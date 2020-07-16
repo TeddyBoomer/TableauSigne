@@ -150,12 +150,11 @@ class TableauSigne():
 
         """
         l = len(tete)
-        out = {"Haut": l*["vide"], "Milieu": l*["vide"],\
-                   "Bas":l*["vide"]}
+        out = {"Haut": l*["vide"], "Milieu": l*["vide"],
+               "Bas":l*["vide"]}
         signe = {1:"+", -1:"-"}
-        #grid = filter(lambda u: not (u in ["vide", "x", -oo, oo]+self.bornes), tete)
-        grid = [r for r in self.racines+self.vi \
-                      if (r >= self.bornes[0]) and (r <= self.bornes[1])]
+        grid = [r for r in self.racines+self.vi 
+                if (r >= self.bornes[0]) and (r <= self.bornes[1])]
         # barres de positions
         for v in grid:
             i = tete.index(v)
@@ -164,7 +163,8 @@ class TableauSigne():
             out["Bas"][i] ="|"
         # titre de la ligne
         if facteur.is_Pow:
-            out["Milieu"][0] = latex( Pow(facteur.args[0], abs(facteur.args[1])))
+            out["Milieu"][0] = latex( Pow(facteur.args[0],
+                                          abs(facteur.args[1])))
         else:
             out["Milieu"][0] = latex(facteur)
 
@@ -175,7 +175,7 @@ class TableauSigne():
                     out["Milieu"][i] = signe[int(sign(facteur))]
         #Autres: puissances paires
         elif facteur.is_Pow and facteur.args[1]%2 == 0:
-            r = solve(Eq(facteur.args[0],0),x)[0] # solve renvoie une liste (peut-être vide)
+            r = solve(Eq(facteur.args[0],0),x)[0] # solve renvoie une liste
             try:
                 i0 = tete.index(r) # position de la racine r du facteur
                 out["Milieu"][i0] = 0
@@ -224,12 +224,11 @@ class TableauSigne():
 
     def _fill_last_ligne(self, tete, nom="f"):
         """ Création de la dernière ligne du tableau par la règle des signes.
-
         """
         signe = {1:"+", -1:"-"}
         l = len(tete)
-        out = {"Haut": l*["vide"], "Milieu": l*["vide"],\
-                   "Bas":l*["vide"]}        
+        out = {"Haut": l*["vide"], "Milieu": l*["vide"],
+               "Bas":l*["vide"]}
         out["Milieu"][0] = "\\text{signe de }"+nom
         for i in range(1,l):
             if tete[i] == "vide":
@@ -249,17 +248,16 @@ class TableauSigne():
     def _create_tab(self):
         """Création du tableau de signe disponible dans self.tab et 
         du tableau de signe simplifié disponible dans self.tabsimplif
-
         """
-        #values = self.racines+self.vi + 2eme borne
         # c'est plus pratique pour insérer les vides
-        values = [r for r in self.racines+self.vi \
-                      if (r > self.bornes[0]) and (r< self.bornes[1])] \
-                      + [self.bornes[1]]
+        values = [r for r in self.racines+self.vi
+                  if (r > self.bornes[0]) and (r< self.bornes[1])]\
+                     + [self.bornes[1]]
         values.sort()
-        tete = ["x", self.bornes[0]]+reduce(operator.concat, \
-                                    [["vide",u] for u in values])
-        self.tab = [{"Haut": len(tete)*["vide"], "Milieu": tete, "Bas": len(tete)*["vide"]}]
+        tete = ["x", self.bornes[0]]+reduce(operator.concat,
+                                            [["vide",u] for u in values])
+        self.tab = [{"Haut": len(tete)*["vide"], "Milieu": tete,
+                     "Bas": len(tete)*["vide"]}]
         for f in self.facteurs:
             self.tab.append(self._fill_ligne(tete, f))
         self.tab.append(self._fill_last_ligne(tete))
@@ -267,8 +265,9 @@ class TableauSigne():
 
     def _create_tab_nosign(self, niveau=1):
         """Création d'un tableau de signe où les signes, les zéros, les vi 
-        sont laissés vides pour êtres complétés. À créer après le tableau 
-        de create_tab()
+        sont laissés vides pour êtres complétés. 
+
+        À créer après le tableau de create_tab()
         niveau: 1 ou 2 - 1 on enlève les signes; 2 on enlève aussi les valeurs
                 d'annulation
         """
@@ -287,14 +286,13 @@ class TableauSigne():
                 self.tabnosign[i]["Milieu"] = tete
             else:
                 L = e["Milieu"]
-                self.tabnosign[i]["Milieu"] = [(x if not(x == '+' or x =='-') else '\\dots') for x in L]
+                self.tabnosign[i]["Milieu"] = [(x if not(x == '+' or x =='-')
+                                                else '\\dots') for x in L]
 
+    def tab2latex(self, option='whole', **kwargs):
+        """Sortie latex du tableau de signe. 
 
-    def tab2latex(self, option='whole'):
-        """Sortie latex du tableau de signe. Il utilise le fichier tabvar.tex comme 
-        suggéré par pstplus.
-
-
+        Il utilise le fichier tabvar.tex comme suggéré par pstplus.
         :param string option: in ['whole', 'simplif', 'nosign']: 'simplif': utiliser le tableau simplifié
            qui ne comporte que la 1ere et la dernière ligne.
            'nosign': générer le tableau avec pointillés à compléter (le niveau de difficulté 1 ou 2
@@ -346,9 +344,9 @@ class TableauSigne():
         out += "}$$"
         return out
 
-
-    def _create_latex_intervalle(self,choix, L, take):
+    def _create_latex_intervalle(self, choix, L, take):
         """renvoie l'intervalle au format latex
+
         choix est dans la liste ['++' , '+0', '--', '-0']
         L est une liste de taille 2
         take est la liste des || ou 0
@@ -399,12 +397,11 @@ class TableauSigne():
 
     def export_pst(self, nom="tableau", ext="pag", option='simplif', sign =True):
         """Exporter l'arbre xml dans un fichier. Format pag ou pst.
-
         """
         f = f"{nom}.{ext}"
         if not(sign):
             choix = self.xmlnosign
-        elif option=='simplif':
+        elif option == 'simplif':
             choix = self.xmlsimplif
         else:
             choix = self.xml
@@ -414,12 +411,13 @@ class TableauSigne():
         out.write( etree.tostring(choix, pretty_print=True).decode("utf-8") ) #choix[simplif]
         out.close()
 
-    def export_latex(self, nom="tableau", option='whole', ext="tex"): #simplif = False, sign=True
+    def export_latex(self, nom="tableau", option='whole', ext="tex"):
         """Exporter la sortie latex dans un fichier. Format tex.
         
         :param ext: pour compatibilite avec export_pst
         :type ext: str in 'tex', 'pag', 'pst'
-        :param option: 'simplif', 'whole', 'nosign' par défaut on laisse des +- pour mettre des … pour faire un énoncé de tableau à compléter.
+        :param option: 'simplif', 'whole', 'nosign' 
+        par défaut on laisse des +- pour mettre des … pour faire un énoncé de tableau à compléter.
         """
         
         f = f"{nom}.{ext}"
@@ -586,7 +584,6 @@ def randExpr(n=2, a=-5, b=5, denomin=True, nopower =True):
       (-x + 2)/(2*x + 3)
       >>> randExpr(3,-15,15)
       (-3*x + 2)*(14*x - 10)/(5*x - 14)
-
     """
     ope = (['/','*'] if denomin else ['*'])
     # éviter des puissances d'un même facteur

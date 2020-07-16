@@ -20,17 +20,19 @@ except ImportError as i:
 class TableauQt(TableauSigne):
     """Réécriture des exports avec un QSaveFile Widget
     """
-    def export(self, file, option='simplif'):
-        """le type d'export est obtenu par analyse de l'extension
+    def export(self, file, option='simplif', **kwargs):
+        """export suivant option de construction
+
+        le type d'export est obtenu par analyse de l'extension
         file est un QString: tuple (nom de fichier, filtre)
-        la simplification est lue depuis l'attribut QMW.simple
+        la simplification est lue dans le dictionnaire QMW.OPT
 
-        :param string option: in ['whole', 'simplif', 'nosign']: 'simplif': utiliser le tableau simplifié
-           qui ne comporte que la 1ere et la dernière ligne.
-           'nosign': générer le tableau avec pointillés à compléter (le niveau de difficulté 1 ou 2
-           a été réglé à l'initialisation)
+        :param string option: in ['whole', 'simplif', 'nosign']: 
+           'simplif': utiliser le tableau simplifié
+            qui ne comporte que la 1ere et la dernière ligne.
+           'nosign': générer le tableau avec pointillés à compléter 
+            (le niveau de difficulté 1 ou 2 a été réglé à l'initialisation)
            'whole': tableau complet normal
-
         """
         # choix pour pst,pag
         choix ={'simplif': self.xmlsimplif, 'whole': self.xml,
@@ -55,13 +57,28 @@ class QMW(QMainWindow):
     def __init__(self):
         super(QMW, self).__init__()
         self.tableau = TableauQt('x')
-        self.simple = 'whole' #doit-on faire un tableau simplifié
-        self.simple_toggle = {'whole': 'simplif', 'simplif': 'whole'} # manque une association vers 'nosign'
-        # v1.3 paramètre qui devient in ['whole', 'simplif', 'nosign']: 'simplif': utiliser le tableau simplifié
-        # voir TableauSigne.tab2latex.__doc__
         #symboles unicode 2a7d et 2a7e voir 
         # http://fr.wikipedia.org/wiki/Table_des_caract%C3%A8res_Unicode_%282000-2FFF%29#Fl.C3.A8ches
         self.inequations = {"⩽0":"-0","<0":"--", "⩾0":"+0",">0":"++"}
+        # init choix d'inéquation
+        choix = QComboBox()
+        for x in self.inequations.keys(): 
+            choix.addItem(x)
+        self.choixIneq  = choix
+        self.solution = QLineEdit() # lié plus tard dans createSolutionBox
+        self.option_fill = {"Simplifier (pas de ligne intermédiaire)": {"option": 'simplif'},
+                  "Tableau complet": {"option": 'whole'},
+                  "Tableau à compléter (niv 1)": {"option": 'nosign',
+                                                  "niveau": 1},
+                  "Tableau à compléter (niv 2)": {"option": 'nosign',
+                                                  "niveau": 2}}
+        # initialisation attribut de gestion des options pour créer le tableau
+        self.OPT = {"option": 'whole'}
+
+        # zone de texte d'une sortie LaTeX
+        bigEditor = QTextEdit()
+        bigEditor.setPlainText("Création de la sortie latex ici pour un copier/coller ")
+        self.bigEditor = bigEditor
         
         self.createMenu()
         self.createHorizontalGroupBox()
@@ -72,11 +89,7 @@ class QMW(QMainWindow):
         self.exitAct = QAction("E&xit", self, shortcut="Ctrl+Q",
                 statusTip="Sortir de l'application", triggered=self.close)
 
-        bigEditor = QTextEdit()
-        bigEditor.setPlainText("Création de la sortie latex ici pour un copier/coller ")
-
-        buttonBox = QDialogButtonBox(QDialogButtonBox.Ok) #| QDialogButtonBox.Cancel
-
+        buttonBox = QDialogButtonBox(QDialogButtonBox.Ok)
         buttonBox.accepted.connect(self.close)
         
         widget = QWidget()
@@ -91,7 +104,6 @@ class QMW(QMainWindow):
         mainLayout.addWidget(self.horizontalGroupBox)
         mainLayout.addWidget(buttonBox)
         widget.setLayout(mainLayout)
-        self.bigEditor = bigEditor
 
         self.setWindowTitle("Tableau de signe")
 
@@ -102,7 +114,6 @@ class QMW(QMainWindow):
                                 f"<p><strong>Tableau de signe</strong> - v{__version__}</p>"+
                                 "<p>B. Mauricette - GPLv3</p>")
         
-
     def createMenu(self):
         self.menuBar = QMenuBar()
 
@@ -136,7 +147,6 @@ class QMW(QMainWindow):
     def _update_inf(self):
         """ màj de la borne inférieure
         la valeur est sympifiée
-
         """
         self.tableau.bornes[0] = sympify(self.b_inf.text())
         self._createTableau()
@@ -145,18 +155,16 @@ class QMW(QMainWindow):
     def _update_sup(self):
         """ màj de la borne supérieure
         la valeur est sympifiée
-
         """
         self.tableau.bornes[1] = sympify(self.b_sup.text())
         self._createTableau()
-
 
     def createHorizontalGroupBox(self):
         self.horizontalGroupBox = QGroupBox("Export")
         layout = QHBoxLayout()
         out = [('LaTeX', self._export_latex),\
                ('PST+', self._export_pst),\
-               ('PAG',self._export_pag)]
+               ('PAG', self._export_pag)]
         for i in range(len(out)):
             button = QPushButton(out[i][0])
             button.clicked.connect(out[i][1])
@@ -168,52 +176,64 @@ class QMW(QMainWindow):
     def _export_latex(self):
         fichier = QFileDialog.getSaveFileName(self, 
                                           "Enregistrer sous…", 
-                                          "/home/boris/Documents/tableau.tex", 
+                                          "/home/boris/Documents/tableau.tex",
                                           "Fichiers LaTeX (*.tex)")
-        self.tableau.export(fichier, option=self.simple)
+        self.tableau.export(fichier, **self.OPT)
 
     @pyqtSlot()
     def _export_pst(self):
         fichier = QFileDialog.getSaveFileName(self, 
-                                          "Enregistrer sous…", 
-                                          "/home/boris/Documents/tableau.pst", 
+                                          "Enregistrer sous…",
+                                          "/home/boris/Documents/tableau.pst",
                                           "Fichiers PST+ (*.pst)")
-        self.tableau.export(fichier, option=self.simple)
+        self.tableau.export(fichier, **self.OPT)
 
     @pyqtSlot()
     def _export_pag(self):
         fichier = QFileDialog.getSaveFileName(self, 
-                                          "Enregistrer sous…", 
-                                          "tableau.pag", 
+                                          "Enregistrer sous…",
+                                          "tableau.pag",
                                           "Fichiers PAG (PdfAdd) (*.pag)")
-        self.tableau.export(fichier, option=self.simple)
-
+        self.tableau.export(fichier, **self.OPT)
 
     def createFormGroupBox(self):
         self.formGroupBox = QGroupBox("Entrée")
-        simple = QCheckBox("Simplifier (pas de lignes intermédiaires)") # bool à basculer
-        simple.clicked.connect(self._simple)
         self.expression = QLineEdit(str(self.tableau.expr))
+
+        type_tab = QComboBox()
+        for x in self.option_fill.keys(): 
+            type_tab.addItem(x)
+        self.type_tab = type_tab
+        # associer signal changement d'option au slot de self.solution.setText
+        self.type_tab.currentTextChanged.connect(self._opt_select)
+        self.type_tab.currentTextChanged.emit(self.type_tab.currentText())
+        
         layout = QFormLayout()
         layout.addRow(QLabel("(fraction rationnelle):"), self.expression)
         valid = QPushButton("Valider")
         valid.clicked.connect(self._createTableau)
         layout.addWidget(valid)
-        layout.addWidget(simple)
+        #layout.addWidget(simple)
+        layout.addWidget(self.type_tab)
         self.formGroupBox.setLayout(layout)
 
-    def _simple(self):
-         self.simple = self.simple_toggle[self.simple] # not(self.simple)
-         self._createTableau()
-
+    def _opt_select(self, t):
+        """basculer l'option de remplissage des signes 'nosign'
+        """
+        self.OPT = self.option_fill[ t ]
+        self._createTableau()
+        
     def _createTableau(self):
-         ex = self.expression.text()
-         # créer un nouveau TableauQt provoquerait des pointeurs d'actions vides
-         self.tableau.__init__(ex) 
-         self.bigEditor.setPlainText(self.tableau.tab2latex(option=self.simple))
-         # voir self.inequations dans __init__
-         ineq = self.inequations[ self.choixIneq.currentText() ]
-         self.solution.setText(self.tableau.get_solutions(ineq))        
+        ex = self.expression.text()
+        # créer un nv TableauQt provoquerait des pointeurs d'actions vides
+        if "niveau" in self.OPT:
+            self.tableau.__init__(ex, niveau=self.OPT["niveau"])
+        else:
+            self.tableau.__init__(ex)
+        self.bigEditor.setPlainText(self.tableau.tab2latex(**self.OPT))
+
+        ineq = self.inequations[ self.choixIneq.currentText() ]
+        self.solution.setText(self.tableau.get_solutions(ineq))        
 
     def _fillbis(self, t):
         """récupérer l'émission du signal lors d'un changement d'inéquation
@@ -222,14 +242,8 @@ class QMW(QMainWindow):
 
     def createSolutionBox(self):
         self.solGroupBox = QGroupBox("Ensemble des solutions d'inéquation")
-        self.solution = QLineEdit()
         layout = QFormLayout()
-        choix = QComboBox()
-        # for x in ["<=0","<0", ">=0",">0"]
-        for x in self.inequations.keys(): 
-            choix.addItem(x)
-        self.choixIneq  = choix
-        # associer le signal de changement d'inéquation au slot de self.solution.setText
+        # associer signal changement d'inéquation au slot self.solution.setText
         self.choixIneq.currentTextChanged.connect(self._fillbis)
         self.choixIneq.currentTextChanged.emit(self.choixIneq.currentText())
         layout.addRow(QLabel("Inéquation de la forme f(x)"), self.choixIneq)    
