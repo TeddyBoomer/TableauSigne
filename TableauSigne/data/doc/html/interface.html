@@ -134,10 +134,11 @@ Les bornes par défaut sont pm oo réglable avec le paramètre bornes.</p>
 <dt class="field-odd">Paramètres</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>ext</strong> (<em>str in 'tex'</em><em>, </em><em>'pag'</em><em>, </em><em>'pst'</em>) – pour compatibilite avec export_pst</p></li>
-<li><p><strong>option</strong> – “simplif”, “whole”, “nosign” par défaut on laisse des +- pour mettre des … pour faire un énoncé de tableau à compléter.</p></li>
+<li><p><strong>option</strong> – “simplif”, “whole”, “nosign”</p></li>
 </ul>
 </dd>
 </dl>
+<p>par défaut on laisse des +- pour mettre des … pour faire un énoncé de tableau à compléter.</p>
 </dd></dl>
 
 <dl class="method">
@@ -166,18 +167,16 @@ choix est dans [“++”, “+0”, “–”, “-0”] pour signifier strictem
 
 <dl class="method">
 <dt id="TableauSigne.tableau.TableauSigne.tab2latex">
-<code class="sig-name descname">tab2latex</code><span class="sig-paren">(</span><em class="sig-param">option='whole'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TableauSigne/tableau.html#TableauSigne.tab2latex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TableauSigne.tableau.TableauSigne.tab2latex" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Sortie latex du tableau de signe. Il utilise le fichier tabvar.tex comme 
-suggéré par pstplus.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Paramètres</dt>
-<dd class="field-odd"><p><strong>option</strong> (<em>string</em>) – in [“whole”, “simplif”, “nosign”]: “simplif”: utiliser le tableau simplifié
-qui ne comporte que la 1ere et la dernière ligne.
+<code class="sig-name descname">tab2latex</code><span class="sig-paren">(</span><em class="sig-param">option='whole'</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TableauSigne/tableau.html#TableauSigne.tab2latex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TableauSigne.tableau.TableauSigne.tab2latex" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Sortie latex du tableau de signe.</p>
+<p>Il utilise le fichier tabvar.tex comme suggéré par pstplus.
+:param string option: in [“whole”, “simplif”, “nosign”]: “simplif”: utiliser le tableau simplifié</p>
+<blockquote>
+<div><p>qui ne comporte que la 1ere et la dernière ligne.
 “nosign”: générer le tableau avec pointillés à compléter (le niveau de difficulté 1 ou 2
 a été réglé à l’initialisation)
 “whole”: tableau complet normal</p>
-</dd>
-</dl>
+</div></blockquote>
 <p>exemple:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">TableauSigne</span><span class="p">(</span><span class="s1">&#39;-1*(3*x+2)*(-5*x +4)&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">tab2latex</span><span class="p">())</span>

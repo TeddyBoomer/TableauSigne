@@ -3,6 +3,7 @@ Historique
 
 Versions:
 
+* 1.3.6 : intégration de l'option 'nosign' et ses 2 niveaux dans l'interface graphique TableauSigneGUI.py.
 * 1.3.5 : correctif de propagation des options, nettoyage du code;
 * 1.3.1 : propagation des options 'whole' 'simplif 'nosign' dans les exports et les scripts;
   l'activation de nosign dans TableauSigneGUI et TableauSigne manque encore.

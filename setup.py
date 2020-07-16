@@ -46,13 +46,7 @@ setup(
 
         # Specify the Python versions you support here. In particular, ensure
         # that you indicate whether you support Python 2, Python 3 or both.
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.2',
-        'Programming Language :: Python :: 3.3',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
-    ],
+        'Programming Language :: Python :: 3'],
 
     # What does your project relate to?
     keywords='pst+ pdfadd sign analysis latex',
@@ -71,7 +65,7 @@ setup(
     # List additional groups of dependencies here (e.g. development dependencies).
     # You can install these using the following syntax, for example:
     # $ pip install -e .[dev,test]
-    extras_require = {
+    extras_require = {'utile': ['PyQt5']
     #    'dev': ['check-manifest'],
     #    'test': ['coverage'],
     },
