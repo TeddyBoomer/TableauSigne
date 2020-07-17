@@ -27,7 +27,7 @@ Une petite illustration des capacités du module:
 
 Exemple::
 
-   >>> from tabsigne3 import *
+   >>> from TableauSigne import *
    >>> A = randExpr(3)
    (4*x - 3)/((-3*x + 4)*(5*x + 5))
    >>> B = TableauSigne(A)

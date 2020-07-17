@@ -3,7 +3,7 @@ Le paquet
 
 Il contient:
 
-* le module lui-même __init__.py
+* le module lui-même __init__.py et tableau.py
 * l'executable *TabSigne*
 * l'executable *TabSigneSimplif*
 * l'executable *TabSigneGUI*

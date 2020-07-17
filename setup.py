@@ -3,7 +3,7 @@ from codecs import open  # To use a consistent encoding
 from os import path
 
 here = path.abspath(path.dirname(__file__))
-
+from TableauSigne import __version__
 # Get the long description from the relevant file
 with open(path.join(here, 'DESCRIPTION.rst'), encoding='utf-8') as f:
     long_description = f.read()
@@ -14,7 +14,7 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version='1.3.6',
+    version= __version__,#'1.3.6',
 
     description='a module to design sign tables. It outputs latex,pst+ or pdfadd format',
     long_description=long_description,

@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
   <head>
     <meta charset="utf-8" />
-    <title>5. API (Application programming interface) du paquet TableauSigne &#8212; Documentation TableauSigne 1.3.5</title>
+    <title>5. API (Application programming interface) du module TableauSigne &#8212; Documentation TableauSigne 1.4</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
@@ -31,7 +31,7 @@
         <li class="right" >
           <a href="history.html" title="4. Historique"
              accesskey="P">précédent</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Documentation TableauSigne 1.3.5</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Documentation TableauSigne 1.4</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -41,12 +41,44 @@
           <div class="body" role="main">
             
   <div class="section" id="module-TableauSigne">
-<span id="api-application-programming-interface-du-paquet-tableausigne"></span><h1>5. API (Application programming interface) du paquet TableauSigne<a class="headerlink" href="#module-TableauSigne" title="Lien permanent vers ce titre">¶</a></h1>
+<span id="api-application-programming-interface-du-module-tableausigne"></span><h1>5. API (Application programming interface) du module TableauSigne<a class="headerlink" href="#module-TableauSigne" title="Lien permanent vers ce titre">¶</a></h1>
+<p>Module de création de tableaux de signe.</p>
+<p>Export possible vers LaTeX, pst+, pdfadd (pour modifier le tableau)</p>
+<dl class="class">
+<dt id="TableauSigne.TableauSigne">
+<em class="property">class </em><code class="sig-name descname">TableauSigne</code><span class="sig-paren">(</span><em class="sig-param">e</em><span class="optional">[</span>, <em class="sig-param">**kwargs</em><span class="optional">]</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/TableauSigne/tableau.html#TableauSigne"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TableauSigne.TableauSigne" title="Lien permanent vers cette définition">¶</a></dt>
+<dt>
+<code class="sig-name descname">créer le tableau de signe d'une expression e</code></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="TableauSigne.randExpr">
+<code class="sig-name descname">randExpr</code><span class="sig-paren">(</span><em class="sig-param">n</em><span class="optional">[</span>, <em class="sig-param">a=-5</em>, <em class="sig-param">b=5</em>, <em class="sig-param">denom=True</em>, <em class="sig-param">nopower=True</em><span class="optional">]</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/TableauSigne/tableau.html#randExpr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TableauSigne.randExpr" title="Lien permanent vers cette définition">¶</a></dt>
+<dt>
+<code class="sig-name descname">générer une expression à n facteurs</code></dt>
+<dd><ul class="simple">
+<li><p>bornes des coefs: a, b</p></li>
+<li><p>bool denomin: autoriser des facteurs au dénominateur,</p></li>
+<li><p>bool nopower: refuser d’avoir des puissances.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="TableauSigne.TableauFactory">
+<em class="property">class </em><code class="sig-name descname">TableauFactory</code><span class="sig-paren">(</span><em class="sig-param">L</em><span class="optional">[</span>, <em class="sig-param">M</em><span class="optional">]</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/TableauSigne/tableau.html#TableauFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TableauSigne.TableauFactory" title="Lien permanent vers cette définition">¶</a></dt>
+<dt>
+<code class="sig-name descname">créer une liste de tableaux de signe</code></dt>
+<dd><ul class="simple">
+<li><p>L est une liste d’expressions (fractions rationnelles)</p></li>
+<li><p>M est une liste de dictionnaires d’options pour les initialisations.</p></li>
+</ul>
+</dd></dl>
+
 <span class="target" id="module-TableauSigne.tableau"></span><p>Classe de création de tableau de signe à l’aide de sympy et lxml.
 Elle génère au choix la sortie latex ou un tableau xml à lancer dans pst+.</p>
 <dl class="class">
 <dt id="TableauSigne.tableau.TableauFactory">
-<em class="property">class </em><code class="sig-name descname">TableauFactory</code><span class="sig-paren">(</span><em class="sig-param">L</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TableauSigne/tableau.html#TableauFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TableauSigne.tableau.TableauFactory" title="Lien permanent vers cette définition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">TableauFactory</code><span class="sig-paren">(</span><em class="sig-param">L</em>, <em class="sig-param">M=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TableauSigne/tableau.html#TableauFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TableauSigne.tableau.TableauFactory" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Génère une liste de tableaux de signe.
 On peut à l’envie générer une liste de solutions d’inéquations …</p>
 <p>exemple:</p>
@@ -73,16 +105,24 @@ On peut à l’envie générer une liste de solutions d’inéquations …</p>
 <dl class="method">
 <dt id="TableauSigne.tableau.TableauFactory.export_latex">
 <code class="sig-name descname">export_latex</code><span class="sig-paren">(</span><em class="sig-param">nom='tableaux_liste'</em>, <em class="sig-param">option='whole'</em>, <em class="sig-param">ext='tex'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TableauSigne/tableau.html#TableauFactory.export_latex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TableauSigne.tableau.TableauFactory.export_latex" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>créer la sortie latex des tableaux dans un seul fichier avec option        de simplification.</p>
+<dd><p>créer la sortie latex des tableaux dans un seul fichier avec option 
+de simplification.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Paramètres</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>nom</strong> (<em>string</em>) – le nom de la sortie .tex</p></li>
-<li><p><strong>option</strong> (<em>string</em>) – in [“whole”, “simplif”, “nosign”]: “simplif”: utiliser        le tableau simplifié qui ne comporte que la 1ere et la dernière ligne.        “nosign”: générer le tableau avec pointillés à compléter (le niveau de difficulté        1 ou 2 a été réglé à l’initialisation) “whole”: tableau complet normal</p></li>
-<li><p><strong>ext</strong> (<em>string</em>) – extension de la sortie (pour compatibilite)</p></li>
+<li><p><strong>option</strong> (<em>string</em>) – in [“whole”, “simplif”, “nosign”]</p></li>
+<li><p><strong>ext</strong> (<em>string</em>) – extension de la sortie (pour compatibilité)</p></li>
 </ul>
 </dd>
 </dl>
+<ul class="simple">
+<li><p>“simplif”: utiliser le tableau simplifié qui ne comporte que la 1ere 
+et la dernière ligne.</p></li>
+<li><p>“nosign”: générer le tableau avec pointillés à compléter (le niveau 
+de difficulté 1 ou 2 a été réglé à l’initialisation)</p></li>
+<li><p>“whole”: tableau complet normal</p></li>
+</ul>
 </dd></dl>
 
 <dl class="method">
@@ -110,7 +150,8 @@ Les bornes par défaut sont pm oo réglable avec le paramètre bornes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Paramètres</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>expr</strong> (<em>string</em>) – expression à étudier, sous forme d’un produit ou quotient; avec la syntaxe sympy.</p></li>
+<li><p><strong>expr</strong> (<em>string</em>) – expression à étudier, sous forme d’un produit ou quotient; 
+avec la syntaxe sympy.</p></li>
 <li><p><strong>bornes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(disponible dans Python v3.8)"><em>list</em></a>) – liste à deux éléments pour les bornes. [-oo, oo] par défaut</p></li>
 <li><p><strong>niveau</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(disponible dans Python v3.8)"><em>int</em></a>) – niveau de difficulté pour générer un tableau à compléter: 1                 - juste les signes à remplir; 2 - aussi les valeurs particulières.</p></li>
 </ul>
@@ -138,7 +179,8 @@ Les bornes par défaut sont pm oo réglable avec le paramètre bornes.</p>
 </ul>
 </dd>
 </dl>
-<p>par défaut on laisse des +- pour mettre des … pour faire un énoncé de tableau à compléter.</p>
+<p>par défaut on laisse des +- pour mettre des … pour faire un énoncé
+de tableau à compléter.</p>
 </dd></dl>
 
 <dl class="method">
@@ -150,8 +192,9 @@ Les bornes par défaut sont pm oo réglable avec le paramètre bornes.</p>
 <dl class="method">
 <dt id="TableauSigne.tableau.TableauSigne.get_solutions">
 <code class="sig-name descname">get_solutions</code><span class="sig-paren">(</span><em class="sig-param">choix</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TableauSigne/tableau.html#TableauSigne.get_solutions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TableauSigne.tableau.TableauSigne.get_solutions" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>renvoie les solutions d’une inéquation au format latex
-choix est dans [“++”, “+0”, “–”, “-0”] pour signifier strictement positif ou pas</p>
+<dd><p>renvoie les solutions d’une inéquation au format latex</p>
+<p>choix est dans [“++”, “+0”, “–”, “-0”] pour signifier strictement 
+positif ou pas</p>
 <dl class="field-list simple">
 <dt class="field-odd">Paramètres</dt>
 <dd class="field-odd"><p><strong>choix</strong> (<em>string</em>) – nature de l’inéquation [“++”, “+0”, “–”, “-0”]</p>
@@ -169,14 +212,19 @@ choix est dans [“++”, “+0”, “–”, “-0”] pour signifier strictem
 <dt id="TableauSigne.tableau.TableauSigne.tab2latex">
 <code class="sig-name descname">tab2latex</code><span class="sig-paren">(</span><em class="sig-param">option='whole'</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TableauSigne/tableau.html#TableauSigne.tab2latex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TableauSigne.tableau.TableauSigne.tab2latex" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Sortie latex du tableau de signe.</p>
-<p>Il utilise le fichier tabvar.tex comme suggéré par pstplus.
-:param string option: in [“whole”, “simplif”, “nosign”]: “simplif”: utiliser le tableau simplifié</p>
-<blockquote>
-<div><p>qui ne comporte que la 1ere et la dernière ligne.
-“nosign”: générer le tableau avec pointillés à compléter (le niveau de difficulté 1 ou 2
-a été réglé à l’initialisation)
-“whole”: tableau complet normal</p>
-</div></blockquote>
+<p>Il utilise le fichier tabvar.tex comme suggéré par pstplus.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><p><strong>option</strong> (<em>string</em>) – in [“whole”, “simplif”, “nosign”]</p>
+</dd>
+</dl>
+<ul class="simple">
+<li><p>“simplif”: utiliser le tableau simplifié
+qui ne comporte que la 1ere et la dernière ligne.</p></li>
+<li><p>“nosign”: générer le tableau avec pointillés à compléter 
+(le niveau de difficulté 1 ou 2 a été réglé à l’initialisation)</p></li>
+<li><p>“whole”: tableau complet normal</p></li>
+</ul>
 <p>exemple:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">TableauSigne</span><span class="p">(</span><span class="s1">&#39;-1*(3*x+2)*(-5*x +4)&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">tab2latex</span><span class="p">())</span>
@@ -235,7 +283,7 @@ Attention, si nopower est activé, il faut b-a&gt;sqrt(n).</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table des matières</a></h3>
   <ul>
-<li><a class="reference internal" href="#">5. API (Application programming interface) du paquet TableauSigne</a></li>
+<li><a class="reference internal" href="#">5. API (Application programming interface) du module TableauSigne</a></li>
 <li><a class="reference internal" href="#indices-and-tables">6. Indices and tables</a></li>
 </ul>
 
@@ -275,7 +323,7 @@ Attention, si nopower est activé, il faut b-a&gt;sqrt(n).</p>
         <li class="right" >
           <a href="history.html" title="4. Historique"
              >précédent</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Documentation TableauSigne 1.3.5</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Documentation TableauSigne 1.4</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

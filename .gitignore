@@ -13,3 +13,4 @@ TableauSigne/data/html/.buildinfo
 TableauSigne/data/doctrees/
 TableauSigne/data/doc/
 .gitignore
+*.pyc

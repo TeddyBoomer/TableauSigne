@@ -19,4 +19,4 @@ Ce module ne gère pas les facteurs avec d'autres symboles que *x*.
    Les scripts distribués avec le paquet ne montrent pas *toutes* les possibilités
    du module. Notamment il existe une classe ``TableauFactory`` pour générer en
    chaine une série de tableaux de signe. Vous pouvez la trouver à la fin du
-   fichier __init__.py.
+   fichier tableau.py.

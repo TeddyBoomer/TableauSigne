@@ -1,7 +1,7 @@
-API (Application programming interface) du paquet TableauSigne
+API (Application programming interface) du module TableauSigne
 ==============================================================
 
-.. automodule::    TableauSigne
+.. automodule::   TableauSigne
    :members:
 
 

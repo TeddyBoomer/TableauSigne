@@ -3,7 +3,7 @@ Le paquet
 
 Il contient:
 
-* le module lui-même __init__.py
+* le module lui-même __init__.py et tableau.py
 * l'executable *TabSigne*
 * l'executable *TabSigneSimplif*
 * l'executable *TabSigneGUI*
@@ -33,9 +33,7 @@ Il vous est conseillé d'utiliser une version de Python >=3.4. En effet, à
 partir de là, l'installateur pip standardise l'installation des modules (et
 utilise le pluf récent format d'archive **wheel**)
 
-Pour satisfaire les dépendances vitales, on commence par taper (sous Dos(win)/dans un shell(linux))::
-
-  pip install sympy lxml
+La présence des dépendances vitales sera vérifiée et elles seront installées si il le faut.
 
 Pour l'interface graphique, on installe PyQt5 en choisissant ici `Riverbank Qt5 <http://www.riverbankcomputing.com/software/pyqt/download5>`_ ou, sous linux, en installant le paquet **python3-qt5**::
 
@@ -43,4 +41,4 @@ Pour l'interface graphique, on installe PyQt5 en choisissant ici `Riverbank Qt5 
 
 Puis on peut installer l'archive::
 
-  pip install TableauSigne-x.x-py3-none-any.whl
+  pip3 install TableauSigne-x.x-py3-none-any.whl

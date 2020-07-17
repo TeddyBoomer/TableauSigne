@@ -16,6 +16,29 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
+"""Module de création de tableaux de signe.
+
+Export possible vers LaTeX, pst+, pdfadd (pour modifier le tableau)
+
+.. py:class:: TableauSigne(e [, **kwargs])
+   créer le tableau de signe d'une expression e
+
+.. py:function:: randExpr(n, [a=-5, b=5, denom=True, nopower=True])
+   générer une expression à n facteurs
+
+   * bornes des coefs: a, b
+   * bool denomin: autoriser des facteurs au dénominateur,
+   * bool nopower: refuser d'avoir des puissances.
+
+.. py:class:: TableauFactory(L, [M])
+   créer une liste de tableaux de signe
+
+   * L est une liste d'expressions (fractions rationnelles)
+   * M est une liste de dictionnaires d'options pour les initialisations.
+"""
+
+
 from TableauSigne.tableau import TableauSigne, TableauFactory, randExpr
 
-__version__ = '1.3.6'
+__version__ = '1.4'
+
