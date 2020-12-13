@@ -1,19 +1,20 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<html lang="fr">
   <head>
     <meta charset="utf-8" />
-    <title>2. Scripts &#8212; Documentation TableauSigne 1.4</title>
-    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2. Scripts &#8212; Documentation TableauSigne 1.5</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
-    <script type="text/javascript" src="_static/translations.js"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/translations.js"></script>
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Recherche" href="search.html" />
@@ -35,7 +36,8 @@
         <li class="right" >
           <a href="install.html" title="1. Le paquet"
              accesskey="P">précédent</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Documentation TableauSigne 1.4</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Documentation TableauSigne 1.5</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">2. </span>Scripts</a></li> 
       </ul>
     </div>  
 
@@ -45,9 +47,9 @@
           <div class="body" role="main">
             
   <div class="section" id="scripts">
-<h1>2. Scripts<a class="headerlink" href="#scripts" title="Lien permanent vers ce titre">¶</a></h1>
+<h1><span class="section-number">2. </span>Scripts<a class="headerlink" href="#scripts" title="Lien permanent vers ce titre">¶</a></h1>
 <div class="section" id="tabsignegui">
-<h2>2.1. TabSigneGUI<a class="headerlink" href="#tabsignegui" title="Lien permanent vers ce titre">¶</a></h2>
+<h2><span class="section-number">2.1. </span>TabSigneGUI<a class="headerlink" href="#tabsignegui" title="Lien permanent vers ce titre">¶</a></h2>
 <p>C’est probablement le plus simple à utiliser car c’est une interface graphique: un double clic dessus devrait le lancer.</p>
 <p>Il y a des boutons d’export tex/pst/pag.</p>
 <p>Il y a une fenêtre de texte qui donne la sortie tex que vous pouvez directement utiliser pour un copier/coller.
@@ -61,12 +63,12 @@ Idem pour produire l’ensemble des solutions d’une inéquation sur le signe.<
 </div>
 </div>
 <div class="section" id="tabsigne">
-<h2>2.2. TabSigne<a class="headerlink" href="#tabsigne" title="Lien permanent vers ce titre">¶</a></h2>
+<h2><span class="section-number">2.2. </span>TabSigne<a class="headerlink" href="#tabsigne" title="Lien permanent vers ce titre">¶</a></h2>
 <p>Le fichier <em>TabSigne</em> est un script permettant d’utiliser le module
 directement en ligne de commande.</p>
 <p>En principe il fonctionne sur toute plateforme.
 Signature:</p>
-<dl class="function">
+<dl class="py function">
 <dt>
 <code class="sig-name descname">TabSigne [-h] [--bornes [BORNES]] [--format {tex,pst,pag}] [--out [OUT]] [--version] expression</code></dt>
 <dd><p>Construit le tableau de signe d’une expression.</p>
@@ -107,7 +109,7 @@ $ TabSigne -b &quot;[-3,sympify(&#39;13/2&#39;)]&quot; -o sortie -f pst &#39;8*x
 <p>(et non pas “-2*x**2*(x+3)/(x+2)**2” pour l’expression)</p>
 </div>
 <div class="section" id="tabsignesimplif">
-<h2>2.3. TabSigneSimplif<a class="headerlink" href="#tabsignesimplif" title="Lien permanent vers ce titre">¶</a></h2>
+<h2><span class="section-number">2.3. </span>TabSigneSimplif<a class="headerlink" href="#tabsignesimplif" title="Lien permanent vers ce titre">¶</a></h2>
 <p>Le fichier <em>TabSigneSimplif</em> fonctionne sur le même principe et produira un tableau simplifié: il ne contient alors que la ligne de la variable et la ligne finale.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
@@ -117,6 +119,7 @@ $ TabSigne -b &quot;[-3,sympify(&#39;13/2&#39;)]&quot; -o sortie -f pst &#39;8*x
 </div>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -134,10 +137,10 @@ $ TabSigne -b &quot;[-3,sympify(&#39;13/2&#39;)]&quot; -o sortie -f pst &#39;8*x
 
   <h4>Sujet précédent</h4>
   <p class="topless"><a href="install.html"
-                        title="Chapitre précédent">1. Le paquet</a></p>
+                        title="Chapitre précédent"><span class="section-number">1. </span>Le paquet</a></p>
   <h4>Sujet suivant</h4>
   <p class="topless"><a href="recommandations.html"
-                        title="Chapitre suivant">3. Recommandations</a></p>
+                        title="Chapitre suivant"><span class="section-number">3. </span>Recommandations</a></p>
   <div role="note" aria-label="source link">
     <h3>Cette page</h3>
     <ul class="this-page-menu">
@@ -154,7 +157,7 @@ $ TabSigne -b &quot;[-3,sympify(&#39;13/2&#39;)]&quot; -o sortie -f pst &#39;8*x
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -174,12 +177,13 @@ $ TabSigne -b &quot;[-3,sympify(&#39;13/2&#39;)]&quot; -o sortie -f pst &#39;8*x
         <li class="right" >
           <a href="install.html" title="1. Le paquet"
              >précédent</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Documentation TableauSigne 1.4</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Documentation TableauSigne 1.5</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">2. </span>Scripts</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-, B.M. - GPL v3.
-      Créé avec <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.3.1.
     </div>
   </body>
 </html>

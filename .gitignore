@@ -10,7 +10,8 @@ build/
 *.whl
 TableauSigne.egg-info/
 TableauSigne/data/html/.buildinfo
+TableauSigne/data/doc/html/.buildinfo
 TableauSigne/data/doctrees/
-TableauSigne/data/doc/
+TableauSigne/data/doc/doctrees/
 .gitignore
 *.pyc

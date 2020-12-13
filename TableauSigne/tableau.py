@@ -10,7 +10,7 @@ from random import choice, randint
 from lxml import etree
 from functools import reduce
 from copy import deepcopy
-from sympy import *
+from sympy import var,sympify,oo,sign,det,Matrix,degree,Poly,denom,numer,random_poly,solve,Eq,latex,Pow,diff
 
 x = var('x')
 
@@ -134,7 +134,8 @@ class TableauSigne():
         
     def _list2pststring(self, l):
         # disparition du + dans le cas de latex(+oo)
-        return reduce(lambda u,v: str(u)+"#"+(latex(v) if (v!=oo) else '+\\infty'), l)
+        return reduce(lambda u,v: str(u)+"#"+(latex(v)
+                                              if (v!=oo) else '+\\infty'), l)
     
     def _fill_ligne(self, tete, facteur):
         """ Construction de la ligne des signes concernant facteur
@@ -159,9 +160,9 @@ class TableauSigne():
         # barres de positions
         for v in grid:
             i = tete.index(v)
-            out["Haut"][i] ="|"
-            out["Milieu"][i] ="|"
-            out["Bas"][i] ="|"
+            out["Haut"][i] = "|"
+            out["Milieu"][i] = "|"
+            out["Bas"][i] = "|"
         # titre de la ligne
         if facteur.is_Pow:
             out["Milieu"][0] = latex( Pow(facteur.args[0],
@@ -172,7 +173,7 @@ class TableauSigne():
         #cas d'une constante
         if facteur.is_Number:
             for i in range(l):
-                if tete[i]=="vide":
+                if tete[i] == "vide":
                     out["Milieu"][i] = signe[int(sign(facteur))]
         #Autres: puissances paires
         elif facteur.is_Pow and facteur.args[1]%2 == 0:
@@ -586,35 +587,23 @@ class TableauFactory(list):
             out.write('\n\n')
         out.close()
 
-
-def randExpr(n=2, a=-5, b=5, denomin=True, nopower=True):
-    """créer aléatoirement une expression avec n facteurs du 1er degré à coef
-    entiers compris entre a et b. Le placement au numérateur/dénominateur se
-    fait aussi au hasard.
-    Attention, si nopower est activé, il faut b-a>sqrt(n).
-
-    :param int n: le nombre de facteurs, 2 par défaut
-    :param int a: borne inférieure des coefs, -5 par défaut
-    :param int b: borne supérieure des coefs, 5 par défaut
-    :param boolean denomin: autoriser des expressions au dénominateur, True par défaut
-
-    exemple::
-
-      >>> randExpr(2)
-      (-x + 2)/(2*x + 3)
-      >>> randExpr(3,-15,15)
-      (-3*x + 2)*(14*x - 10)/(5*x - 14)
-    """
-    ope = (['/','*'] if denomin else ['*'])
-    # éviter des puissances d'un même facteur
-    # le 1er terme du couple est un coef directeur, doit être non nul
-    A = [[choice([-1,1])* randint(1, b), randint(a,b)] for i in range(n)]
+def _genListeCoef(n=2, a=-5, b=5, nopower=True, vals=None):
+    """Constuire la liste des [ai, bi] pour générer les facteurs (ai*x +bi)"""
     # tester toutes les colinéarités 2 à 2
+    multiplicateur = 4  
     if nopower:
         nocolin = False
         while not(nocolin):
-            A = [[choice([-1,1]) * randint(1, b), randint(a,b)]
-                 for i in range(n)]
+            if vals:
+                tmpC = [choice([-1,1])* randint(1, multiplicateur)
+                        for i in range(len(vals))]
+                Atmp = [ [tmpC[i], -tmpC[i]*e] for i,e in enumerate(vals)]
+                Areste = [[choice([-1,1])* randint(1, b), randint(a,b)]
+                          for i in range(n-len(vals))]
+                A = Atmp+Areste
+            else:
+                A = [[choice([-1,1]) * randint(1, b), randint(a,b)]
+                     for i in range(n)]
             # tester toutes les colinéarités 2 à 2
             nocolin = True
             for i in range(n):
@@ -624,11 +613,51 @@ def randExpr(n=2, a=-5, b=5, denomin=True, nopower=True):
                         nocolin = False
                         break
     else:
-        # le 1er terme du couple est un coef directeur, doit être non nul
-        A = [[choice([-1,1])*randint(1, b), randint(a,b)] for i in range(n)]
+        if vals:
+            tmpC = [choice([-1,1])* randint(1, multiplicateur)
+                    for i in range(len(vals))]
+            Atmp = [ [tmpC[i], -tmpC[i]*e] for i,e in enumerate(vals)]
+            Areste = [[choice([-1,1])* randint(1, b), randint(a,b)]
+                      for i in range(n-len(vals))]
+            A = Atmp+Areste
+        else:
+            # le 1er terme du couple est un coef directeur, doit être non nul
+            A = [[choice([-1,1])*randint(1, b), randint(a,b)]
+                 for i in range(n)]
+    return A
+
+def randExpr(n=2, a=-5, b=5, denomin=True, nopower=True, vals=None):
+    """créer aléatoirement une expression avec n facteurs du 1er degré à coef
+    entiers compris entre a et b. Le placement au numérateur/dénominateur se
+    fait aussi au hasard.
+    Attention, si nopower est activé, il faut b-a>sqrt(n).
+
+    :param int n: le nombre de facteurs, 2 par défaut
+    :param int a: borne inférieure des coefs, -5 par défaut
+    :param int b: borne supérieure des coefs, 5 par défaut
+    :param boolean/int denomin: autoriser des expressions au dénominateur, True par défaut
+       on autorise un int entre 0 et n pour désigner le nombre de coefs qu 'on veut au dénominateur
+    :param list vals: liste de zéros ou vi de taille <= n. Biensûr, vous savez ce que vous faites, vous
+       ne pouvez proposer plusieurs fois la même (en contradiction avec nopower)
+
+    exemple::
+
+      >>> randExpr(2)
+      (-x + 2)/(2*x + 3)
+      >>> randExpr(3,-15,15)
+      (-3*x + 2)*(14*x - 10)/(5*x - 14)
+      >>> randExpr(5, denomin=3, vals=[-4,2,3])
+      (-3*x - 3)*(4*x - 3)/((8 - 4*x)*(9 - 3*x)*(-4*x - 16))
+    """
+    ope = (['/','*'] if denomin else ['*'])
+    A = _genListeCoef(n, a, b, nopower, vals)
         
     #F = [(random_poly(x, 1, a,b, polys=False), choice(ope)) for i in range(n)]
-    F = [(x*e[0]+e[1], choice(ope)) for e in A]
+    if type(denomin)==bool:
+        F = [(x*e[0]+e[1], choice(ope)) for e in A]
+    elif type(denomin)==int:
+        OPS = denomin*['/'] + (n-denomin)*['*']
+        F = [(x*e[0]+e[1], OPS[i]) for i,e in enumerate(A)]
     out = sympify(reduce(lambda a,b: f"{a+b[1]}({str(b[0])})", F, '1'))
     # sadly certains facteurs "colinéaires" pourraient se neutraliser
     # ce cas ne se produit pas si nopower est activé

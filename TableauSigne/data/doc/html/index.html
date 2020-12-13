@@ -1,19 +1,20 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<html lang="fr">
   <head>
     <meta charset="utf-8" />
-    <title>Bienvenue dans la doc de TableauSigne! &#8212; Documentation TableauSigne 1.4</title>
-    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bienvenue dans la doc de TableauSigne! &#8212; Documentation TableauSigne 1.5</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
-    <script type="text/javascript" src="_static/translations.js"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/translations.js"></script>
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Recherche" href="search.html" />
@@ -31,7 +32,8 @@
         <li class="right" >
           <a href="install.html" title="1. Le paquet"
              accesskey="N">suivant</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">Documentation TableauSigne 1.4</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="#">Documentation TableauSigne 1.5</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Bienvenue dans la doc de TableauSigne!</a></li> 
       </ul>
     </div>  
 
@@ -47,10 +49,10 @@
 <dd class="field-odd"><p>Boris Mauricette &lt;Boris point Mauricette at ac - lyon point fr&gt; ou &lt;teddy_boomer at yahoo point fr&gt;</p>
 </dd>
 <dt class="field-even">Date</dt>
-<dd class="field-even"><p>17 juillet, 2020</p>
+<dd class="field-even"><p>13 décembre, 2020</p>
 </dd>
 <dt class="field-odd">Revision</dt>
-<dd class="field-odd"><p>1.4</p>
+<dd class="field-odd"><p>1.5</p>
 </dd>
 <dt class="field-even">Description</dt>
 <dd class="field-even"><p>Voici la documentation du paquet pour les tableaux de signe.</p>
@@ -80,9 +82,11 @@
 </div>
 <p>Une petite illustration des capacités du module:</p>
 <p>Exemple:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">TableauSigne</span> <span class="k">import</span> <span class="o">*</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">TableauSigne</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">A</span> <span class="o">=</span> <span class="n">randExpr</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <span class="go">(4*x - 3)/((-3*x + 4)*(5*x + 5))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">A2</span> <span class="o">=</span> <span class="n">randExpr</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">denomin</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">vals</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="go">(-3*x - 3)*(4*x - 3)/((8 - 4*x)*(9 - 3*x)*(-4*x - 16))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">B</span> <span class="o">=</span> <span class="n">TableauSigne</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">B</span><span class="o">.</span><span class="n">get_solutions</span><span class="p">(</span><span class="s1">&#39;+0&#39;</span><span class="p">)</span>
 <span class="go">&#39;\left] -\infty;-1\right[\cup \left[ \frac{3}{4};\frac{4}{3}\\right[&#39;</span>
@@ -101,6 +105,7 @@
 </div>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -108,7 +113,7 @@
         <div class="sphinxsidebarwrapper">
   <h4>Sujet suivant</h4>
   <p class="topless"><a href="install.html"
-                        title="Chapitre suivant">1. Le paquet</a></p>
+                        title="Chapitre suivant"><span class="section-number">1. </span>Le paquet</a></p>
   <div role="note" aria-label="source link">
     <h3>Cette page</h3>
     <ul class="this-page-menu">
@@ -125,7 +130,7 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -142,12 +147,13 @@
         <li class="right" >
           <a href="install.html" title="1. Le paquet"
              >suivant</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">Documentation TableauSigne 1.4</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="#">Documentation TableauSigne 1.5</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Bienvenue dans la doc de TableauSigne!</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-, B.M. - GPL v3.
-      Créé avec <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.3.1.
     </div>
   </body>
 </html>

@@ -1,19 +1,20 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<html lang="fr">
   <head>
     <meta charset="utf-8" />
-    <title>TableauSigne.tableau &#8212; Documentation TableauSigne 1.4</title>
-    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TableauSigne.tableau &#8212; Documentation TableauSigne 1.5</title>
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
     
-    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../_static/language_data.js"></script>
-    <script type="text/javascript" src="../../_static/translations.js"></script>
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/translations.js"></script>
     
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Recherche" href="../../search.html" /> 
@@ -27,8 +28,9 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Index des modules Python"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Documentation TableauSigne 1.4</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Code du module</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Documentation TableauSigne 1.5</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Code du module</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">TableauSigne.tableau</a></li> 
       </ul>
     </div>  
 
@@ -46,11 +48,11 @@
 
 <span class="kn">import</span> <span class="nn">operator</span>
 <span class="kn">import</span> <span class="nn">re</span> <span class="k">as</span> <span class="nn">regexp</span>
-<span class="kn">from</span> <span class="nn">random</span> <span class="k">import</span> <span class="n">choice</span><span class="p">,</span> <span class="n">randint</span>
-<span class="kn">from</span> <span class="nn">lxml</span> <span class="k">import</span> <span class="n">etree</span>
-<span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">reduce</span>
-<span class="kn">from</span> <span class="nn">copy</span> <span class="k">import</span> <span class="n">deepcopy</span>
-<span class="kn">from</span> <span class="nn">sympy</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">choice</span><span class="p">,</span> <span class="n">randint</span>
+<span class="kn">from</span> <span class="nn">lxml</span> <span class="kn">import</span> <span class="n">etree</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">reduce</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">var</span><span class="p">,</span><span class="n">sympify</span><span class="p">,</span><span class="n">oo</span><span class="p">,</span><span class="n">sign</span><span class="p">,</span><span class="n">det</span><span class="p">,</span><span class="n">Matrix</span><span class="p">,</span><span class="n">degree</span><span class="p">,</span><span class="n">Poly</span><span class="p">,</span><span class="n">denom</span><span class="p">,</span><span class="n">numer</span><span class="p">,</span><span class="n">random_poly</span><span class="p">,</span><span class="n">solve</span><span class="p">,</span><span class="n">Eq</span><span class="p">,</span><span class="n">latex</span><span class="p">,</span><span class="n">Pow</span><span class="p">,</span><span class="n">diff</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="n">var</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
 
@@ -76,7 +78,7 @@
 <span class="sd">        &gt;&gt;&gt; f = TableauSigne(&#39;3*x+1&#39;) # expression du 1er degré prise en compte</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expr</span><span class="p">,</span> <span class="n">bornes</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="n">oo</span><span class="p">,</span> <span class="n">oo</span><span class="p">],</span> <span class="n">niveau</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expr</span><span class="p">,</span> <span class="n">bornes</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="n">oo</span><span class="p">,</span> <span class="n">oo</span><span class="p">],</span> <span class="n">niveau</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">expr</span> <span class="o">=</span> <span class="n">sympify</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bornes</span> <span class="o">=</span> <span class="n">bornes</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">niveau</span> <span class="o">=</span> <span class="n">niveau</span>
@@ -174,7 +176,8 @@
         
     <span class="k">def</span> <span class="nf">_list2pststring</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l</span><span class="p">):</span>
         <span class="c1"># disparition du + dans le cas de latex(+oo)</span>
-        <span class="k">return</span> <span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">u</span><span class="p">,</span><span class="n">v</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">u</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;#&quot;</span><span class="o">+</span><span class="p">(</span><span class="n">latex</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="n">v</span><span class="o">!=</span><span class="n">oo</span><span class="p">)</span> <span class="k">else</span> <span class="s1">&#39;+</span><span class="se">\\</span><span class="s1">infty&#39;</span><span class="p">),</span> <span class="n">l</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">u</span><span class="p">,</span><span class="n">v</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">u</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;#&quot;</span><span class="o">+</span><span class="p">(</span><span class="n">latex</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+                                              <span class="k">if</span> <span class="p">(</span><span class="n">v</span><span class="o">!=</span><span class="n">oo</span><span class="p">)</span> <span class="k">else</span> <span class="s1">&#39;+</span><span class="se">\\</span><span class="s1">infty&#39;</span><span class="p">),</span> <span class="n">l</span><span class="p">)</span>
     
     <span class="k">def</span> <span class="nf">_fill_ligne</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tete</span><span class="p">,</span> <span class="n">facteur</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Construction de la ligne des signes concernant facteur</span>
@@ -199,9 +202,9 @@
         <span class="c1"># barres de positions</span>
         <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">grid</span><span class="p">:</span>
             <span class="n">i</span> <span class="o">=</span> <span class="n">tete</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
-            <span class="n">out</span><span class="p">[</span><span class="s2">&quot;Haut&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span><span class="s2">&quot;|&quot;</span>
-            <span class="n">out</span><span class="p">[</span><span class="s2">&quot;Milieu&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span><span class="s2">&quot;|&quot;</span>
-            <span class="n">out</span><span class="p">[</span><span class="s2">&quot;Bas&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span><span class="s2">&quot;|&quot;</span>
+            <span class="n">out</span><span class="p">[</span><span class="s2">&quot;Haut&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;|&quot;</span>
+            <span class="n">out</span><span class="p">[</span><span class="s2">&quot;Milieu&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;|&quot;</span>
+            <span class="n">out</span><span class="p">[</span><span class="s2">&quot;Bas&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;|&quot;</span>
         <span class="c1"># titre de la ligne</span>
         <span class="k">if</span> <span class="n">facteur</span><span class="o">.</span><span class="n">is_Pow</span><span class="p">:</span>
             <span class="n">out</span><span class="p">[</span><span class="s2">&quot;Milieu&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">latex</span><span class="p">(</span> <span class="n">Pow</span><span class="p">(</span><span class="n">facteur</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
@@ -212,7 +215,7 @@
         <span class="c1">#cas d&#39;une constante</span>
         <span class="k">if</span> <span class="n">facteur</span><span class="o">.</span><span class="n">is_Number</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
-                <span class="k">if</span> <span class="n">tete</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="s2">&quot;vide&quot;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">tete</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;vide&quot;</span><span class="p">:</span>
                     <span class="n">out</span><span class="p">[</span><span class="s2">&quot;Milieu&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">signe</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">sign</span><span class="p">(</span><span class="n">facteur</span><span class="p">))]</span>
         <span class="c1">#Autres: puissances paires</span>
         <span class="k">elif</span> <span class="n">facteur</span><span class="o">.</span><span class="n">is_Pow</span> <span class="ow">and</span> <span class="n">facteur</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">%</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -444,7 +447,7 @@
 <div class="viewcode-block" id="TableauSigne.export_pst"><a class="viewcode-back" href="../../interface.html#TableauSigne.TableauSigne.export_pst">[docs]</a>    <span class="k">def</span> <span class="nf">export_pst</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nom</span><span class="o">=</span><span class="s2">&quot;tableau&quot;</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="s2">&quot;pag&quot;</span><span class="p">,</span> <span class="n">option</span><span class="o">=</span><span class="s1">&#39;simplif&#39;</span><span class="p">,</span> <span class="n">sign</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Exporter l&#39;arbre xml dans un fichier. Format pag ou pst.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{nom}</span><span class="s2">.</span><span class="si">{ext}</span><span class="s2">&quot;</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">nom</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">ext</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">sign</span><span class="p">):</span>
             <span class="n">choix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xmlnosign</span>
         <span class="k">elif</span> <span class="n">option</span> <span class="o">==</span> <span class="s1">&#39;simplif&#39;</span><span class="p">:</span>
@@ -466,7 +469,7 @@
 <span class="sd">        par défaut on laisse des +- pour mettre des … pour faire un énoncé</span>
 <span class="sd">        de tableau à compléter.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{nom}</span><span class="s2">.</span><span class="si">{ext}</span><span class="s2">&quot;</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">nom</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">ext</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="n">out</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
         <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">tab2latex</span><span class="p">(</span><span class="n">option</span><span class="o">=</span><span class="n">option</span><span class="p">)</span> <span class="p">)</span>
         <span class="n">out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div></div>
@@ -580,7 +583,7 @@
 <span class="sd">      </span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">M</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">M</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;initialisation</span>
 
 <span class="sd">        L: liste d&#39;expressions</span>
@@ -619,42 +622,30 @@
 <span class="sd">          de difficulté 1 ou 2 a été réglé à l&#39;initialisation) </span>
 <span class="sd">        * &#39;whole&#39;: tableau complet normal</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{nom}</span><span class="s2">.</span><span class="si">{ext}</span><span class="s2">&quot;</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">nom</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">ext</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="n">out</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span> <span class="n">t</span><span class="o">.</span><span class="n">tab2latex</span><span class="p">(</span><span class="n">option</span><span class="o">=</span><span class="n">option</span><span class="p">))</span>
             <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="n">out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div></div>
 
-
-<div class="viewcode-block" id="randExpr"><a class="viewcode-back" href="../../interface.html#TableauSigne.randExpr">[docs]</a><span class="k">def</span> <span class="nf">randExpr</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">a</span><span class="o">=-</span><span class="mi">5</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">denomin</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nopower</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;créer aléatoirement une expression avec n facteurs du 1er degré à coef</span>
-<span class="sd">    entiers compris entre a et b. Le placement au numérateur/dénominateur se</span>
-<span class="sd">    fait aussi au hasard.</span>
-<span class="sd">    Attention, si nopower est activé, il faut b-a&gt;sqrt(n).</span>
-
-<span class="sd">    :param int n: le nombre de facteurs, 2 par défaut</span>
-<span class="sd">    :param int a: borne inférieure des coefs, -5 par défaut</span>
-<span class="sd">    :param int b: borne supérieure des coefs, 5 par défaut</span>
-<span class="sd">    :param boolean denomin: autoriser des expressions au dénominateur, True par défaut</span>
-
-<span class="sd">    exemple::</span>
-
-<span class="sd">      &gt;&gt;&gt; randExpr(2)</span>
-<span class="sd">      (-x + 2)/(2*x + 3)</span>
-<span class="sd">      &gt;&gt;&gt; randExpr(3,-15,15)</span>
-<span class="sd">      (-3*x + 2)*(14*x - 10)/(5*x - 14)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">ope</span> <span class="o">=</span> <span class="p">([</span><span class="s1">&#39;/&#39;</span><span class="p">,</span><span class="s1">&#39;*&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="n">denomin</span> <span class="k">else</span> <span class="p">[</span><span class="s1">&#39;*&#39;</span><span class="p">])</span>
-    <span class="c1"># éviter des puissances d&#39;un même facteur</span>
-    <span class="c1"># le 1er terme du couple est un coef directeur, doit être non nul</span>
-    <span class="n">A</span> <span class="o">=</span> <span class="p">[[</span><span class="n">choice</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span><span class="o">*</span> <span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">randint</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+<span class="k">def</span> <span class="nf">_genListeCoef</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">a</span><span class="o">=-</span><span class="mi">5</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">nopower</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">vals</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Constuire la liste des [ai, bi] pour générer les facteurs (ai*x +bi)&quot;&quot;&quot;</span>
     <span class="c1"># tester toutes les colinéarités 2 à 2</span>
+    <span class="n">multiplicateur</span> <span class="o">=</span> <span class="mi">4</span>  
     <span class="k">if</span> <span class="n">nopower</span><span class="p">:</span>
         <span class="n">nocolin</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">while</span> <span class="ow">not</span><span class="p">(</span><span class="n">nocolin</span><span class="p">):</span>
-            <span class="n">A</span> <span class="o">=</span> <span class="p">[[</span><span class="n">choice</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">randint</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)]</span>
-                 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+            <span class="k">if</span> <span class="n">vals</span><span class="p">:</span>
+                <span class="n">tmpC</span> <span class="o">=</span> <span class="p">[</span><span class="n">choice</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span><span class="o">*</span> <span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">multiplicateur</span><span class="p">)</span>
+                        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">vals</span><span class="p">))]</span>
+                <span class="n">Atmp</span> <span class="o">=</span> <span class="p">[</span> <span class="p">[</span><span class="n">tmpC</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="o">-</span><span class="n">tmpC</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">e</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">vals</span><span class="p">)]</span>
+                <span class="n">Areste</span> <span class="o">=</span> <span class="p">[[</span><span class="n">choice</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span><span class="o">*</span> <span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">randint</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)]</span>
+                          <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">vals</span><span class="p">))]</span>
+                <span class="n">A</span> <span class="o">=</span> <span class="n">Atmp</span><span class="o">+</span><span class="n">Areste</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">A</span> <span class="o">=</span> <span class="p">[[</span><span class="n">choice</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">randint</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)]</span>
+                     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
             <span class="c1"># tester toutes les colinéarités 2 à 2</span>
             <span class="n">nocolin</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
@@ -664,12 +655,52 @@
                         <span class="n">nocolin</span> <span class="o">=</span> <span class="kc">False</span>
                         <span class="k">break</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># le 1er terme du couple est un coef directeur, doit être non nul</span>
-        <span class="n">A</span> <span class="o">=</span> <span class="p">[[</span><span class="n">choice</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span><span class="o">*</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">randint</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="n">vals</span><span class="p">:</span>
+            <span class="n">tmpC</span> <span class="o">=</span> <span class="p">[</span><span class="n">choice</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span><span class="o">*</span> <span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">multiplicateur</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">vals</span><span class="p">))]</span>
+            <span class="n">Atmp</span> <span class="o">=</span> <span class="p">[</span> <span class="p">[</span><span class="n">tmpC</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="o">-</span><span class="n">tmpC</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">e</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">vals</span><span class="p">)]</span>
+            <span class="n">Areste</span> <span class="o">=</span> <span class="p">[[</span><span class="n">choice</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span><span class="o">*</span> <span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">randint</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)]</span>
+                      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">vals</span><span class="p">))]</span>
+            <span class="n">A</span> <span class="o">=</span> <span class="n">Atmp</span><span class="o">+</span><span class="n">Areste</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># le 1er terme du couple est un coef directeur, doit être non nul</span>
+            <span class="n">A</span> <span class="o">=</span> <span class="p">[[</span><span class="n">choice</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span><span class="o">*</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">randint</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)]</span>
+                 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="n">A</span>
+
+<div class="viewcode-block" id="randExpr"><a class="viewcode-back" href="../../interface.html#TableauSigne.randExpr">[docs]</a><span class="k">def</span> <span class="nf">randExpr</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">a</span><span class="o">=-</span><span class="mi">5</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">denomin</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nopower</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">vals</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;créer aléatoirement une expression avec n facteurs du 1er degré à coef</span>
+<span class="sd">    entiers compris entre a et b. Le placement au numérateur/dénominateur se</span>
+<span class="sd">    fait aussi au hasard.</span>
+<span class="sd">    Attention, si nopower est activé, il faut b-a&gt;sqrt(n).</span>
+
+<span class="sd">    :param int n: le nombre de facteurs, 2 par défaut</span>
+<span class="sd">    :param int a: borne inférieure des coefs, -5 par défaut</span>
+<span class="sd">    :param int b: borne supérieure des coefs, 5 par défaut</span>
+<span class="sd">    :param boolean/int denomin: autoriser des expressions au dénominateur, True par défaut</span>
+<span class="sd">       on autorise un int entre 0 et n pour désigner le nombre de coefs qu &#39;on veut au dénominateur</span>
+<span class="sd">    :param list vals: liste de zéros ou vi de taille &lt;= n. Biensûr, vous savez ce que vous faites, vous</span>
+<span class="sd">       ne pouvez proposer plusieurs fois la même (en contradiction avec nopower)</span>
+
+<span class="sd">    exemple::</span>
+
+<span class="sd">      &gt;&gt;&gt; randExpr(2)</span>
+<span class="sd">      (-x + 2)/(2*x + 3)</span>
+<span class="sd">      &gt;&gt;&gt; randExpr(3,-15,15)</span>
+<span class="sd">      (-3*x + 2)*(14*x - 10)/(5*x - 14)</span>
+<span class="sd">      &gt;&gt;&gt; randExpr(5, denomin=3, vals=[-4,2,3])</span>
+<span class="sd">      (-3*x - 3)*(4*x - 3)/((8 - 4*x)*(9 - 3*x)*(-4*x - 16))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ope</span> <span class="o">=</span> <span class="p">([</span><span class="s1">&#39;/&#39;</span><span class="p">,</span><span class="s1">&#39;*&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="n">denomin</span> <span class="k">else</span> <span class="p">[</span><span class="s1">&#39;*&#39;</span><span class="p">])</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">_genListeCoef</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">nopower</span><span class="p">,</span> <span class="n">vals</span><span class="p">)</span>
         
     <span class="c1">#F = [(random_poly(x, 1, a,b, polys=False), choice(ope)) for i in range(n)]</span>
-    <span class="n">F</span> <span class="o">=</span> <span class="p">[(</span><span class="n">x</span><span class="o">*</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">choice</span><span class="p">(</span><span class="n">ope</span><span class="p">))</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">A</span><span class="p">]</span>
-    <span class="n">out</span> <span class="o">=</span> <span class="n">sympify</span><span class="p">(</span><span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">:</span> <span class="n">f</span><span class="s2">&quot;{a+b[1]}({str(b[0])})&quot;</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">denomin</span><span class="p">)</span><span class="o">==</span><span class="nb">bool</span><span class="p">:</span>
+        <span class="n">F</span> <span class="o">=</span> <span class="p">[(</span><span class="n">x</span><span class="o">*</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">choice</span><span class="p">(</span><span class="n">ope</span><span class="p">))</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">A</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">denomin</span><span class="p">)</span><span class="o">==</span><span class="nb">int</span><span class="p">:</span>
+        <span class="n">OPS</span> <span class="o">=</span> <span class="n">denomin</span><span class="o">*</span><span class="p">[</span><span class="s1">&#39;/&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">denomin</span><span class="p">)</span><span class="o">*</span><span class="p">[</span><span class="s1">&#39;*&#39;</span><span class="p">]</span>
+        <span class="n">F</span> <span class="o">=</span> <span class="p">[(</span><span class="n">x</span><span class="o">*</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">OPS</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">A</span><span class="p">)]</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">sympify</span><span class="p">(</span><span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">))</span>
     <span class="c1"># sadly certains facteurs &quot;colinéaires&quot; pourraient se neutraliser</span>
     <span class="c1"># ce cas ne se produit pas si nopower est activé</span>
     <span class="k">while</span> <span class="p">(</span><span class="n">n</span><span class="o">&gt;=</span><span class="mi">2</span> <span class="ow">and</span> <span class="p">(</span><span class="n">degree</span><span class="p">(</span><span class="n">Poly</span><span class="p">(</span><span class="n">numer</span><span class="p">(</span><span class="n">out</span><span class="p">),</span> <span class="n">x</span><span class="p">))</span>
@@ -678,11 +709,12 @@
              <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
         <span class="c1"># besoin de sympifier pour des expressions avec fractions…</span>
         <span class="c1">#out = sympify(reduce(lambda a,b: a+b[1]+&#39;(&#39;+str(b[0])+&#39;)&#39;, F, &#39;1&#39;))</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">:</span> <span class="n">f</span><span class="s2">&quot;{a+b[1]}({str(b[0])})&quot;</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">out</span></div>
 
 </pre></div>
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -697,7 +729,7 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -711,13 +743,14 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Index des modules Python"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Documentation TableauSigne 1.4</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" >Code du module</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Documentation TableauSigne 1.5</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Code du module</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">TableauSigne.tableau</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-, B.M. - GPL v3.
-      Créé avec <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.3.1.
     </div>
   </body>
 </html>

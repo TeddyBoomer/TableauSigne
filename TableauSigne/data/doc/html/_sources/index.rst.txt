@@ -30,6 +30,8 @@ Exemple::
    >>> from TableauSigne import *
    >>> A = randExpr(3)
    (4*x - 3)/((-3*x + 4)*(5*x + 5))
+   >>> A2 = randExpr(5, denomin=3, vals=[-4,2,3])
+   (-3*x - 3)*(4*x - 3)/((8 - 4*x)*(9 - 3*x)*(-4*x - 16))
    >>> B = TableauSigne(A)
    >>> B.get_solutions('+0')
    '\left] -\infty;-1\right[\cup \left[ \frac{3}{4};\frac{4}{3}\\right['
@@ -41,7 +43,7 @@ Exemple::
    \tx{4 x -3} &  & \tx{-} & \tx{|} & \tx{-} & \txt{0} & \tx{+} & \tx{|} & \tx{+} & \cr
    \tx{\text{signe de }f} &  & \tx{+} & \dbt & \tx{-} & \txt{0} & \tx{+} & \dbt & \tx{-} & \cr}$$
    >>> B.export_pst()
-
+   
 Le logiciel pdfAdd donne le rendu suivant (.pdf converti en .png)
 
 .. image:: ../img/exemple.png

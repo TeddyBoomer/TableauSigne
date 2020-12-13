@@ -23,12 +23,15 @@ Export possible vers LaTeX, pst+, pdfadd (pour modifier le tableau)
 .. py:class:: TableauSigne(e [, **kwargs])
    créer le tableau de signe d'une expression e
 
-.. py:function:: randExpr(n, [a=-5, b=5, denom=True, nopower=True])
+.. py:function:: randExpr(n, [a=-5, b=5, denom=True, nopower=True, vals=None])
    générer une expression à n facteurs
 
    * bornes des coefs: a, b
-   * bool denomin: autoriser des facteurs au dénominateur,
+   * bool/int denomin: autoriser des facteurs au dénominateur, éventuellement
+     en préciser le nombre
    * bool nopower: refuser d'avoir des puissances.
+   * list vals: liste de zéros ou vi qu'on veut imposer dans l'expr (avec 
+     prudence)
 
 .. py:class:: TableauFactory(L, [M])
    créer une liste de tableaux de signe
@@ -40,5 +43,4 @@ Export possible vers LaTeX, pst+, pdfadd (pour modifier le tableau)
 
 from TableauSigne.tableau import TableauSigne, TableauFactory, randExpr
 
-__version__ = '1.4'
-
+__version__ = '1.5'
