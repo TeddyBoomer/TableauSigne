@@ -42,6 +42,9 @@ class TableauQt(TableauSigne):
         if ext == "tex":
             o = self.tab2latex(option=option)
             t = QByteArray(o.encode('utf-8'))
+        elif ext == "tkz":
+            o = self.tab2tkz(option=option)
+            t = QByteArray(o.encode('utf-8'))
         elif ext in ["pst", "pag"]:
             o = etree.tostring(choix[option], pretty_print=True)
             t = QByteArray(o)
@@ -77,7 +80,7 @@ class QMW(QMainWindow):
 
         # zone de texte d'une sortie LaTeX
         bigEditor = QTextEdit()
-        bigEditor.setPlainText("Création de la sortie latex ici pour un copier/coller ")
+        bigEditor.setPlainText("Création de la sortie latex/TikZ ici pour un copier/coller ")
         self.bigEditor = bigEditor
         
         self.createMenu()
@@ -162,9 +165,10 @@ class QMW(QMainWindow):
     def createHorizontalGroupBox(self):
         self.horizontalGroupBox = QGroupBox("Export")
         layout = QHBoxLayout()
-        out = [('LaTeX', self._export_latex),\
-               ('PST+', self._export_pst),\
-               ('PAG', self._export_pag)]
+        out = [('LaTeX', self._export_latex),
+               ('PST+', self._export_pst),
+               ('PAG', self._export_pag),
+               ('TikZ', self._export_tkz)]
         for i in range(len(out)):
             button = QPushButton(out[i][0])
             button.clicked.connect(out[i][1])
@@ -196,13 +200,21 @@ class QMW(QMainWindow):
                                           "Fichiers PAG (PdfAdd) (*.pag)")
         self.tableau.export(fichier, **self.OPT)
 
+    @pyqtSlot()
+    def _export_tkz(self):
+        fichier = QFileDialog.getSaveFileName(self, 
+                                          "Enregistrer sous…",
+                                          "tableau.tkz",
+                                          "Fichiers TikZ (*.tkz)")
+        self.tableau.export(fichier, **self.OPT)
+
     def createFormGroupBox(self):
         self.formGroupBox = QGroupBox("Entrée")
         self.expression = QLineEdit(str(self.tableau.expr))
 
         type_tab = QComboBox()
-        for x in self.option_fill.keys(): 
-            type_tab.addItem(x)
+        for e in self.option_fill.keys(): 
+            type_tab.addItem(e)
         self.type_tab = type_tab
         # associer signal changement d'option au slot de self.solution.setText
         self.type_tab.currentTextChanged.connect(self._opt_select)
@@ -230,7 +242,7 @@ class QMW(QMainWindow):
             self.tableau.__init__(ex, niveau=self.OPT["niveau"])
         else:
             self.tableau.__init__(ex)
-        self.bigEditor.setPlainText(self.tableau.tab2latex(**self.OPT))
+        self.bigEditor.setPlainText(self.tableau.tab2tkz(**self.OPT))
 
         ineq = self.inequations[ self.choixIneq.currentText() ]
         self.solution.setText(self.tableau.get_solutions(ineq))        
@@ -255,6 +267,6 @@ if __name__ == '__main__':
     import sys
     app = QApplication(sys.argv)
     d = QMW()
-    d.resize(700,500)
+    d.resize(700,700)
     d.show()
     sys.exit(app.exec_())

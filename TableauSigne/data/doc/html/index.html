@@ -4,8 +4,9 @@
 <html lang="fr">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bienvenue dans la doc de TableauSigne! &#8212; Documentation TableauSigne 1.5</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Bienvenue dans la doc de TableauSigne! &#8212; Documentation TableauSigne 2.0</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     
@@ -32,7 +33,7 @@
         <li class="right" >
           <a href="install.html" title="1. Le paquet"
              accesskey="N">suivant</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">Documentation TableauSigne 1.5</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="#">Documentation TableauSigne 2.0</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Bienvenue dans la doc de TableauSigne!</a></li> 
       </ul>
     </div>  
@@ -42,17 +43,17 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="bienvenue-dans-la-doc-de-tableausigne">
+  <section id="bienvenue-dans-la-doc-de-tableausigne">
 <h1>Bienvenue dans la doc de TableauSigne!<a class="headerlink" href="#bienvenue-dans-la-doc-de-tableausigne" title="Lien permanent vers ce titre">¶</a></h1>
 <dl class="field-list simple">
 <dt class="field-odd">Author</dt>
 <dd class="field-odd"><p>Boris Mauricette &lt;Boris point Mauricette at ac - lyon point fr&gt; ou &lt;teddy_boomer at yahoo point fr&gt;</p>
 </dd>
 <dt class="field-even">Date</dt>
-<dd class="field-even"><p>13 décembre, 2020</p>
+<dd class="field-even"><p>03 novembre, 2022</p>
 </dd>
 <dt class="field-odd">Revision</dt>
-<dd class="field-odd"><p>1.5</p>
+<dd class="field-odd"><p>2.0</p>
 </dd>
 <dt class="field-even">Description</dt>
 <dd class="field-even"><p>Voici la documentation du paquet pour les tableaux de signe.</p>
@@ -90,19 +91,27 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="n">B</span> <span class="o">=</span> <span class="n">TableauSigne</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">B</span><span class="o">.</span><span class="n">get_solutions</span><span class="p">(</span><span class="s1">&#39;+0&#39;</span><span class="p">)</span>
 <span class="go">&#39;\left] -\infty;-1\right[\cup \left[ \frac{3}{4};\frac{4}{3}\\right[&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">B</span><span class="o">.</span><span class="n">tab2latex</span><span class="p">())</span>
-<span class="go">$$\tabvar{%</span>
-<span class="go">\tx{x} &amp; \tx{-\infty} &amp;  &amp; \tx{-1} &amp;  &amp; \tx{\frac{3}{4}} &amp;  &amp; \tx{\frac{4}{3}} &amp;  &amp; \tx{+\infty}\cr</span>
-<span class="go">\tx{- 3 x + 4} &amp;  &amp; \tx{+} &amp; \tx{|} &amp; \tx{+} &amp; \tx{|} &amp; \tx{+} &amp; \txt{0} &amp; \tx{-} &amp; \cr</span>
-<span class="go">\tx{5 x + 5} &amp;  &amp; \tx{-} &amp; \txt{0} &amp; \tx{+} &amp; \tx{|} &amp; \tx{+} &amp; \tx{|} &amp; \tx{+} &amp; \cr</span>
-<span class="go">\tx{4 x -3} &amp;  &amp; \tx{-} &amp; \tx{|} &amp; \tx{-} &amp; \txt{0} &amp; \tx{+} &amp; \tx{|} &amp; \tx{+} &amp; \cr</span>
-<span class="go">\tx{\text{signe de }f} &amp;  &amp; \tx{+} &amp; \dbt &amp; \tx{-} &amp; \txt{0} &amp; \tx{+} &amp; \dbt &amp; \tx{-} &amp; \cr}$$</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">B</span><span class="o">.</span><span class="n">export_pst</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">B</span><span class="o">.</span><span class="n">tab2tkz</span><span class="p">())</span>
+<span class="go">%\usepackage{tkz-tab}</span>
+<span class="go">\begin{tikzpicture}</span>
+<span class="go">\tkzTabInit[nocadre,lgt=2.5,espcl=1.5]{$x$ /0.8 ,</span>
+<span class="go">$4 x - 3$ /0.8 ,</span>
+<span class="go">$5 x + 5$ /0.8 ,</span>
+<span class="go">$4 + \left(-3\right) x$ /0.8 ,</span>
+<span class="go">signe de $f(x)$ /0.8}{$-\infty$ , $-1$ , $\frac{3}{4}$ , $\frac{4}{3}$ , $+\infty$}</span>
+<span class="go">\tkzTabLine{ , - , d , - , z , + , d , + , }</span>
+<span class="go">\tkzTabLine{ , - , d , + , t , + , d , + , }</span>
+<span class="go">\tkzTabLine{ , + , d , + , t , + , d , - , }</span>
+<span class="go">\tkzTabLine{, +, d, -, z, +, d, -, }</span>
+<span class="go">\end{tikzpicture}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">B</span><span class="o">.</span><span class="n">export_tkz</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>Le logiciel pdfAdd donne le rendu suivant (.pdf converti en .png)</p>
-<a class="reference internal image-reference" href="_images/exemple.png"><img alt="résultat de l'export au format eps (produit par pst+)" class="align-left" src="_images/exemple.png" style="width: 396.0px; height: 170.0px;" /></a>
-</div>
+<p>La compilation avec XeLaTex donne le rendu suivant. (on observe qu’il y a un
+peu de travail manuel à faire sur les facteurs avec un coefficient directeur
+négatif)</p>
+<a class="reference internal image-reference" href="_images/exemple.png"><img alt="résultat de l'export au format eps (produit par pst+)" class="align-left" src="_images/exemple.png" style="width: 551.0px; height: 227.0px;" /></a>
+</section>
 
 
             <div class="clearer"></div>
@@ -147,7 +156,7 @@
         <li class="right" >
           <a href="install.html" title="1. Le paquet"
              >suivant</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">Documentation TableauSigne 1.5</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="#">Documentation TableauSigne 2.0</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Bienvenue dans la doc de TableauSigne!</a></li> 
       </ul>
     </div>

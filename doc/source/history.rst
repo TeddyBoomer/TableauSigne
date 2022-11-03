@@ -3,6 +3,7 @@ Historique
 
 Versions:
 
+* 2.0 : ajout export TikZ; activation de l'option evaluate=False pour maintenir l'expression de chaque facteur tel que saisi.
 * 1.5 : amélioration de la fonction `randExpr` pour contrôler plus finement le nombre de facteurs au dénominateur, les valeurs des zéros ou des valeurs interdites.
 * 1.4 : nettoyage et ajustement du code et de la documentation.
 * 1.3.6 : intégration de l'option 'nosign' et ses 2 niveaux dans l'interface graphique TableauSigneGUI.py.

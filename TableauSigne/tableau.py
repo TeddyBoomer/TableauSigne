@@ -25,6 +25,8 @@ class TableauSigne():
     :param int niveau: niveau de difficulté pour générer un tableau à compléter: 1 \
                 - juste les signes à remplir; 2 - aussi les valeurs particulières.
 
+    Regroupez les facteurs du dénominateur ensembles pour éviter les mauvaises surprises.
+
     exemple::
 
         >>> a = TableauSigne('-1*(3*x+2)*(-5*x +4)')
@@ -37,7 +39,7 @@ class TableauSigne():
     """
     
     def __init__(self, expr, bornes=[-oo, oo], niveau=1):
-        self.expr = sympify(expr)
+        self.expr = sympify(expr, evaluate=False)
         self.bornes = bornes
         self.niveau = niveau
         self.tab = []
@@ -53,7 +55,10 @@ class TableauSigne():
             ## tous les facteurs positifs rammenés à puissance 1
             self.pow_positif = [u.args[0] for u in self.pow_plus] +list(self.pow_simple) + list(self.fact_x)
             ## facteurs puissance négative -> vi
-            self.pow_moins = [u for u in self.facteurs if u.is_Pow and u.args[1]<0]
+            ## ils tombent dans un des arguments avec une puissance -1
+            ## on resympify avec evaluate à True
+            tmp = sympify([e.args[0] for e in self.facteurs if e.is_Pow and e.args[1]<0][0]**-1).args
+            self.pow_moins = [u for u in tmp if u.is_Pow and u.args[1]<0]
         elif self.expr.is_Add and (degree(self.expr) == 1): 
             # cas d'un seul facteur de degré 1:
             self.facteurs = self.pow_positif = [self.expr]
@@ -198,8 +203,7 @@ class TableauSigne():
                 f,p = facteur, 1
             # position du zéro
             r = solve(Eq(f,0),x)[0] # solve renvoie une liste (peut-être vide)
-            # signe coeff dir
-            a = sign(diff(f, x))
+            a = int(sign(diff(f, x))) # signe coeff dir
             try:
                 i0 = tete.index(r) # position de la racine r du facteur
                 # out["Bas"][i0] = "|" déjà fait à l'initialisation
@@ -208,24 +212,24 @@ class TableauSigne():
                 # remplissage signe
                 for i in range(i0):
                     if tete[i]=="vide":
-                        out["Milieu"][i] = signe[int(-a)]
-                for i in range(i0+1,l):
+                        out["Milieu"][i] = signe[-a]
+                for i in range(i0+1, l):
                     if tete[i]=="vide":
-                        out["Milieu"][i] = signe[int(a)]
+                        out["Milieu"][i] = signe[a]
             except ValueError:
                 if r < self.bornes[0]:
                     for i in range(1,l):
                         if tete[i]=="vide":
-                            out["Milieu"][i] = signe[int(a)]
+                            out["Milieu"][i] = signe[a]
                 elif r > self.bornes[1]:
                     for i in range(1,l):
                         if tete[i]=="vide":
-                            out["Milieu"][i] = signe[int(-a)]
+                            out["Milieu"][i] = signe[-a]
 
         return out
 
     def _fill_last_ligne(self, tete, nom="f"):
-        """ Création de la dernière ligne du tableau par la règle des signes.
+        """Création de la dernière ligne du tableau par la règle des signes.
         """
         signe = {1:"+", -1:"-"}
         l = len(tete)
@@ -260,7 +264,7 @@ class TableauSigne():
                                             [["vide", u] for u in values])
         self.tab = [{"Haut": len(tete)*["vide"], "Milieu": tete,
                      "Bas": len(tete)*["vide"]}]
-        for f in self.facteurs:
+        for f in self.pow_positif+self.pow_moins:
             self.tab.append(self._fill_ligne(tete, f))
         self.tab.append(self._fill_last_ligne(tete))
         self.tabsimplif = [self.tab[0]]+[self.tab[-1]]
@@ -291,8 +295,163 @@ class TableauSigne():
                 self.tabnosign[i]["Milieu"] = [(x if not(x == '+' or x =='-')
                                                 else '\\dots') for x in L]
 
+    def _fill_ligne_tkz(self, tete: list, facteur, grid=[], option='whole', grid_sp=[]):
+        """construit une ligne tkzTabLine relativement à facteur
+
+        la tete est une liste avec alternance de valeurs et de vides.
+        grid est la liste des écritures latex des positions
+        grid_sp est la liste des valeurs sympifiées
+        
+        Le remplissage des signes est traditionnel: observer le coef dir et
+        remplir en conséquence.
+
+        """
+        l = len(tete)
+        out = [""] +(l-2)*["vide"]+[""]
+        if option in ['whole', 'simplif']:
+            signe = {1:"+", -1:"-", "z": "z", "t": "t", "d": "d"}
+        elif option=='nosign':
+            signe = {1:"…", -1:"…", "z": "…", "t": "…", "d": "…"}
+        N = len(grid)
+        # barres de positions sauf aux bords
+        # on analyse la grille des valeurs sympifiées grid_sp
+        for j,v in enumerate(grid):
+            i = tete.index(v)
+            if grid_sp[j] in self.racines:
+                out[i] = signe["t"]
+            elif grid_sp[j] in self.vi:
+                out[i] = signe["d"]
+            # if j not in [0,N-1]:
+            #     out[i] = signe["t"]
+        #cas d'une constante
+        if facteur.is_Number:
+            for i in range(l):
+                if tete[i] == "vide":
+                    out[i] = signe[int(sign(facteur))]
+        #Autres: puissances paires
+        elif facteur.is_Pow and facteur.args[1]%2 == 0:
+            r = solve(Eq(facteur.args[0],0),x)[0] # solve renvoie une liste
+            try:
+                i0 = tete.index(r) # position de la racine r du facteur
+                out[i0] = signe["z"]
+                tmp = list(range(l))
+                tmp.remove(i0)
+            except ValueError:
+                tmp = list(range(l))
+            for i in tmp:
+                if tete[i]=="vide":
+                    out[i] = signe[1]
+        #Autres à améliorer suivant puissance
+        else:
+            if facteur.is_Pow:
+                f,p = facteur.args
+            elif facteur.is_Add:
+                f,p = facteur, 1
+            elif facteur.is_Symbol:
+                f,p = facteur, 1
+            # position du zéro
+            r = solve(Eq(f,0),x)[0] # solve renvoie une liste (peut-être vide)
+            # signe coeff dir
+            a = sign(diff(f, x))
+            try:
+                i0 = tete.index(f"${latex(r)}$") # position de la racine r du facteur
+                out[i0] = signe["z"] if p>0 else signe["d"]
+                # remplissage signe
+                for i in range(i0):
+                    if tete[i]=="vide":
+                        out[i] = signe[int(-a)]
+                for i in range(i0+1,l):
+                    if tete[i]=="vide":
+                        out[i] = signe[int(a)]
+            except ValueError:
+                if r < self.bornes[0]:
+                    for i in range(l):
+                        if tete[i]=="vide":
+                            out[i] = signe[int(a)]
+                elif r > self.bornes[1]:
+                    for i in range(l):
+                        if tete[i]=="vide":
+                            out[i] = signe[int(-a)]
+        return "\\tkzTabLine{" + ' , '.join(out) + "}\n"
+
+    def _fill_last_ligne_tkz(self, tete, nom="f", option='whole'):
+        """Création de la dernière ligne du tableau par la règle des signes pour TiKz
+        
+        on analyse self.tab complètement créé auparavant, on retire la ligne 0
+        et la dernière.
+
+        """
+        if option in ['whole', 'simplif']:
+            signe = {1:"+", -1:"-", "z": "z", "t": "t", "d": "d"}
+        elif option=='nosign':
+            signe = {1:"…", -1:"…", "z": "…", "t": "…", "d": "…"}
+        l = len(tete)
+        out = [""]+(l-2)*["vide"]+[""]
+        for i in range(l):
+            if tete[i] == "vide":
+                #récupérer les signes sauf 1ere ligne
+                tmp = [x["Milieu"][i+1] for x in self.tab[1:len(self.tab)-1]]
+                out[i] = signe[int((-1)**(tmp.count("-")%2))]
+            elif tete[i] in self.racines:
+                out[i] = signe['z']
+            elif tete[i] in self.vi:
+                out[i] = signe["d"]
+            else: # vider au niveau des bornes
+                out[i] = ''
+        return "\\tkzTabLine{" + ', '.join(out) + "}\n"
+
+    def _facto_pos(self, f):
+        """fonction technique pour affichage des facteurs"""
+        if f.is_Pow:
+            return f"${latex( Pow(sympify(f.args[0]), abs(f.args[1])))}$"
+        else:
+            return  f"${latex(f)}$"
+        
+    def tab2tkz(self, option='whole', tabopts="nocadre,lgt=2.5,espcl=1.5",
+                **kwargs):
+        """sortie latex tkz-tab du tableau de signe
+        
+        :param string option: in ['whole', 'simplif', 'nosign']
+
+        * 'simplif': utiliser le tableau simplifié
+          qui ne comporte que la 1ere et la dernière ligne.
+        * 'nosign': générer le tableau avec pointillés à compléter 
+          (le niveau de difficulté 1 ou 2 a été réglé à l'initialisation)
+        * 'whole': tableau complet normal
+
+        """
+        # début construction: Tabinit
+        col1 = ["$x$"] + list(map(lambda e: self._facto_pos(e),
+                                  self.pow_positif+self.pow_moins))\
+            + ['signe de $f(x)$']
+        C1 = list(map(lambda e: f"{e} /0.8", col1))
+
+        # c'est plus pratique pour insérer les vides
+        values = [r for r in self.racines+self.vi
+                  if (r > self.bornes[0]) and (r< self.bornes[1])]
+        values.sort()
+        # garder une version sympifiée des valeurs
+        VALS = [self.bornes[0]] + values + [self.bornes[1]]
+        tete = [f"${latex(self.bornes[0])}$"] +\
+            list(map(lambda e: f"${latex(e)}$", values)) + \
+            [f"${'+' if self.bornes[1]==oo else ''}{latex(self.bornes[1])}$"]
+        # tete = [f"${latex(self.bornes[0])}$"]+ values
+        V_spc = reduce(lambda a,b: a +[b, "vide"], VALS, [])[:-1]
+        # enlever le dernier vide
+        tete_spc = reduce(lambda a,b: a +[b, "vide"], tete, [])[:-1]
+        # dernier "vide" superflu
+        OUT = "%\\usepackage{tkz-tab}\n\\begin{tikzpicture}\n"
+        OUT += f"\\tkzTabInit[{tabopts}]{{{(' ,'+chr(10)).join(C1)}}}{{{' , '.join(tete)}}}\n"
+        if option in ['whole', 'nosign']:
+            for f in self.pow_positif+self.pow_moins:
+                LINE = self._fill_ligne_tkz(tete_spc, f, grid=tete, option=option, grid_sp=VALS)
+                OUT += LINE
+        OUT += self._fill_last_ligne_tkz(V_spc, option=option)
+        OUT += "\\end{tikzpicture}"
+        return OUT
+      
     def tab2latex(self, option='whole', **kwargs):
-        """Sortie latex du tableau de signe. 
+        """Sortie latex tabvar du tableau de signe. 
 
         Il utilise le fichier tabvar.tex comme suggéré par pstplus.
         
@@ -432,6 +591,21 @@ class TableauSigne():
         out.write( self.tab2latex(option=option) )
         out.close()
 
+    def export_tikz(self, nom="tableau", option='whole', ext="tkz"):
+        """Exporter la sortie latex dans un fichier. Format tex.
+        
+        :param ext: pour compatibilite avec export_pst
+        :type ext: str in 'tex', 'pag', 'pst'
+        :param option: 'simplif', 'whole', 'nosign' 
+
+        par défaut on laisse des +- pour mettre des … pour faire un énoncé
+        de tableau à compléter.
+        """
+        f = f"{nom}.{ext}"
+        out = open(f, 'w')
+        out.write( self.tab2tkz(option=option) )
+        out.close()
+        
 # class TableauVariation(TableauSigne):
 #     """
 #     Classe de creation d'un tableau de variation. Ce n'est qu'une heuristique,

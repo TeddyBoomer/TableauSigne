@@ -1,14 +1,14 @@
 TableauSigne
 ============
 
-Produire des sorties tex/pst/pag de tableaux de signe
+Produire des sorties TikZ/tex/pst/pag de tableaux de signe
 
-* [Téléchargement](https://github.com/TeddyBoomer/TableauSigne/releases/tag/v1.3.6)
+* [Téléchargement](https://github.com/TeddyBoomer/TableauSigne/releases/tag/v2.0)
 * Installation: voir en bas de cette page
 * Documentation: fournie dans le dossier d'installation (voir en bas de page)
 
-Une petite illustration des capacités du module:
-================================================
+Une petite illustration du module:
+==================================
 
 Exemple:
 
@@ -22,17 +22,25 @@ B.get_solutions('+0')
 
 '\left] -\infty;-1\right[\cup \left[ \frac{3}{4};\frac{4}{3}\\right['
 
-print(B.tab2latex())
-B.export_pst()
+print(B.tab2tkz())
+B.export_tkz()
 ```
 
+**Sortie TikZ** (un peu de travail manuel nécessaire sur certains coefficients)
+
 ```latex
-$$\tabvar{%
-\tx{x} & \tx{-\infty} &  & \tx{-1} &  & \tx{\frac{3}{4}} &  & \tx{\frac{4}{3}} &  & \tx{+\infty}\cr
-\tx{- 3 x + 4} &  & \tx{+} & \tx{|} & \tx{+} & \tx{|} & \tx{+} & \txt{0} & \tx{-} & \cr
-\tx{5 x + 5} &  & \tx{-} & \txt{0} & \tx{+} & \tx{|} & \tx{+} & \tx{|} & \tx{+} & \cr
-\tx{4 x -3} &  & \tx{-} & \tx{|} & \tx{-} & \txt{0} & \tx{+} & \tx{|} & \tx{+} & \cr
-\tx{\text{signe de }f} &  & \tx{+} & \dbt & \tx{-} & \txt{0} & \tx{+} & \dbt & \tx{-} & \cr}$$
+%\usepackage{tkz-tab}
+\begin{tikzpicture}
+\tkzTabInit[nocadre,lgt=2.5,espcl=1.5]{$x$ /0.8 ,
+$4 x - 3$ /0.8 ,
+$5 x + 5$ /0.8 ,
+$4 + \left(-3\right) x$ /0.8 ,
+signe de $f(x)$ /0.8}{$-\infty$ , $-1$ , $\frac{3}{4}$ , $\frac{4}{3}$ , $+\infty$}
+\tkzTabLine{ , - , d , - , z , + , d , + , }
+\tkzTabLine{ , - , d , + , t , + , d , + , }
+\tkzTabLine{ , + , d , + , t , + , d , - , }
+\tkzTabLine{, +, d, -, z, +, d, -, }
+\end{tikzpicture}
 ```
 
 **Rendu LaTeX/PdfAdd**: (pour LaTeX, il faut importer le fichier *tabvar.tex*
