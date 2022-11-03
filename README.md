@@ -43,8 +43,7 @@ signe de $f(x)$ /0.8}{$-\infty$ , $-1$ , $\frac{3}{4}$ , $\frac{4}{3}$ , $+\inft
 \end{tikzpicture}
 ```
 
-**Rendu LaTeX/PdfAdd**: (pour LaTeX, il faut importer le fichier *tabvar.tex*
-ou *pdftabvar.tex* dans votre entête)
+**Rendu LaTeX**:
 
 <img src="exemple.png" width=400/>
 
@@ -58,7 +57,8 @@ pour le lancer…
 
 <img src="GUI.png" width=500/>
 
-voir le site http://www.xm1math.net/pdfadd/index.html
+*autres possibilités: export PAG pour PdfAdd*: voir le site
+http://www.xm1math.net/pdfadd/index.html
 
 Installation/Mise à jour: 
 =========================
