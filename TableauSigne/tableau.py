@@ -37,7 +37,14 @@ class TableauSigne():
         >>> e = TableauSigne('x*(2-3*x)') # bug sur x factor corrigé.
         >>> f = TableauSigne('3*x+1') # expression du 1er degré prise en compte
     """
-    
+    def _splitDiv(self, a):
+        b = a.args
+        if (b[0]).is_Mul:
+            T = [e**b[1] for e in b[0].args]
+            return T
+        else:
+            return [a]
+
     def __init__(self, expr, bornes=[-oo, oo], niveau=1):
         self.expr = sympify(expr, evaluate=False)
         self.bornes = bornes
@@ -52,17 +59,13 @@ class TableauSigne():
             self.pow_plus = [u for u in facteurs if (u.is_Pow and u.args[1]>1)]
             ## facteurs simples ->
             self.pow_simple = [u for u in facteurs if u.is_Add]
-            ## tous les facteurs positifs rammenés à puissance 1
-            self.pow_positif = [u.args[0] for u in self.pow_plus] +list(self.pow_simple) + list(self.fact_x)
+            self.pow_positif = self.pow_plus +list(self.pow_simple) + list(self.fact_x)
+            #[u.args[0] for u in self.pow_plus] +list(self.pow_simple) + list(self.fact_x)
             ## facteurs puissance négative -> vi
             ## ils tombent dans un des arguments avec une puissance -1
-            ## on resympify avec evaluate à True
-            tmp = [e.args[0] for e in facteurs if e.is_Pow and e.args[1]<0]
-            if tmp != []:
-                tmp1 = sympify([0]**-1).args
-                self.pow_moins = [u for u in tmp1 if u.is_Pow and u.args[1]<0]
-            else:
-                self.pow_moins =[]
+            ## on resympify avec evaluate à True par défaut
+            tmp = [self._splitDiv(e) for e in facteurs if e.is_Pow and e.args[1]<0]
+            self.pow_moins  = reduce(lambda a,b: a+b, tmp)
             self.facteurs = self.fact_cst + self.pow_positif + self.pow_moins
         elif self.expr.is_Add and (degree(self.expr) == 1): 
             # cas d'un seul facteur de degré 1:
@@ -297,7 +300,8 @@ class TableauSigne():
                 self.tabnosign[i]["Milieu"] = [(x if not(x == '+' or x =='-')
                                                 else '\\dots') for x in L]
 
-    def _fill_ligne_tkz(self, tete: list, facteur, grid=[], option='whole', grid_sp=[]):
+    def _fill_ligne_tkz(self, tete: list, facteur, grid=[], option='whole',
+                        grid_sp=[]):
         """construit une ligne tkzTabLine relativement à facteur
 
         la tete est une liste avec alternance de valeurs et de vides.
@@ -323,8 +327,6 @@ class TableauSigne():
                 out[i] = signe["t"]
             elif grid_sp[j] in self.vi:
                 out[i] = signe["d"]
-            # if j not in [0,N-1]:
-            #     out[i] = signe["t"]
         #cas d'une constante
         if facteur.is_Number:
             for i in range(l):
@@ -356,7 +358,7 @@ class TableauSigne():
             # signe coeff dir
             a = sign(diff(f, x))
             try:
-                i0 = tete.index(f"${latex(r)}$") # position de la racine r du facteur
+                i0 = tete.index(f"${latex(r)}$") # position de la racine r
                 out[i0] = signe["z"] if p>0 else signe["d"]
                 # remplissage signe
                 for i in range(i0):
@@ -403,11 +405,13 @@ class TableauSigne():
         return "\\tkzTabLine{" + ', '.join(out) + "}\n"
 
     def _facto_pos(self, f):
-        """fonction technique pour affichage des facteurs"""
+        """fonction technique pour affichage des facteurs
+        avec puissance toujours positive.
+        """
         if f.is_Pow:
-            return f"${latex( Pow(sympify(f.args[0]), abs(f.args[1])))}$"
+            return f"${latex(Pow(sympify(f.args[0]), abs(f.args[1])).simplify())}$"
         else:
-            return  f"${latex(f)}$"
+            return  f"${latex(f.simplify())}$"
         
     def tab2tkz(self, option='whole', tabopts="nocadre,lgt=2.5,espcl=1.5",
                 **kwargs):
@@ -446,7 +450,8 @@ class TableauSigne():
         OUT += f"\\tkzTabInit[{tabopts}]{{{(' ,'+chr(10)).join(C1)}}}{{{' , '.join(tete)}}}\n"
         if option in ['whole', 'nosign']:
             for f in self.facteurs: # self.pow_positif+self.pow_moins
-                LINE = self._fill_ligne_tkz(tete_spc, f, grid=tete, option=option, grid_sp=VALS)
+                LINE = self._fill_ligne_tkz(tete_spc, f, grid=tete, option=option,
+                                            grid_sp=VALS)
                 OUT += LINE
         OUT += self._fill_last_ligne_tkz(V_spc, option=option)
         OUT += "\\end{tikzpicture}"
@@ -483,7 +488,6 @@ class TableauSigne():
         else: #option=='whole'
             T = self.tab
         # appliquer plusieurs substitution sur les éléments d'une ligne
-        #'|': '\\tx{|}'
         trad = {'+': '\\tx{+}',
                 '-': '\\tx{-}',
                 '|': '\\trait',
@@ -500,7 +504,6 @@ class TableauSigne():
         L2 = [a if (a != '\\tx{vide}') else '' for a in L]
         out += reduce(lambda u,v:  u + " & " + v , L2)
         out += "\cr"
-
         #autres lignes
         for i,l in enumerate(T[1:]):
             out +="\n"
@@ -540,7 +543,7 @@ class TableauSigne():
                   self.tab[-1]['Milieu'][i-1:i+2:2]) for i in positions]
         return datas
 
-    def get_solutions(self, choix):
+    def get_solutions(self, choix:str) -> str:
         """renvoie les solutions d'une inéquation au format latex
         
         choix est dans ['++', '+0', '-\-', '-0'] pour signifier strictement 
@@ -594,7 +597,7 @@ class TableauSigne():
         out.close()
 
     def export_tikz(self, nom="tableau", option='whole', ext="tkz"):
-        """Exporter la sortie latex dans un fichier. Format tex.
+        """Exporter la sortie dans un fichier. Format tex TikZ.
         
         :param ext: pour compatibilite avec export_pst
         :type ext: str in 'tex', 'pag', 'pst'

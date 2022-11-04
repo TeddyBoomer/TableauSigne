@@ -26,19 +26,19 @@ print(B.tab2tkz())
 B.export_tkz()
 ```
 
-**Sortie TikZ** (un peu de travail manuel nécessaire sur certains coefficients)
+**Sortie TikZ** (v>=2.0.3: affichage OK des facteurs) 
 
 ```latex
 %\usepackage{tkz-tab}
 \begin{tikzpicture}
 \tkzTabInit[nocadre,lgt=2.5,espcl=1.5]{$x$ /0.8 ,
 $4 x - 3$ /0.8 ,
+$4 - 3 x$ /0.8 ,
 $5 x + 5$ /0.8 ,
-$4 + \left(-3\right) x$ /0.8 ,
 signe de $f(x)$ /0.8}{$-\infty$ , $-1$ , $\frac{3}{4}$ , $\frac{4}{3}$ , $+\infty$}
 \tkzTabLine{ , - , d , - , z , + , d , + , }
-\tkzTabLine{ , - , d , + , t , + , d , + , }
 \tkzTabLine{ , + , d , + , t , + , d , - , }
+\tkzTabLine{ , - , d , + , t , + , d , + , }
 \tkzTabLine{, +, d, -, z, +, d, -, }
 \end{tikzpicture}
 ```
