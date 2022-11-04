@@ -44,21 +44,26 @@ class TableauSigne():
         self.niveau = niveau
         self.tab = []
         if self.expr.is_Mul:
-            self.facteurs = self.expr.args
-            self.fact_cst = [u for u in self.facteurs if u.is_Number]
+            facteurs = self.expr.args
+            self.fact_cst = [u for u in facteurs if u.is_Number]
             ## facteur x seul, non traité ailleurs. en principe 1 seul résultat possible.
-            self.fact_x = [u for u in self.facteurs if u.is_Symbol]
+            self.fact_x = [u for u in facteurs if u.is_Symbol]
             ## facteurs puissance >=2 -> racines
-            self.pow_plus = [u for u in self.facteurs if (u.is_Pow and u.args[1]>1)]
+            self.pow_plus = [u for u in facteurs if (u.is_Pow and u.args[1]>1)]
             ## facteurs simples ->
-            self.pow_simple = [u for u in self.facteurs if u.is_Add]
+            self.pow_simple = [u for u in facteurs if u.is_Add]
             ## tous les facteurs positifs rammenés à puissance 1
             self.pow_positif = [u.args[0] for u in self.pow_plus] +list(self.pow_simple) + list(self.fact_x)
             ## facteurs puissance négative -> vi
             ## ils tombent dans un des arguments avec une puissance -1
             ## on resympify avec evaluate à True
-            tmp = sympify([e.args[0] for e in self.facteurs if e.is_Pow and e.args[1]<0][0]**-1).args
-            self.pow_moins = [u for u in tmp if u.is_Pow and u.args[1]<0]
+            tmp = [e.args[0] for e in facteurs if e.is_Pow and e.args[1]<0]
+            if tmp != []:
+                tmp1 = sympify([0]**-1).args
+                self.pow_moins = [u for u in tmp1 if u.is_Pow and u.args[1]<0]
+            else:
+                self.pow_moins =[]
+            self.facteurs = self.fact_cst + self.pow_positif + self.pow_moins
         elif self.expr.is_Add and (degree(self.expr) == 1): 
             # cas d'un seul facteur de degré 1:
             self.facteurs = self.pow_positif = [self.expr]
@@ -77,6 +82,7 @@ class TableauSigne():
                              [solve(u.args[0],x) for u in list(self.pow_moins)]) # valeurs interdites
         except TypeError:
             self.vi = []
+            
         self._create_tab()
         self._create_tab_nosign(niveau = niveau)
         self._arbrepst()
@@ -91,25 +97,21 @@ class TableauSigne():
         root_simplif = etree.Element("Tableau")
         root_nosign =  etree.Element("Tableau")
         ligne = etree.SubElement(root, "Lignes")
-        #ligne.text = str(len(self.facteurs)+2)
         ligne.text = str(len(self.tab))
 
         ligne_simplif = etree.SubElement(root_simplif, "Lignes")
         ligne_simplif.text = '2'
 
         ligne_nosign = etree.SubElement(root_nosign, "Lignes")
-        #ligne.text = str(len(self.facteurs)+2)
         ligne_nosign.text = str(len(self.tabnosign))
 
         col = etree.SubElement(root, "Colonnes")
-        #col.text = str(2*len(self.racines)+2*len(self.vi)+4)
         col.text = str(len(self.tab[0]["Milieu"]))
 
         col_simplif = etree.SubElement(root_simplif, "Colonnes")
         col_simplif.text = col.text
 
         col_nosign = etree.SubElement(root_nosign, "Colonnes")
-        #col.text = str(2*len(self.racines)+2*len(self.vi)+4)
         col_nosign.text = str(len(self.tabnosign[0]["Milieu"]))
 
         for l in self.tab:
@@ -264,7 +266,7 @@ class TableauSigne():
                                             [["vide", u] for u in values])
         self.tab = [{"Haut": len(tete)*["vide"], "Milieu": tete,
                      "Bas": len(tete)*["vide"]}]
-        for f in self.pow_positif+self.pow_moins:
+        for f in self.facteurs: # self.pow_positif+self.pow_moins
             self.tab.append(self._fill_ligne(tete, f))
         self.tab.append(self._fill_last_ligne(tete))
         self.tabsimplif = [self.tab[0]]+[self.tab[-1]]
@@ -443,7 +445,7 @@ class TableauSigne():
         OUT = "%\\usepackage{tkz-tab}\n\\begin{tikzpicture}\n"
         OUT += f"\\tkzTabInit[{tabopts}]{{{(' ,'+chr(10)).join(C1)}}}{{{' , '.join(tete)}}}\n"
         if option in ['whole', 'nosign']:
-            for f in self.pow_positif+self.pow_moins:
+            for f in self.facteurs: # self.pow_positif+self.pow_moins
                 LINE = self._fill_ligne_tkz(tete_spc, f, grid=tete, option=option, grid_sp=VALS)
                 OUT += LINE
         OUT += self._fill_last_ligne_tkz(V_spc, option=option)

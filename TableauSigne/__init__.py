@@ -43,4 +43,4 @@ Export possible vers LaTeX, pst+, pdfadd (pour modifier le tableau)
 
 from TableauSigne.tableau import TableauSigne, TableauFactory, randExpr
 
-__version__ = '2.0'
+__version__ = '2.0.2'
