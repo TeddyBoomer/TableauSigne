@@ -3,7 +3,7 @@ TableauSigne
 
 Produire des sorties TikZ/tex/pst/pag de tableaux de signe
 
-* [Téléchargement](https://github.com/TeddyBoomer/TableauSigne/releases/tag/v2.0)
+* [Téléchargement](https://github.com/TeddyBoomer/TableauSigne/releases/tag/v2.0.3)
 * Installation: voir en bas de cette page
 * Documentation: fournie dans le dossier d'installation (voir en bas de page)
 
