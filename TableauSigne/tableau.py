@@ -55,17 +55,20 @@ class TableauSigne():
             self.fact_cst = [u for u in facteurs if u.is_Number]
             ## facteur x seul, non traité ailleurs. en principe 1 seul résultat possible.
             self.fact_x = [u for u in facteurs if u.is_Symbol]
+            ## facteur type ax seul, non traité ailleur. is_Mul
+            self.mult_x = [u for u in facteurs if u.is_Mul]
             ## facteurs puissance >=2 -> racines
             self.pow_plus = [u for u in facteurs if (u.is_Pow and u.args[1]>1)]
-            ## facteurs simples ->
+            ## facteurs simples ax+b, b≠ 0
             self.pow_simple = [u for u in facteurs if u.is_Add]
-            self.pow_positif = self.pow_plus +list(self.pow_simple) + list(self.fact_x)
+            self.pow_positif = self.pow_plus + self.pow_simple + self.fact_x + self.mult_x
+            #self.pow_plus + list(self.pow_simple) + list(self.fact_x) + list(self.mult_x)
             #[u.args[0] for u in self.pow_plus] +list(self.pow_simple) + list(self.fact_x)
             ## facteurs puissance négative -> vi
             ## ils tombent dans un des arguments avec une puissance -1
             ## on resympify avec evaluate à True par défaut
             tmp = [self._splitDiv(e) for e in facteurs if e.is_Pow and e.args[1]<0]
-            self.pow_moins  = reduce(lambda a,b: a+b, tmp)
+            self.pow_moins  = reduce(lambda a,b: a+b, tmp, [])
             self.facteurs = self.fact_cst + self.pow_positif + self.pow_moins
         elif self.expr.is_Add and (degree(self.expr) == 1): 
             # cas d'un seul facteur de degré 1:
@@ -205,6 +208,8 @@ class TableauSigne():
             elif facteur.is_Add:
                 f,p = facteur, 1
             elif facteur.is_Symbol:
+                f,p = facteur, 1
+            elif facteur.is_Mul: # cas de ax
                 f,p = facteur, 1
             # position du zéro
             r = solve(Eq(f,0),x)[0] # solve renvoie une liste (peut-être vide)
@@ -353,6 +358,8 @@ class TableauSigne():
                 f,p = facteur, 1
             elif facteur.is_Symbol:
                 f,p = facteur, 1
+            elif facteur.is_Mul: # cas de ax
+                f,p = facteur, 1
             # position du zéro
             r = solve(Eq(f,0),x)[0] # solve renvoie une liste (peut-être vide)
             # signe coeff dir
@@ -428,12 +435,12 @@ class TableauSigne():
         """
         # début construction: Tabinit
         col1 = ["$x$"] + list(map(lambda e: self._facto_pos(e),
-                                  self.pow_positif+self.pow_moins))\
-            + ['signe de $f(x)$']
+                                  self.fact_cst + self.pow_positif\
+                                  + self.pow_moins)) + ['signe de $f(x)$']
         C1 = list(map(lambda e: f"{e} /0.8", col1))
 
         # c'est plus pratique pour insérer les vides
-        values = [r for r in self.racines+self.vi
+        values = [r for r in self.racines + self.vi
                   if (r > self.bornes[0]) and (r< self.bornes[1])]
         values.sort()
         # garder une version sympifiée des valeurs
