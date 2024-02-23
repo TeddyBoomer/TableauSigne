@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- CODING438: utf-8 -*-
 """
 Classe de création de tableau de signe à l'aide de sympy et lxml.
 Elle génère au choix la sortie latex ou un tableau xml à lancer dans pst+.
@@ -50,6 +50,7 @@ class TableauSigne():
         self.bornes = bornes
         self.niveau = niveau
         self.tab = []
+        self.fact_cst = []
         if self.expr.is_Mul:
             facteurs = self.expr.args
             self.fact_cst = [u for u in facteurs if u.is_Number]
@@ -122,33 +123,29 @@ class TableauSigne():
 
         for l in self.tab:
             for e in ["Bas", "Milieu", "Haut"]:
-                etree.SubElement(root, e).text =\
-                    regexp.sub(r'\$',
-                               r'',
-                               self._list2pststring(l[e]))
+                etree.SubElement(root, e).text = self._list2pststring(l[e])
 
         self.xml = root
         for l in (self.tab[0], self.tab[-1]):
             for e in ["Bas", "Milieu", "Haut"]:
                 etree.SubElement(root_simplif, e).text =\
-                    regexp.sub(r'\$',
-                               r'',
-                               self._list2pststring(l[e]))
+                    self._list2pststring(l[e])
+
         self.xmlsimplif = root_simplif
         for l in self.tabnosign:
             for e in ["Bas", "Milieu", "Haut"]:
                 etree.SubElement(root_nosign, e).text =\
-                    regexp.sub(r'\$',
-                               r'',
-                               self._list2pststring(l[e]))
+                    self._list2pststring(l[e])
 
         self.xmlnosign = root_nosign
 
         
     def _list2pststring(self, l):
-        # disparition du + dans le cas de latex(+oo)
-        return reduce(lambda u,v: str(u)+"#"+(latex(v)
-                                              if (v!=oo) else '+\\infty'), l)
+        trad = {'+': '+', '-': '-', '|': '|', '||': '||',
+                0: '0', '\\dots': '\\dots', '\\ldots': '\\ldots',
+                'vide': 'vide', oo: '+\\infty'}
+        h = str(l[0])
+        return "#".join([h]+[trad[e] if e in trad else latex(e) for e in l[1:]])
     
     def _fill_ligne(self, tete, facteur):
         """ Construction de la ligne des signes concernant facteur
@@ -501,15 +498,14 @@ class TableauSigne():
                 '||': '\\dbt',
                 0: '\\txt{0}',
                 '\\dots': '\\tx{\\dots}',
-                'vide': ''}
+                'vide': '',
+                oo: '\\tx{+\\infty}',
+                "x": '\\tx{x}'}
         out = "$$\\tabvar{%"
         #traitement à part pour la 1ere ligne
         out +="\n"
-        L = ["\\tx{" + (latex(x) if x!= oo else '+\\infty') + "}"
-             for x in T[0]["Milieu"]]
-        # enlever les 'vide'
-        L2 = [a if (a != '\\tx{vide}') else '' for a in L]
-        out += reduce(lambda u,v:  u + " & " + v , L2)
+        L = list(map(lambda e: (trad[e] if (e in trad) else ("\\tx{" + latex(e) + "}")), T[0]["Milieu"]))
+        out += " & ".join(L)
         out += "\cr"
         #autres lignes
         for i,l in enumerate(T[1:]):

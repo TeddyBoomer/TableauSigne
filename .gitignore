@@ -1,6 +1,6 @@
 __pycache__/
 build.xml
-build.xml~
+*~
 tabsigne3.pyc
 test/
 doc/img/
