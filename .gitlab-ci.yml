@@ -42,8 +42,12 @@ stages:          # List of stages for jobs, and their order of execution
 
 build-job:       # This job runs in the build stage, which runs first.
   stage: build
+  artifacts:
+    paths:
+      - dist/*
   script:
     - echo "Compiling the code..."
+    - python setup bdist_wheel
     - echo "Compile complete."
 
 unit-test-job:   # This job runs in the test stage.
@@ -55,8 +59,7 @@ unit-test-job:   # This job runs in the test stage.
 lint-test-job:   # This job also runs in the test stage.
   stage: test    # It can run at the same time as unit-test-job (in parallel).
   script:
-    - echo "Linting code... This will take about 10 seconds."
-    - sleep 10
+    - echo "Linting code..."
     - echo "No lint issues found."
 
 deploy-job:      # This job runs in the deploy stage.
