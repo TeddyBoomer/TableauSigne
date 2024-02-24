@@ -47,7 +47,7 @@ build-job:       # This job runs in the build stage, which runs first.
       - dist/*
   script:
     - echo "Compiling the code..."
-    - python setup bdist_wheel
+    - python setup.py bdist_wheel
     - echo "Compile complete."
 
 unit-test-job:   # This job runs in the test stage.
