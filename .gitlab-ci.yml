@@ -32,7 +32,7 @@ before_script:
   - pip install virtualenv
   - virtualenv venv
   - source venv/bin/activate
-  - pip install lxml
+  - pip install lxml sympy
 
 
 stages:          # List of stages for jobs, and their order of execution
