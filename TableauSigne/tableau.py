@@ -1,4 +1,3 @@
-# -*- CODING438: utf-8 -*-
 """
 Classe de création de tableau de signe à l'aide de sympy et lxml.
 Elle génère au choix la sortie latex ou un tableau xml à lancer dans pst+.
@@ -327,8 +326,9 @@ class TableauSigne():
             i = tete.index(v)
             if grid_sp[j] in self.racines:
                 out[i] = signe["t"]
+            # les vi ne seront portées que sur last ligne
             elif grid_sp[j] in self.vi:
-                out[i] = signe["d"]
+                out[i] = signe["t"]
         #cas d'une constante
         if facteur.is_Number:
             for i in range(l):
@@ -363,7 +363,8 @@ class TableauSigne():
             a = sign(diff(f, x))
             try:
                 i0 = tete.index(f"${latex(r)}$") # position de la racine r
-                out[i0] = signe["z"] if p>0 else signe["d"]
+                # facteurs toujours présentés avec une puissance positive
+                out[i0] = signe["z"] # if p>0 else signe["d"]
                 # remplissage signe
                 for i in range(i0):
                     if tete[i]=="vide":
